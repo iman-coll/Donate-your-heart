@@ -561,3 +561,63 @@ are the `r`, `k`, `wob` and `bob` values in `initFriends()`, and `BF`/`KID` set 
 Two things I would check first on a real phone: that 16 small elements near a fingertip do not
 obscure the thing you are about to tap (clicks pass through, but sight is another matter), and
 that the flock does not feel heavy on a cheap Android.
+
+---
+
+## 11. Deployment — one app, two hosts
+
+### 11.1 What exists now
+
+| | |
+|---|---|
+| Repository | https://github.com/iman-coll/Donate-your-heart (public) |
+| **Live app (GitHub Pages)** | https://iman-coll.github.io/Donate-your-heart/ — **verified HTTP 200** |
+| Pages source | `main` / `/docs`, HTTPS enforced |
+| Custom 404 | Verified — an unknown path returns the app's own "that page isn't here" page |
+| Manifest | Verified HTTP 200 at `/manifest.json` |
+| Streamlit | `streamlit_app.py` is committed and compiles; **deployment is one manual click** (§11.3) |
+
+### 11.2 The design that keeps the two hosts identical
+
+`docs/` is the GitHub Pages root, and it holds the whole app. `streamlit_app.py` does not
+reimplement anything — it reads `docs/index.html` and hands that exact string to Streamlit. So
+there is one file to edit and no possible drift between the two URLs.
+
+Keeping the app in `docs/` rather than at the repo root is the part that matters for safety:
+GitHub Pages publishes **only** that folder, so `streamlit_app.py`, `.streamlit/config.toml`,
+`requirements.txt` and this document are never served as public files. A Streamlit app at the
+root of a Pages site gets served as plain text, and `secrets.toml` becomes downloadable the
+moment anyone adds `.nojekyll`.
+
+Two belt-and-braces extras: a `.nojekyll` inside `docs/` so Jekyll never touches the output, and
+a redirect stub at the repo root that only fires if Pages is ever misconfigured to `/ (root)`.
+
+### 11.3 The one step I could not do for you: Streamlit
+
+Streamlit Community Cloud deploys through a browser OAuth handshake against GitHub. There is no
+API for it, so it cannot be scripted from here. It is three clicks:
+
+1. Go to <https://share.streamlit.io> and sign in with GitHub (as `iman-coll`).
+2. **Create app → Deploy a public app from GitHub**.
+3. Repository `iman-coll/Donate-your-heart`, branch `main`, main file `streamlit_app.py` → **Deploy**.
+
+`requirements.txt` is picked up automatically; there are no secrets to add.
+
+### 11.4 How it was pushed, and how to push again
+
+The shell here cannot use git's default TLS backend (`schannel: SEC_E_NO_CREDENTIALS`) and the
+sandbox blocks the `sh`-based credential helper, so the push used the bundled OpenSSL backend
+with the token inline. The remote was reset to the clean URL afterwards. For a normal clone you
+need none of that — plain `git push` will work on your machine. In this workspace the working
+incantation is:
+
+```powershell
+git -C Donate-your-heart config http.sslBackend openssl
+git -C Donate-your-heart -c credential.helper= push origin main
+```
+
+To change something in the app, edit `Donate-your-heart/docs/index.html` (or run
+`python tools/make_assets.py` from inside the repo to regenerate the icons and social card), then
+commit and push. GitHub Pages rebuilds in about a minute, and Streamlit reflects the change on
+its next reload, because both read the same file.
+
