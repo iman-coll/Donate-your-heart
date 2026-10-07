@@ -1,0 +1,17 @@
+[theme]
+base = "light"
+primaryColor = "#ee6e96"
+backgroundColor = "#fdeef2"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#5b4a66"
+
+[server]
+headless = true
+
+[browser]
+gatherUsageStats = false
+
+# NOTE: there is intentionally no secrets.toml in this repository and this app needs
+# none. If you ever add one, .gitignore already excludes it — and remember that
+# `docs/` is the only folder GitHub Pages publishes, so this directory is never
+# served to the public.

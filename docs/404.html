@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Page not found — Iman Donation Trust</title>
+<style>
+  body{margin:0;min-height:100vh;display:grid;place-items:center;text-align:center;
+    font:600 1rem/1.6 "Segoe UI",system-ui,sans-serif;color:#5b4a66;
+    background:radial-gradient(1200px 600px at 8% -10%,#ffe9f2 0,transparent 60%),linear-gradient(180deg,#ffe6ee,#fdeee6)}
+  .card{background:#fff;border:3px solid #ffd9e6;border-radius:24px;padding:26px 30px;max-width:460px;
+    box-shadow:0 8px 20px rgba(219,112,147,.18)}
+  h1{font-size:1.5rem;margin:0 0 6px;color:#3d6b9e}
+  p{margin:6px 0;font-weight:600;color:#7a6a82}
+  a{display:inline-block;margin-top:14px;background:linear-gradient(180deg,#f27178,#e05a64);color:#fff;
+    text-decoration:none;padding:11px 22px;border-radius:999px;font-weight:700}
+  .heart{font-size:2.4rem}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="heart">💗</div>
+    <h1>That page isn't here</h1>
+    <p>The donation app is one page — everything in it is a tab, not a separate URL.</p>
+    <p>If you followed an old link, this will take you to the right place.</p>
+    <a id="go" href="/Donate-your-heart/">Take me to Iman Donation Trust</a>
+  </div>
+  <script>
+    /* GitHub Pages serves this file for any unknown path, including deep ones, so a
+       relative link would resolve against the wrong directory. The absolute site path
+       is used instead, and the visible link works even if this script is blocked. */
+    (function () {
+      var base = '/Donate-your-heart/';
+      document.getElementById('go').setAttribute('href', base);
+      if (location.pathname !== base) { location.replace(base); }
+    })();
+  </script>
+</body>
+</html>

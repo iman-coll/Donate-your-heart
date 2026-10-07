@@ -1,0 +1,19 @@
+{
+  "name": "Iman Donation Trust",
+  "short_name": "Iman Trust",
+  "description": "Find a drop-off point for clothes, books, toys and food at 34 partner sites across Pakistan, then generate a donation ticket in seconds.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffe6ee",
+  "theme_color": "#f9bcd0",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["charity", "lifestyle", "utilities"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,2380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Iman Donation Trust — Share Your Kindness & Donate with Love!</title>
+<meta name="description" content="Iman Donation Trust — find a drop-off point for clothes, books, toys and food at 34 partner sites in 17 cities across Pakistan, and generate a donation ticket in seconds.">
+<meta name="theme-color" content="#f9bcd0">
+<meta name="color-scheme" content="light">
+<!-- iOS auto-links anything that looks like a phone number; that breaks the ticket's
+     <pre> layout and double-links numbers the app already makes tappable. -->
+<meta name="format-detection" content="telephone=no">
+<!-- Sharing cards: WhatsApp is the main way links spread in Pakistan, so this matters more than SEO. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Iman Donation Trust">
+<meta property="og:title" content="Iman Donation Trust — donate your things anywhere in Pakistan">
+<meta property="og:description" content="Find a drop-off point for clothes, books, toys and food at 34 partner sites in 17 cities across Pakistan, then generate a donation ticket in seconds. No account, nothing uploaded.">
+<meta property="og:url" content="https://iman-coll.github.io/Donate-your-heart/">
+<meta property="og:image" content="https://iman-coll.github.io/Donate-your-heart/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_PK">
+<meta name="twitter:card" content="summary_large_image">
+<!-- .json, not .webmanifest: GitHub Pages serves .webmanifest as octet-stream and
+     Chrome then refuses the manifest outright. -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- media-src is what lets an optional same-origin companion clip play (see CONFIG.child.mode). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; script-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; connect-src 'none'">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 56C14 44 6 34 6 23 6 14 13 8 21 8c5 0 9 2 11 6 2-4 6-6 11-6 8 0 15 6 15 15 0 11-8 21-26 33z' fill='%23f26d8d'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink-100:#ffeef5;--pink-200:#ffd9e6;--pink-400:#f38fb4;--pink-500:#ee6e96;
+  --red-500:#e8656f;--red-600:#d14e58;
+  --yellow:#ffd44d;--blue:#a8d8f0;--green:#8fd07a;--purple:#d8b8f0;
+  --ink:#5b4a66;--ink2:#8a7a93;--navy:#3d6b9e;--brown:#7a5a49;
+  --shadow:0 8px 20px rgba(219,112,147,.18);
+  --fh:'Baloo 2','Comic Sans MS',system-ui,sans-serif;
+  --fb:'Quicksand','Segoe UI',system-ui,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--fb);color:var(--ink);
+  background:
+   radial-gradient(1200px 600px at 8% -10%, #ffe9f2 0%, transparent 60%),
+   radial-gradient(1000px 520px at 108% 8%, #fff0dd 0%, transparent 55%),
+   linear-gradient(180deg,#ffe6ee,#fdeef2 45%,#fdeee6);}
+body.locked{overflow:hidden}
+button{font-family:inherit}
+#app{max-width:560px;margin:0 auto;padding:10px 10px 0}
+.view{display:none}
+.view.active{display:block}
+.app-header{position:relative;text-align:center;padding:6px 0 2px;overflow:hidden}
+.hrow{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.mascot{flex:none;cursor:pointer;transition:transform .2s;filter:drop-shadow(0 6px 8px rgba(200,110,140,.22))}
+.mascot:hover{transform:scale(1.06) rotate(-2deg)}
+.mascot.boing{animation:boing .5s ease}
+.sprite{background-repeat:no-repeat;background-position:0 0}
+.logo{font-family:var(--fh);font-weight:800;margin:0;line-height:.95;letter-spacing:.5px;
+  font-size:clamp(1.9rem,7vw,2.7rem);paint-order:stroke fill;-webkit-text-stroke:6px #fff;
+  text-shadow:0 4px 0 rgba(214,110,140,.22)}
+.logo span{-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo .w1{background-image:linear-gradient(180deg,#9ad97f,#5fb85f)}
+.logo .w2{background-image:linear-gradient(180deg,#f9a8c9,#ee6e96)}
+.logo .w3{background-image:linear-gradient(180deg,#ffe066,#f4b63c);font-size:1.15em}
+.ribbon-top{position:relative;margin:2px auto 0;max-width:410px;z-index:2;
+  background:linear-gradient(180deg,#f27178,#e05a64);color:#fff;font:700 clamp(.85rem,3.4vw,1.05rem) var(--fh);
+  padding:10px 26px;border-radius:14px;box-shadow:0 5px 0 rgba(190,60,80,.35);transform:rotate(-1.2deg)}
+.ribbon-top::before,.ribbon-top::after{content:"";position:absolute;top:9px;border:12px solid var(--red-600);z-index:-1}
+.ribbon-top::before{left:-16px;border-left-color:transparent}
+.ribbon-top::after{right:-16px;border-right-color:transparent}
+.cloud{position:absolute;width:64px;height:20px;background:#fff;border-radius:50px;opacity:.8}
+.cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
+.cloud::before{width:26px;height:26px;top:-12px;left:12px}
+.cloud::after{width:18px;height:18px;top:-8px;right:12px}
+.c1{top:6px;left:-80px;animation:drift 26s linear infinite}
+.c2{top:34px;left:-80px;animation:drift 36s linear 9s infinite}
+@keyframes drift{to{transform:translateX(130vw)}}
+.tw{position:absolute;width:12px;height:12px;background:var(--yellow);
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
+  animation:tw 1.4s steps(2,end) infinite;pointer-events:none}
+.tw1{top:12%;left:7%}.tw2{top:20%;right:10%;animation-delay:.4s}.tw3{top:4%;left:48%;animation-delay:.8s;width:9px;height:9px}
+@keyframes tw{0%,100%{transform:scale(.5);opacity:.5}50%{transform:scale(1.15) rotate(20deg);opacity:1}}
+.card{background:linear-gradient(180deg,#fffdf8,#fff4f8);border:3px solid #fff;border-radius:24px;box-shadow:var(--shadow)}
+.welcome{position:relative;padding:18px 18px 20px;margin:16px 0 6px}
+.welcome h2{font-family:var(--fh);color:var(--navy);font-size:1.6rem;margin:0 0 2px}
+.sub{margin:0 0 12px;color:var(--ink2);font-weight:600}
+#bunny-stage{position:absolute;right:-8px;top:-38px;cursor:pointer;transition:transform .2s;
+  border:0;padding:0;background-color:transparent}
+#bunny-stage:hover{transform:rotate(-3deg) scale(1.05)}
+.searchbar{display:flex;align-items:center;gap:8px;background:#fff;border:3px solid var(--pink-200);
+  border-radius:999px;padding:7px 8px 7px 14px;box-shadow:inset 0 2px 6px rgba(240,150,180,.12)}
+.searchbar input{flex:1;min-width:0;border:0;outline:0;font:600 1rem var(--fb);color:var(--ink);background:transparent}
+.searchbar input::placeholder{color:#c9a9bb}
+#search-heart{flex:none;border:0;background:var(--pink-100);border-radius:50%;width:38px;height:38px;display:grid;place-items:center;cursor:pointer;transition:transform .15s}
+#search-heart:hover{transform:scale(1.12) rotate(8deg)}
+#live-results{margin:10px 2px 0}
+.lr-head{font:700 .85rem var(--fh);color:#b0577c;margin:4px 2px 8px}
+.lr-more{font:600 .74rem var(--fb);color:#a08aa8;margin:8px 2px 2px;text-align:center}
+.lr-row{display:flex;align-items:center;gap:8px;background:#fff;border:2.5px solid #ffe4ee;border-radius:16px;padding:8px 10px;margin-bottom:6px}
+.lr-inf{flex:1;min-width:0;font:700 .88rem var(--fh);color:var(--navy)}
+.lr-inf small{display:block;font:600 .74rem var(--fb);color:var(--ink2);margin-top:1px}
+.lr-btn{padding:8px 12px;font-size:.85rem;flex:none;text-decoration:none}
+.ribbon2{display:flex;align-items:center;justify-content:center;gap:10px;margin:16px 0 12px;
+  background:linear-gradient(180deg,#f9a8c4,#f288ad);border-radius:18px;padding:12px 14px;
+  box-shadow:0 5px 0 rgba(210,100,140,.3)}
+.ribbon2 h2{margin:0;color:#fff;font:700 clamp(1.1rem,4.4vw,1.45rem) var(--fh);text-shadow:0 2px 0 rgba(190,70,110,.35)}
+.fl{font-size:1.25rem;animation:wiggle 3s ease-in-out infinite}
+@keyframes wiggle{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(124px,1fr));gap:12px;padding:4px 2px 6px}
+.cat{position:relative;border:3px solid #fff;border-radius:26px;padding:14px 8px 10px;cursor:pointer;
+  box-shadow:0 6px 14px rgba(214,120,150,.18);transition:transform .15s ease;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.4) 0 10px,transparent 10px 22px)}
+.cat:hover{transform:translateY(-4px) rotate(-1deg) scale(1.02)}
+.cat:active{transform:scale(.95)}
+.cat:focus-visible{outline:3px dashed var(--pink-400);outline-offset:3px}
+.cat .ic{width:88px;height:88px;margin:0 auto;display:block}
+.cat .lb{display:block;text-align:center;font:700 1.02rem var(--fh);color:var(--brown);margin-top:6px}
+.cat.boing{animation:boing .55s ease}
+@keyframes boing{0%{transform:scale(1)}30%{transform:scale(1.14) rotate(-3deg)}55%{transform:scale(.94)}100%{transform:scale(1)}}
+#no-results{text-align:center;color:var(--ink2);font-weight:700;padding:18px}
+.find-wrap{text-align:center;padding:10px 0 4px}
+.find-btn{display:inline-flex;align-items:center;gap:10px;background:#fff;border:3px solid var(--pink-200);
+  border-radius:999px;padding:12px 24px;font:700 1.15rem var(--fh);color:var(--navy);
+  box-shadow:0 6px 0 var(--pink-200),var(--shadow);cursor:pointer;transition:transform .15s}
+.find-btn:hover{transform:translateY(-2px)}
+.find-btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--pink-200)}
+.find-btn svg{animation:pinBounce 1.6s ease-in-out infinite}
+@keyframes pinBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+main{padding-bottom:0}
+.bottomnav{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:60;
+  width:min(536px,calc(100% - 22px));display:flex;gap:10px}
+.navbtn{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+  background:#fff;border:3px solid var(--pink-200);border-radius:22px;padding:9px 4px 7px;cursor:pointer;
+  font:700 .92rem var(--fh);color:var(--navy);box-shadow:0 6px 14px rgba(214,120,150,.2);transition:transform .15s,border-color .15s}
+.navbtn.active{background:var(--pink-100);border-color:var(--pink-400);transform:translateY(-5px)}
+.navbtn:hover{transform:translateY(-3px)}
+.navbadge{position:absolute;top:-7px;right:12%;background:var(--red-500);color:#fff;border:2px solid #fff;
+  border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font:800 .72rem var(--fb);padding:0 5px}
+[hidden]{display:none!important}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:11px 20px;cursor:pointer;
+  font:700 .98rem var(--fh);transition:transform .12s,filter .12s;text-decoration:none}
+.btn:active{transform:scale(.96)}
+.btn-primary{background:linear-gradient(180deg,#f27178,#e05a64);color:#fff;border:0;box-shadow:0 5px 0 rgba(190,60,80,.35)}
+.btn-primary:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn-soft{background:#fff;border:2.5px solid var(--pink-200);color:#b0577c}
+.btn-soft:hover{background:var(--pink-100)}
+.field{margin-bottom:12px;text-align:left}
+.field label{display:block;font:700 .85rem var(--fh);color:#8a6a7e;margin:0 0 4px 6px}
+.field input,.field select,.field textarea{width:100%;border:2.5px solid var(--pink-200);border-radius:14px;
+  padding:10px 12px;font:600 .95rem var(--fb);color:var(--ink);background:#fff;outline:0;transition:border .15s,box-shadow .15s}
+.field :is(input,select,textarea):focus{border-color:var(--pink-400);box-shadow:0 0 0 4px rgba(243,143,180,.18)}
+.field textarea{resize:vertical;min-height:74px}
+.field.err :is(input,select){border-color:var(--red-500);background:#fff5f5;animation:shake .3s}
+.err-msg{display:none;color:#d24a5a;font:600 .78rem var(--fb);margin:4px 6px 0}
+.field.err .err-msg{display:block}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:4px;background:#fff;border:2px solid var(--pink-200);
+  border-radius:999px;padding:3px 10px;font:700 .78rem var(--fh);color:#b0577c;margin:3px 3px 0 0}
+.chipbtn{cursor:pointer;transition:transform .12s}
+.chipbtn:hover{transform:scale(1.08);background:var(--pink-100)}
+.sec-title{font:700 1.25rem var(--fh);color:var(--navy);margin:16px 4px 8px;display:flex;align-items:center;gap:8px}
+.b-row{display:flex;align-items:center;gap:10px;background:#fff;border:2.5px solid #ffe4ee;border-radius:16px;padding:8px 10px;margin-bottom:8px}
+.b-row .nm{flex:1;font:700 .95rem var(--fh);color:var(--brown)}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:28px;height:28px;border-radius:50%;border:2px solid var(--pink-200);background:#fff7fa;font:800 1rem var(--fb);color:#e05a7a;cursor:pointer;line-height:1}
+.qty b{min-width:20px;text-align:center}
+.del{border:0;background:none;cursor:pointer;font-size:1rem;opacity:.7}
+.del:hover{opacity:1;transform:scale(1.15)}
+.panelcard{padding:14px 16px;margin-bottom:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.stat{background:#fff;border:2.5px solid #ffe4ee;border-radius:18px;padding:12px 6px;text-align:center}
+.stat b{font:800 1.4rem var(--fh);color:#e05a7a;display:block}
+.stat span{font:600 .74rem var(--fb);color:#9a8aa2}
+.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 12px;margin:3px;
+  font:700 .82rem var(--fh);background:#fff;border:2px solid var(--pink-200);color:#b0577c}
+.badge.locked{filter:grayscale(1);opacity:.45}
+.h-card{background:#fff;border:2.5px solid #ffe4ee;border-radius:18px;padding:12px 14px;margin-bottom:10px}
+.h-card .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.h-card .dt{font:800 .95rem var(--fh);color:var(--navy)}
+.status{font:700 .72rem var(--fb);background:#e8f8ee;color:#2f9e5f;border:2px solid #bfe8cf;border-radius:999px;padding:2px 10px}
+.h-card .items{margin:6px 0;font:600 .85rem var(--fb);color:var(--ink2)}
+.h-card .row{display:flex;gap:8px;flex-wrap:wrap}
+.avatar-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.av-opt{width:46px;height:46px;border-radius:50%;border:3px solid var(--pink-200);background:#fff;font-size:1.4rem;cursor:pointer;display:grid;place-items:center}
+.av-opt.sel{border-color:var(--pink-400);background:var(--pink-100);transform:scale(1.1)}
+.modal{position:fixed;inset:0;display:none;place-items:center;z-index:100}
+.modal.open{display:grid}
+.backdrop{position:absolute;inset:0;background:rgba(90,60,80,.38);backdrop-filter:blur(3px)}
+.panel{position:relative;width:min(560px,calc(100% - 26px));max-height:min(86vh,780px);overflow:auto;
+  background:linear-gradient(180deg,#fff8f3,#fff3f7);border:4px solid #fff;border-radius:26px;
+  box-shadow:0 20px 50px rgba(180,90,130,.35);animation:pop .25s ease;padding:18px;outline:none}
+@keyframes pop{from{transform:scale(.85);opacity:0}}
+.panel h3{margin:0 0 4px;font:800 1.3rem var(--fh);color:var(--navy);padding-right:44px}
+.panel .desc{color:var(--ink2);font-weight:600;margin:0 0 12px}
+.pclose{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:2.5px solid var(--pink-200);
+  background:#fff;color:#e05a7a;font-size:1.05rem;font-weight:800;cursor:pointer}
+.pclose:hover{background:var(--pink-100)}
+.stepper{display:flex;align-items:center;gap:12px}
+.stepper button{width:38px;height:38px;border-radius:50%;border:2.5px solid var(--pink-200);background:#fff;font:800 1.25rem var(--fh);color:#e05a7a;cursor:pointer}
+.stepper button:hover{background:var(--pink-100)}
+.stepper b{font:800 1.3rem var(--fh);color:var(--navy);min-width:36px;text-align:center}
+.s-card{background:#fff;border:2.5px solid #ffe4ee;border-radius:18px;padding:12px 14px;margin-bottom:10px}
+.s-card .nm{font:800 1.02rem var(--fh);color:var(--navy)}
+.s-card .meta{font:600 .84rem var(--fb);color:var(--ink2);margin:3px 0 6px}
+.s-card .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.city-head{font:800 .95rem var(--fh);color:#b0577c;margin:14px 2px 6px;display:flex;align-items:center;gap:6px}
+.city-head::after{content:"";flex:1;height:2px;background:var(--pink-100);border-radius:2px}
+.hp-card{display:flex;align-items:center;gap:12px;background:#fff;border:2.5px solid #ffe4ee;border-radius:18px;padding:12px 14px;margin-bottom:10px}
+.hp-card .ico{font-size:1.7rem}
+.hp-card .inf{flex:1;min-width:0}
+.hp-card .nm2{font:800 .95rem var(--fh);color:var(--navy)}
+.hp-card .ds{font:600 .78rem var(--fb);color:var(--ink2)}
+.hp-card .src-link{font:700 .68rem var(--fb);color:#b0577c;text-decoration:none;border-bottom:1px dashed #f0b8ce}
+.hp-card .src-link:hover{color:#e05a7a}
+#toasts{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:300;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:92vw}
+.toast{display:flex;gap:8px;align-items:center;background:#fff;border:2.5px solid var(--pink-200);color:#6b5570;
+  font:700 .9rem var(--fh);padding:9px 16px;border-radius:999px;box-shadow:0 10px 24px rgba(200,110,150,.25);animation:toastIn .25s ease}
+.toast.out{animation:toastOut .3s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateY(-14px) scale(.9)}}
+@keyframes toastOut{to{opacity:0;transform:translateY(-10px) scale(.95)}}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:400}
+.h-float{position:absolute;bottom:8px;font-size:14px;pointer-events:none;animation:hUp 3.2s ease-in forwards}
+@keyframes hUp{0%{opacity:0;transform:translateY(0) scale(.6)}12%{opacity:.9}100%{opacity:0;transform:translateY(-130px) rotate(14deg) scale(1)}}
+footer{margin:24px 0 0;padding:0 0 112px;text-align:center;color:#a08aa8;font:600 .85rem var(--fb)}
+footer .fbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.success{border:3px solid #bfe8cf;background:linear-gradient(180deg,#f4fff8,#eefaf1);border-radius:20px;padding:16px;margin-bottom:14px}
+.success h3{color:#2f9e5f;margin:0 0 6px}
+.ticket{background:#fff;border:2px dashed #7bc9a0;border-radius:14px;padding:12px 12px 12px 46px;font:600 .82rem/1.5 var(--fb);white-space:pre-wrap;color:#3d5c48;position:relative}
+.ticket::before{content:"🎫";position:absolute;left:12px;top:12px;font-size:1.2rem}
+.verify-note{font:600 .74rem/1.5 var(--fb);color:#9a8aa2;background:#fffbe8;border:2px solid #ffe9a8;border-radius:12px;padding:8px 12px;margin-top:10px}
+/* ═══════════ Cursor-following companion (illustrated · CSP-safe · zero network) ═══════════ */
+/* The scene used to carry a caption bar and a pause button. Both are gone: there is
+   nothing to read and nothing to pause, they simply follow. */
+.child-hero{position:relative;margin:14px 0 6px;border:3px solid #fff;border-radius:24px;overflow:hidden;
+  background:#ffe4ef;box-shadow:var(--shadow)}
+/* Smoothing is done in JS (lerp), so NO css transition here — a transition would fight the rAF loop. */
+.child-3d{will-change:transform;transform-origin:50% 78%}
+.child-3d>svg,.child-3d>video{display:block;width:100%;height:auto}
+.child-svg{background:#ffeaf2}
+.sc-far,.sc-mid,.sc-child,.pupil-g,.lid,.blush{will-change:transform}
+/* ═══════════ Cursor entourage: 6 butterflies + 5 boys + 5 girls ═══════════ */
+/* layout+paint containment only: `strict` would add size containment, and a fixed
+   element sized by inset:0 does not need its size derived from nothing. */
+#friends{position:fixed;inset:0;pointer-events:none;z-index:260;overflow:hidden;contain:layout paint}
+.fr{position:absolute;top:0;left:0;will-change:transform;transform:translate3d(-200px,-200px,0)}
+.fr svg{display:block;overflow:visible}
+/* transform-box:view-box makes 50% 50% mean the centre of the viewBox, which is what
+   squashes a wing toward the body axis rather than toward the element's border box. */
+.fr .bwl,.fr .bwr{transform-box:view-box;transform-origin:50% 50%;
+  animation:flap .3s ease-in-out infinite alternate}
+@keyframes flap{from{transform:scaleX(1)}to{transform:scaleX(.38)}}
+.fr .bob{transform-box:view-box;transform-origin:50% 50%;animation:bob 1.7s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-2.6px)}}
+.child-caption{display:none}
+/* viewport-fit=cover is set, so the fixed bottom nav must clear the iPhone home indicator. */
+.bottomnav{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+footer{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
+/* ═══════════ Secondary pages (Sites · Zakat · Guide · Emergency · About) ═══════════ */
+.page-head{margin:16px 4px 10px}
+.page-head h2{font:800 clamp(1.3rem,5vw,1.6rem) var(--fh);color:var(--navy);margin:0 0 3px}
+.page-head p{margin:0;font:600 .84rem/1.5 var(--fb);color:#8a7a93}
+.note{font:600 .8rem/1.6 var(--fb);color:#6f6079;background:#fffdf3;border:2px solid #ffe9a8;
+  border-radius:16px;padding:11px 14px;margin:12px 2px 6px}
+.note.warn{color:#7a5a49;background:#fff7f2;border-color:#ffd3c2}
+.note a,.gd-item a{color:#b0577c;font-weight:700;text-decoration:none;border-bottom:1px dashed #f0b8ce}
+.note a:hover,.gd-item a:hover{color:#e05a7a}
+/* Home quick links */
+.quicklinks{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px;margin:0 2px 6px}
+.ql{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;cursor:pointer;
+  background:#fff;border:2.5px solid #ffe4ee;border-radius:20px;padding:12px 14px;
+  box-shadow:0 6px 14px rgba(214,120,150,.14);transition:transform .15s,border-color .15s}
+.ql:hover{transform:translateY(-3px);border-color:var(--pink-400)}
+.ql:active{transform:scale(.97)}
+.ql .ql-ic{font-size:1.5rem;line-height:1}
+.ql b{font:700 1rem var(--fh);color:var(--navy)}
+.ql .ql-sub{font:600 .74rem/1.4 var(--fb);color:#8a7a93}
+/* definition-style lists used by the Guide, Emergency and About pages */
+.gd{padding:6px 10px}
+.gd-item{display:flex;gap:10px;align-items:flex-start;padding:9px 4px;border-bottom:1.5px dashed #ffeaf2}
+.gd-item:last-child{border-bottom:0}
+.gd-item b{flex:none;width:41%;font:700 .86rem/1.45 var(--fh);color:var(--brown)}
+.gd.no .gd-item b{color:#b0475a}
+.gd-item span{flex:1;min-width:0;font:600 .78rem/1.5 var(--fb);color:#7a6a82}
+@media (max-width:430px){.gd-item{flex-direction:column;gap:2px}.gd-item b{width:auto}}
+/* Emergency stat grid */
+.em-figs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+.em-fig{background:#fff;border:2.5px solid #ffe4ee;border-radius:16px;padding:10px 4px;text-align:center}
+.em-fig b{display:block;font:800 1.05rem var(--fh);color:#e05a7a}
+.em-fig span{font:600 .68rem/1.3 var(--fb);color:#9a8aa2}
+/* Zakat calculator */
+.zk-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1.5px dashed #ffeaf2}
+.zk-row label{flex:1;min-width:0;font:700 .84rem var(--fh);color:#8a6a7e}
+.zk-row input{width:134px;flex:none;border:2.5px solid var(--pink-200);border-radius:12px;padding:8px 10px;
+  font:700 .9rem var(--fb);color:var(--ink);background:#fff;outline:0;text-align:right}
+.zk-row input:focus{border-color:var(--pink-400);box-shadow:0 0 0 4px rgba(243,143,180,.18)}
+.zk-row.minus label,.zk-row.minus input{color:#b0475a}
+.zk-minus{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;
+  background:#ffeaee;color:#d14e58;font-weight:800;margin-left:4px}
+.zk-row.nisaab{border-bottom:0;border-top:2.5px solid #ffe4ee;margin-top:6px;padding-top:12px}
+.zk-help{margin:10px 0 2px;background:#fffdf8;border:2px solid #ffe9c9;border-radius:14px;padding:10px 12px}
+.zk-help summary{font:700 .84rem var(--fh);color:#b0577c;cursor:pointer}
+.zk-help p{font:600 .78rem/1.6 var(--fb);color:#7a6a82;margin:8px 0 0}
+.zk-fine{font:600 .72rem/1.5 var(--fb);color:#8a7a93;margin:8px 0 0}
+.zk-line{display:flex;justify-content:space-between;gap:10px;font:700 .86rem var(--fb);color:#7a6a82;padding:5px 0}
+.zk-line b{color:var(--navy);font-family:var(--fh)}
+.zk-verdict{margin:8px 0;padding:9px 12px;border-radius:14px;font:700 .8rem/1.5 var(--fb);
+  background:#f4f6f8;color:#6f6079}
+.zk-verdict.due{background:#e8f8ee;color:#2f7f52;border:2px solid #bfe8cf}
+.zk-verdict.below{background:#fffbe8;color:#8a6a1f;border:2px solid #ffe9a8}
+.zk-due{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;border-top:2.5px solid #ffe4ee;padding-top:10px;margin-top:4px}
+.zk-due span{font:700 .86rem var(--fh);color:#8a6a7e}
+.zk-due b{font:800 1.5rem var(--fh);color:#e05a7a}
+.zk-due small{font:600 .7rem var(--fb);color:#9a8aa2}
+/* a five-tab bar needs a tighter item than the old three-tab one */
+.navbtn svg{width:23px;height:23px}
+.navbtn{font-size:.8rem;padding:8px 2px 6px}
+.bottomnav{gap:7px}
+@media (max-width:400px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="app">
+  <noscript>
+    <div class="card" style="padding:16px;margin:12px 0;text-align:center">
+      <p style="font:700 1.2rem var(--fh);color:var(--navy);margin:0 0 6px">Iman Donation Trust</p>
+      <p style="font-weight:600"><b>This app needs JavaScript.</b> With it off you can still call a national helpline directly:</p>
+      <p style="font-weight:600">Edhi <a href="tel:115">115</a> · Chhipa <a href="tel:1020">1020</a> · Saylani <a href="tel:111729526">111-729-526</a></p>
+    </div>
+  </noscript>
+
+  <header class="app-header">
+    <div class="cloud c1"></div><div class="cloud c2"></div>
+    <span class="tw tw1"></span><span class="tw tw2"></span><span class="tw tw3"></span>
+    <div class="hrow">
+      <!-- Decorative mascots: pure easter eggs, so they are hidden from assistive
+           tech and taken out of the tab order rather than announced as images. -->
+      <div id="bear-stage" class="mascot sprite" aria-hidden="true" title="Hug!"></div>
+      <h1 class="logo"><span class="w1">Iman</span> <span class="w2">Donation</span><br><span class="w3">Trust</span></h1>
+      <div id="castle-stage" class="mascot sprite" aria-hidden="true" title="Hello!"></div>
+    </div>
+    <div class="ribbon-top">Share Your Kindness &amp; Donate with Love!</div>
+  </header>
+
+  <main>
+  <!-- ================= HOME ================= -->
+  <section id="view-home" class="view active" aria-label="Home">
+    <div class="welcome card" id="welcome-card">
+      <button type="button" id="bunny-stage" class="sprite" title="Donate with love!" aria-label="Go to the donation basket"></button>
+      <h2>Hi, Welcome!</h2>
+      <p class="sub">Find a place to donate your items — anywhere in Pakistan 🇵🇰</p>
+      <div class="searchbar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="#c9a9bb" stroke-width="2.6"/><path d="m15.5 15.5 4.5 4.5" stroke="#c9a9bb" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <input id="search" type="search" placeholder="Search “Lahore”, “Edhi”, “toys”…" autocomplete="off" aria-label="Search donation sites and categories">
+        <button id="search-heart" title="Surprise me!" aria-label="Surprise me with a random category">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 21C6.5 17 3 13.6 3 9.8 3 7 5.2 5 7.7 5c1.8 0 3.3 1 4.3 2.6C13 6 14.5 5 16.3 5 18.8 5 21 7 21 9.8c0 3.8-3.5 7.2-9 11.2z" fill="#f5a8c0"/></svg>
+        </button>
+      </div>
+      <div id="live-results" hidden></div>
+    </div>
+
+    <!-- ═══════════ CURSOR-FOLLOWING COMPANION ═══════════
+         Inline SVG: no image file, no network, works under this page's strict CSP.
+         See section 16 of the script for the gaze engine and CONFIG.child for the
+         drop-in slot if you later want to use a generated clip instead. -->
+    <section class="child-hero" id="child-hero" aria-label="Illustrated companion">
+      <div class="child-3d" id="child-3d">
+        <svg id="child-stage" class="child-svg" viewBox="0 0 320 190" role="img" aria-labelledby="child-svg-title">
+          <title id="child-svg-title">An illustrated child standing in a village looks up and follows your cursor</title>
+          <defs>
+            <linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffe4ef"/><stop offset="1" stop-color="#fff7ec"/>
+            </linearGradient>
+            <linearGradient id="g-ground" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ead8ba"/><stop offset="1" stop-color="#d8c19b"/>
+            </linearGradient>
+            <radialGradient id="g-sun" cx=".5" cy=".5" r=".5">
+              <stop offset="0" stop-color="#ffe9a8" stop-opacity=".95"/>
+              <stop offset="1" stop-color="#ffd44d" stop-opacity="0"/>
+            </radialGradient>
+            <clipPath id="clip-lid-l"><ellipse cx="146" cy="114" rx="8.6" ry="9.1"/></clipPath>
+            <clipPath id="clip-lid-r"><ellipse cx="174" cy="114" rx="8.6" ry="9.1"/></clipPath>
+          </defs>
+
+          <!-- far layer: sky, sun, hills, ground.
+               Deliberately over-sized by 14px on every side: this layer slides against
+               the others, and the whole scene is tilted in perspective, either of which
+               would otherwise expose an unpainted edge. -->
+          <g class="sc-far">
+            <rect x="-14" y="-14" width="348" height="220" fill="url(#g-sky)"/>
+            <circle cx="262" cy="40" r="42" fill="url(#g-sun)"/>
+            <circle cx="262" cy="40" r="15" fill="#ffd44d" opacity=".9"/>
+            <path d="M-10 126 L48 88 L106 126 Z" fill="#ddd2e8"/>
+            <path d="M72 126 L128 82 L184 126 Z" fill="#d2c6e2"/>
+            <path d="M158 126 L206 92 L254 126 Z" fill="#e3daee"/>
+            <path d="M-14 126 H334 V204 H-14 Z" fill="url(#g-ground)"/>
+          </g>
+
+          <!-- mid layer: village -->
+          <g class="sc-mid">
+            <path d="M16 126 V104 L44 86 L72 104 V126 Z" fill="#f4dfc8" stroke="#dcc3a4" stroke-width="1.5"/>
+            <path d="M10 106 L44 82 L78 106 Z" fill="#c98a5e"/>
+            <rect x="36" y="108" width="16" height="18" rx="2.5" fill="#8a5f3d"/>
+            <rect x="22" y="110" width="9" height="9" rx="2" fill="#ffe6b8" stroke="#dcc3a4" stroke-width="1.2"/>
+            <rect x="282" y="106" width="7" height="20" rx="3" fill="#a9784f"/>
+            <circle cx="285" cy="96" r="20" fill="#8fc98a"/>
+            <circle cx="272" cy="105" r="13" fill="#7dbb79"/>
+            <circle cx="298" cy="105" r="13" fill="#7dbb79"/>
+            <path d="M96 126 q4 -10 9 0 q4 -8 8 0 z" fill="#9ecf95"/>
+            <path d="M212 126 q4 -9 8 0 q4 -7 8 0 z" fill="#9ecf95"/>
+          </g>
+
+          <!-- child layer -->
+          <g class="sc-child">
+            <ellipse id="child-shadow" cx="160" cy="172" rx="46" ry="10" fill="#b99a72" opacity=".3"/>
+            <rect x="150" y="132" width="20" height="24" rx="8" fill="#eab98e"/>
+            <path d="M124 190 V158 a36 30 0 0 1 72 0 V190 Z" fill="#8fc9ea" stroke="#6aa8cc" stroke-width="1.6"/>
+            <g id="child-head">
+              <circle cx="160" cy="106" r="35" fill="#4a3324"/>
+              <circle cx="130" cy="114" r="7" fill="#eab98e"/>
+              <circle cx="190" cy="114" r="7" fill="#eab98e"/>
+              <ellipse cx="160" cy="112" rx="30" ry="31" fill="#f7d2ac"/>
+              <path d="M130 108 a30 31 0 0 1 60 0 q-16 -16 -30 -7 q-15 -9 -30 7 z" fill="#4a3324"/>
+              <!-- Both eyes first, then both lids: a lid must paint ON TOP of its eye. -->
+              <g class="eye">
+                <ellipse cx="146" cy="114" rx="8.6" ry="9.1" fill="#fff" stroke="#d9a87f" stroke-width="1.1"/>
+                <g class="pupil-g">
+                  <circle cx="146" cy="114" r="4.7" fill="#43301f"/>
+                  <circle cx="144.1" cy="112.1" r="1.6" fill="#fff"/>
+                </g>
+              </g>
+              <g class="eye">
+                <ellipse cx="174" cy="114" rx="8.6" ry="9.1" fill="#fff" stroke="#d9a87f" stroke-width="1.1"/>
+                <g class="pupil-g">
+                  <circle cx="174" cy="114" r="4.7" fill="#43301f"/>
+                  <circle cx="172.1" cy="112.1" r="1.6" fill="#fff"/>
+                </g>
+              </g>
+              <g clip-path="url(#clip-lid-l)"><rect class="lid" x="137.4" y="104.9" width="17.2" height="0" fill="#f7d2ac"/></g>
+              <g clip-path="url(#clip-lid-r)"><rect class="lid" x="165.4" y="104.9" width="17.2" height="0" fill="#f7d2ac"/></g>
+              <path d="M138 101 q8 -6 16 -1" fill="none" stroke="#4a3324" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M182 101 q-8 -6 -16 -1" fill="none" stroke="#4a3324" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M160 118 q3 4 -2 5" fill="none" stroke="#dda87c" stroke-width="1.6" stroke-linecap="round"/>
+              <path id="child-mouth" d="M150 128 q10 8 20 0" fill="none" stroke="#b2643f" stroke-width="2.4" stroke-linecap="round"/>
+              <ellipse class="blush" cx="139" cy="124" rx="7.5" ry="4.6" fill="#f497b3" opacity=".4"/>
+              <ellipse class="blush" cx="181" cy="124" rx="7.5" ry="4.6" fill="#f497b3" opacity=".4"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <div class="ribbon2"><span class="fl">🌸</span><h2>What Would You Like to Donate?</h2><span class="fl">🌸</span></div>
+    <div id="cat-grid" class="grid" role="group" aria-label="Donation categories"></div>
+    <p id="no-results" role="status" aria-live="polite" hidden>🍂 No matches…</p>
+
+    <div class="find-wrap">
+      <button id="find-btn" class="find-btn">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 1 1 14 0c0 4.9-7 11-7 11z" fill="#f26d8d"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg>
+        Find Donation Sites
+      </button>
+    </div>
+
+    <div class="sec-title">🧭 Not sure where to start?</div>
+    <div class="quicklinks">
+      <button class="ql" data-goto="guide">
+        <span class="ql-ic">📖</span><b>Donation Guide</b>
+        <span class="ql-sub">What to give, and what charities can't take</span>
+      </button>
+      <button class="ql" data-goto="zakat">
+        <span class="ql-ic">🕌</span><b>Zakat Calculator</b>
+        <span class="ql-sub">Work out 2.5% above the nisaab</span>
+      </button>
+      <button class="ql" data-goto="emergency">
+        <span class="ql-ic">🆘</span><b>Emergency Appeals</b>
+        <span class="ql-sub">Relief drives, and how to spot a fake one</span>
+      </button>
+      <button class="ql" data-goto="about">
+        <span class="ql-ic">ℹ️</span><b>About &amp; Trust</b>
+        <span class="ql-sub">How the directory is built, and its limits</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= DONATE ================= -->
+  <section id="view-donate" class="view" aria-label="Donate">
+    <div class="sec-title">🧺 My Donation Basket</div>
+    <div id="basket-list"></div>
+    <div class="panelcard card">
+      <b style="font:700 .9rem var(--fh);color:#8a6a7e">Quick add:</b>
+      <div id="quick-add" style="margin-top:6px"></div>
+    </div>
+
+    <div class="sec-title">💝 Donation Details</div>
+    <form id="donate-form" class="panelcard card" novalidate>
+      <p style="font:600 .78rem var(--fb);color:#a08aa8;margin:0 0 10px 4px">💡 Pick your city first — the “Preferred site” list shows partner sites there.</p>
+      <!-- Errors are wired to their inputs (aria-invalid + aria-describedby), not
+           just painted red: colour alone conveyed nothing to a screen reader. -->
+      <div class="row2">
+        <div class="field"><label for="f-name">Your name *</label><input id="f-name" maxlength="60" placeholder="Ayesha Khan" required><p class="err-msg" id="e-name">Please tell us your name 💌</p></div>
+        <div class="field"><label for="f-phone">Phone *</label><input id="f-phone" type="tel" maxlength="20" placeholder="03xx xxxxxxx" required><p class="err-msg" id="e-phone">Add a phone so the site can reach you ☎️</p></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="f-city">City *</label><select id="f-city" required></select><p class="err-msg" id="e-city">Pick a city 🏙️</p></div>
+        <div class="field"><label for="f-site">Preferred site</label><select id="f-site"></select></div>
+      </div>
+      <div class="field"><label for="f-date">Preferred date</label><input id="f-date" type="date"><p class="err-msg" id="e-date">Pick today or a later date 📅</p></div>
+      <div class="field"><label for="f-notes">Notes (optional)</label><textarea id="f-notes" maxlength="400" placeholder="Anything we should know? 💗"></textarea></div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1.1rem">🎫 Generate Donation Ticket</button>
+      <p style="text-align:center;font:600 .76rem var(--fb);color:#8a7a93;margin:8px 0 0">You'll get a ticket to show at the site — no account needed!</p>
+      <p style="text-align:center;font:600 .74rem/1.5 var(--fb);color:#8a7a93;margin:8px 0 0">🔒 Nothing is uploaded. Your name, phone and history are saved only in this browser on this device, and “Clear everything” really clears them.</p>
+    </form>
+
+    <div id="donate-success" class="success" hidden>
+      <h3>🎉 Thank you, kind soul!</h3>
+      <p style="font:600 .9rem var(--fb);color:#3d5c48;margin:0 0 8px">Take this ticket to your chosen site. Call ahead to confirm opening hours and what they can actually accept:</p>
+      <pre class="ticket" id="sum-pre"></pre>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+        <a id="call-site" class="btn btn-primary" href="#">📞 Call Site</a>
+        <a id="map-site" class="btn btn-soft" target="_blank" rel="noopener" href="#">🗺️ Directions</a>
+        <button type="button" id="copy-summary" class="btn btn-soft">📋 Copy</button>
+        <button type="button" id="download-receipt" class="btn btn-soft">⬇️ Save Ticket</button>
+        <button type="button" id="new-donation" class="btn btn-soft">➕ New donation</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROFILE ================= -->
+  <section id="view-profile" class="view" aria-label="Profile">
+    <div class="panelcard card">
+      <div class="avatar-row">
+        <div id="av-stage" class="sprite" aria-hidden="true"></div>
+        <span id="av-emoji" style="font-size:44px" hidden>🐥</span>
+        <div style="flex:1;min-width:160px">
+          <div class="field" style="margin:0"><label for="pf-name">Kindness hero name</label><input id="pf-name" maxlength="60" placeholder="Write your name ✍️"></div>
+        </div>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:8px" id="avatar-picker" role="group" aria-label="Choose avatar"></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b id="stat-items">0</b><span>items donated</span></div>
+      <div class="stat"><b id="stat-don">0</b><span>donations</span></div>
+      <div class="stat"><b id="stat-cats">0</b><span>categories</span></div>
+    </div>
+
+    <div class="sec-title">🏅 Kindness Badges</div>
+    <div class="panelcard card" id="badge-row"></div>
+
+    <div class="sec-title">📜 Donation History</div>
+    <div id="history-list"></div>
+    <p id="empty-history" style="text-align:center;color:#a08aa8;font-weight:600">No donations yet — your first gift is one tap away! 🌷</p>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+      <button id="export-json" class="btn btn-soft">⬇️ Export my data</button>
+      <button id="clear-data" class="btn btn-soft">🧹 Clear everything</button>
+    </div>
+  </section>
+
+  <!-- ================= SITES ================= -->
+  <section id="view-sites" class="view" aria-label="Donation sites">
+    <div class="page-head">
+      <h2>📍 Donation Sites</h2>
+      <p id="sites-echo">34 partner sites across 17 cities — search, filter, then call or navigate.</p>
+    </div>
+    <div class="panelcard card">
+      <div class="searchbar" style="margin-bottom:10px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="#c9a9bb" stroke-width="2.6"/><path d="m15.5 15.5 4.5 4.5" stroke="#c9a9bb" stroke-width="2.6" stroke-linecap="round"/></svg>
+        <input id="sites-q" type="search" placeholder="Search “Lahore”, “Edhi”, “toys”…" autocomplete="off" aria-label="Search donation sites">
+      </div>
+      <div class="row2">
+        <div class="field" style="margin:0"><label for="sites-prov">Province</label><select id="sites-prov"></select></div>
+        <div class="field" style="margin:0"><label for="sites-city">City</label><select id="sites-city"></select></div>
+      </div>
+    </div>
+    <div id="sites-list"></div>
+    <p id="sites-none" hidden style="text-align:center;color:#8a7a93;font-weight:600">No sites matched — try another city or keyword 🗺️</p>
+    <div class="verify-note">⚠️ Branch addresses and hours were compiled from public sources and are <b>not</b> individually
+      verified. Call before you travel, and treat “accepts everything” as a prompt to ask, not a promise.
+      Branch numbers change — <b>Edhi 115</b>, <b>Chhipa 1020</b> and <b>Saylani 111-729-526</b> reach every branch.</div>
+  </section>
+
+  <!-- ================= ZAKAT ================= -->
+  <section id="view-zakat" class="view" aria-label="Zakat calculator">
+    <div class="page-head">
+      <h2>🕌 Zakat Calculator</h2>
+      <p>Work out 2.5% of the wealth you have held for one lunar year, once it is above the nisaab.</p>
+    </div>
+
+    <div class="panelcard card">
+      <div class="zk-row"><label for="zk-cash">Cash in hand &amp; in the bank</label><input id="zk-cash" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div>
+      <div class="zk-row"><label for="zk-gold">Gold — value in Rs</label><input id="zk-gold" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div>
+      <div class="zk-row"><label for="zk-silver">Silver — value in Rs</label><input id="zk-silver" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div>
+      <div class="zk-row"><label for="zk-stock">Business stock &amp; goods for sale</label><input id="zk-stock" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div>
+      <div class="zk-row"><label for="zk-recv">Money owed to you</label><input id="zk-recv" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div>
+      <div class="zk-row minus"><label for="zk-debt">Debts you must pay now <span class="zk-minus">−</span></label><input id="zk-debt" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div>
+
+      <details class="zk-help">
+        <summary>How do I work out the nisaab?</summary>
+        <p>The nisaab is the threshold below which no zakat is due. The two classical measures are
+          <b>87.48&nbsp;g of gold</b> and <b>612.36&nbsp;g of silver</b>. Many scholars prefer the silver
+          figure, because it is lower and so more people qualify to give.</p>
+        <div class="row2" style="margin-top:8px">
+          <div class="field" style="margin:0"><label for="zk-metal">Metal</label>
+            <select id="zk-metal"><option value="612.36">Silver — 612.36 g</option><option value="87.48">Gold — 87.48 g</option></select></div>
+          <div class="field" style="margin:0"><label for="zk-rate">Today's price per gram (Rs)</label><input id="zk-rate" type="number" inputmode="numeric" min="0" step="1" placeholder="e.g. 260"></div>
+        </div>
+        <button type="button" id="zk-usenisaab" class="btn btn-soft" style="margin-top:8px">Use this as my nisaab</button>
+        <p class="zk-fine">You enter the metal rate yourself, because this app makes no network requests at all —
+          so it cannot fetch a live gold or silver price, and a stale price would be worse than none.</p>
+      </details>
+
+      <div class="zk-row nisaab"><label for="zk-nisaab">Nisaab threshold (Rs)</label><input id="zk-nisaab" type="number" inputmode="numeric" min="0" step="1" placeholder="Enter above"></div>
+      <p class="zk-fine" id="zk-nisaab-note">Nisaab is the line between owing zakat and not. Leave it blank and you will still see your total wealth.</p>
+      <p class="zk-fine">🔒 Nothing you type on this page is saved — not on a server, and not even in this browser. Close the tab and it is gone.</p>
+    </div>
+
+    <div class="panelcard card zk-out">
+      <div class="zk-line"><span>Total zakatable wealth</span><b id="zk-total">Rs 0</b></div>
+      <div class="zk-line"><span>Nisaab threshold</span><b id="zk-thr">not set</b></div>
+      <div id="zk-verdict" class="zk-verdict">Enter your assets above to see what you owe.</div>
+      <div class="zk-due"><span>Zakat due</span><b id="zk-due">Rs 0</b><small>2.5% of your zakatable wealth</small></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button type="button" id="zk-copy" class="btn btn-soft">📋 Copy my figures</button>
+        <button type="button" id="zk-clear" class="btn btn-soft">🧹 Clear</button>
+        <button type="button" class="btn btn-primary" data-goto="sites">📍 Where to give</button>
+      </div>
+    </div>
+
+    <div class="note warn">
+      <b>This is a calculator, not a fatwa.</b> Zakat is due on wealth you have owned for a complete lunar
+      year (hawl), above the nisaab, and surplus to your needs. Cash, gold, silver, business stock and
+      debts all have detailed rules that differ between schools of thought — please check your own
+      situation with a scholar you trust.
+      <br><br>Zakat may only be given to the eight categories of eligible recipients. Ask any organisation
+      how they distribute zakat before you give it to them.
+    </div>
+  </section>
+
+  <!-- ================= GUIDE ================= -->
+  <section id="view-guide" class="view" aria-label="Donation guide">
+    <div class="page-head">
+      <h2>📖 Donation Guide</h2>
+      <p>What to give, what to leave out, and how to hand it over so it actually reaches someone.</p>
+    </div>
+
+    <div class="sec-title">✅ Before you give</div>
+    <div class="panelcard card gd">
+      <div class="gd-item"><b>Wash it and let it dry</b><span>Damp clothes grow mildew in a closed bag and the whole bag gets thrown away.</span></div>
+      <div class="gd-item"><b>Sort, don't mix</b><span>One bag per category beats one bag of everything. Sorting is the charity's single biggest cost.</span></div>
+      <div class="gd-item"><b>Check pockets, zips and cords</b><span>Empty them, and pack the charger with the device it belongs to.</span></div>
+      <div class="gd-item"><b>Give what you would hand to a friend</b><span>If you would apologise while handing it over, it needs recycling, not a donation.</span></div>
+    </div>
+
+    <div class="sec-title">💗 What travels well</div>
+    <div class="panelcard card gd">
+      <div class="gd-item"><b>🧥 Clothes, all seasons, all ages</b><span>The biggest need by far, and the easiest to get wrong — clean and dry is what matters.</span></div>
+      <div class="gd-item"><b>📚 Textbooks, storybooks, notebooks</b><span>School sets are always short. Tear out nothing; a complete set is worth ten loose books.</span></div>
+      <div class="gd-item"><b>🎒 School bags and stationery</b><span>Pencils, copies, geometry boxes and bags go straight to students before term.</span></div>
+      <div class="gd-item"><b>🍚 Sealed, in-date packaged food</b><span>Flour, rice, lentils, oil, tea, milk powder, dates. Check the date yourself.</span></div>
+      <div class="gd-item"><b>🧸 Toys and games, complete</b><span>A puzzle with the pieces, a bear that can be washed. Small and complete beats big and broken.</span></div>
+      <div class="gd-item"><b>🛏️ Blankets and quilts, in winter</b><span>The most requested item in December and January, and the least donated.</span></div>
+      <div class="gd-item"><b>🔌 Working small appliances</b><span>Fans, irons, kettles, radios — with the cable. Wipe it down and test it first.</span></div>
+      <div class="gd-item"><b>🩸 Ration-bag items</b><span>Rice, sugar, oil and tea in sealed packs are what a rashan bag is actually made of.</span></div>
+    </div>
+
+    <div class="sec-title">🚫 What charities usually cannot take</div>
+    <div class="panelcard card gd no">
+      <div class="gd-item"><b>Soiled, torn or wet clothing</b><span>Nobody can repair it at scale. It costs the charity money to dispose of.</span></div>
+      <div class="gd-item"><b>Used underwear and socks</b><span>Unless brand new and still sealed. This is the rule most people break.</span></div>
+      <div class="gd-item"><b>Expired or opened food</b><span>Also anything in a damaged or unlabelled packet.</span></div>
+      <div class="gd-item"><b>Loose or unlabelled medicines</b><span>Only sealed, in-date, pharmacy-readable packs — and ask first, because most sites are not licensed to take them.</span></div>
+      <div class="gd-item"><b>Broken or incomplete electronics</b><span>No cracked screens, no missing parts, no CRT televisions.</span></div>
+      <div class="gd-item"><b>Medical waste</b><span>Syringes, dressings, expired IV supplies. This is hazardous waste, not a donation.</span></div>
+      <div class="gd-item"><b>Furniture needing repair</b><span>Unless the site has agreed to collect it and has the space and a workshop.</span></div>
+      <div class="gd-item"><b>Anything you would apologise for</b><span>The clearest test there is. When in doubt, ask the site first with a photo.</span></div>
+    </div>
+    <div class="note">Every organisation sets its own rules, and this is general guidance — not a policy statement
+      from any charity. <b>Call the site before you load the car</b>, especially for anything large, electrical
+      or medical.</div>
+
+    <div class="sec-title">🏷️ The condition grades in this app</div>
+    <div class="panelcard card gd">
+      <div class="gd-item"><b>Like New</b><span>Unused or used once. Fits on a shelf in a shop.</span></div>
+      <div class="gd-item"><b>Good</b><span>Clean, complete, works. Someone would happily buy it second-hand.</span></div>
+      <div class="gd-item"><b>Usable</b><span>Shows wear but functions. Honest to declare, and still wanted.</span></div>
+      <div class="gd-item"><b>Needs Repair</b><span>Only if you know the site repairs things. Ask first — many cannot.</span></div>
+    </div>
+
+    <div class="sec-title">📦 Getting it there</div>
+    <div class="panelcard card gd">
+      <div class="gd-item"><b>1 · Pick a site</b><span>Use the Sites tab, filter to your city, and check what they accept.</span></div>
+      <div class="gd-item"><b>2 · Call ahead</b><span>Confirm opening hours and that they still want what you are bringing. Numbers change.</span></div>
+      <div class="gd-item"><b>3 · Make a ticket</b><span>The Donate tab turns your list into a printable ticket with the site's address on it.</span></div>
+      <div class="gd-item"><b>4 · Ask for a receipt</b><span>If you want a record, ask for one at the counter. A bank trail is safer than cash.</span></div>
+    </div>
+    <div class="note">🚚 <b>Can't travel?</b> TCS, Leopards and Bykea will deliver a parcel to the charity's published
+      address. Call the charity first so they expect it, write the contents on the outside, and keep the courier
+      receipt. Ask before you send anything electrical or medical.</div>
+
+    <div class="note">💗 <b>Give things people need, not things you want gone.</b> The point of a donation is the
+      person receiving it — that is also why this app uses an illustration rather than a photograph of a child.</div>
+  </section>
+
+  <!-- ================= EMERGENCY ================= -->
+  <section id="view-emergency" class="view" aria-label="Emergency appeals">
+    <div class="page-head">
+      <h2>🆘 Emergency Appeals</h2>
+      <p>A dated snapshot, not a live feed. Disasters are also when donation scams spike.</p>
+    </div>
+
+    <div class="panelcard card">
+      <div class="sec-title" style="margin-top:0">🌊 Monsoon 2025 — the last verified season</div>
+      <p style="font:600 .8rem/1.5 var(--fb);color:#8a7a93;margin:0 0 10px">
+        Figures published by NDMA and mirrored by ReliefWeb. <b>Snapshot checked 2026-10-07.</b>
+        This app makes no network requests, so it cannot update itself — always check the source before acting.</p>
+      <div class="em-figs">
+        <div class="em-fig"><b>1,037</b><span>deaths</span></div>
+        <div class="em-fig"><b>~80,000</b><span>displaced</span></div>
+        <div class="em-fig"><b>~4.9 m</b><span>affected in Punjab</span></div>
+        <div class="em-fig"><b>229,760</b><span>houses damaged</span></div>
+        <div class="em-fig"><b>1.12 m ha</b><span>inundated</span></div>
+        <div class="em-fig"><b>22,800+</b><span>livestock lost</span></div>
+      </div>
+      <p class="zk-fine">Punjab 304 deaths · Khyber Pakhtunkhwa 504 · damage estimated at Rs 822 bn (~US$3 bn).
+        We deliberately do not print a 2022 figure here: it could not be verified from a primary source.</p>
+    </div>
+
+    <div class="sec-title">📞 Organisations that run relief programmes</div>
+    <div class="panelcard card" id="em-orgs"></div>
+
+    <div class="sec-title">🔍 How to spot a fake appeal</div>
+    <div class="panelcard card gd no">
+      <div class="gd-item"><b>A personal account number</b><span>Banks in Pakistan are not allowed to let personal accounts collect donations — the account title must match the organisation. A JazzCash or Easypaisa number in someone's own name is the single biggest red flag.</span></div>
+      <div class="gd-item"><b>A look-alike website or page</b><span>Edhi's own homepage carries a permanent warning about copycat domains. Type the organisation's address yourself instead of tapping a forwarded link.</span></div>
+      <div class="gd-item"><b>No registration, address or landline</b><span>A real organisation can show a registration certificate and a physical office. Ask for both.</span></div>
+      <div class="gd-item"><b>Urgency plus a deadline</b><span>“Only today”, “last 3 trucks”, a countdown. Real appeals do not expire in an hour.</span></div>
+      <div class="gd-item"><b>Photos you cannot place</b><span>Old images get recycled between disasters. A reverse image search takes ten seconds.</span></div>
+      <div class="gd-item"><b>“Forward this to 10 people”</b><span>Chain-message appeals almost never have a verifiable recipient behind them.</span></div>
+    </div>
+
+    <div class="sec-title">✅ Check before you give</div>
+    <div class="panelcard card gd">
+      <div class="gd-item"><b>PCP NPO Directory</b><span>Pakistan Centre for Philanthropy lists organisations and the years it evaluated them. <a href="https://pcp.org.pk/npo-directory" target="_blank" rel="noopener">pcp.org.pk/npo-directory ↗</a></span></div>
+      <div class="gd-item"><b>Sindh Charity Commission</b><span>Public charity search, plus the list of proscribed organisations. <a href="https://charitycommission.sindh.gov.pk/" target="_blank" rel="noopener">charitycommission.sindh.gov.pk ↗</a></span></div>
+      <div class="gd-item"><b>Call the national line</b><span>Edhi 115, Chhipa 1020 and Saylani 111-729-526 all answer in every city and can confirm whether an appeal is theirs.</span></div>
+    </div>
+
+    <div class="note warn">This app <b>never collects, holds or transfers money</b>. It only points you at an
+      organisation's own published contact details. If a page asks you to pay <i>this</i> app, it is not this app.</div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="view-about" class="view" aria-label="About and trust">
+    <div class="page-head">
+      <h2>ℹ️ About &amp; Trust</h2>
+      <p>Who made this, what it does and does not do, and how to check it yourself.</p>
+    </div>
+
+    <div class="panelcard card gd">
+      <div class="gd-item"><b>An independent directory</b><span>Iman Donation Trust is a student-built prototype that helps you find somewhere to take things you want to give away. It is <b>not affiliated with, and not endorsed by</b>, any organisation listed here — Edhi, Chhipa, Saylani, Al-Khidmat, Shaukat Khanum and the rest are named only so you can contact them.</span></div>
+      <div class="gd-item"><b>It does not collect money</b><span>There is no payment, no wallet, no bank account and no donation form anywhere in this app. It links to organisations' own published phone numbers.</span></div>
+      <div class="gd-item"><b>You can run it offline</b><span>One HTML file. No accounts, no analytics, no cookies, no network requests after the page loads.</span></div>
+    </div>
+
+    <div class="sec-title">🔎 How the directory is built — and its limits</div>
+    <div class="panelcard card gd">
+      <div class="gd-item"><b>Compiled from public sources</b><span>Addresses, hours and categories were taken from organisations' own websites and public listings. They are <b>not individually verified by us</b>.</span></div>
+      <div class="gd-item"><b>Helplines carry a source</b><span>Four of the five national numbers link to the page they came from and the date they were checked, so a wrong number is visible rather than hidden. Chhipa's was 1121 here once; it is 1020, and that is exactly the kind of error the source links exist to catch.</span></div>
+      <div class="gd-item"><b>“Accepts everything” means “ask them”</b><span>Where a site is marked as taking any category, that is a prompt to call, not a promise from the charity.</span></div>
+      <div class="gd-item"><b>Not every genuine charity is certified</b><span>Many small, real organisations have no PCP evaluation. “No record found” is not the same as “not real” — but a personal account number always is a problem.</span></div>
+    </div>
+
+    <div class="sec-title">🧾 Check an organisation yourself</div>
+    <div class="panelcard card gd">
+      <div class="gd-item"><b>Pakistan Centre for Philanthropy</b><span>FBR's designated certification agency, with evaluation years per organisation. <a href="https://pcp.org.pk/npo-directory" target="_blank" rel="noopener">pcp.org.pk/npo-directory ↗</a></span></div>
+      <div class="gd-item"><b>Sindh Charity Commission</b><span>Public charity search and proscribed-organisation list. <a href="https://charitycommission.sindh.gov.pk/" target="_blank" rel="noopener">charitycommission.sindh.gov.pk ↗</a></span></div>
+      <div class="gd-item"><b>Punjab and KP charity commissions</b><span>Both run registration portals and publish guidance for donors.</span></div>
+      <div class="gd-item"><b>Ask for the certificate</b><span>Any real organisation can show its registration certificate and a governing-body resolution, and will not mind being asked.</span></div>
+      <div class="gd-item"><b>Never trust a personal account</b><span>Banks in Pakistan may not let personal accounts collect donations, and an advertised donation account must be titled in the organisation's own name.</span></div>
+    </div>
+
+    <div class="sec-title">🔒 Your data</div>
+    <div class="panelcard card gd">
+      <div class="gd-item"><b>Nothing is uploaded</b><span>Your name, phone number, basket and donation history are stored only in this browser on this device. There is no server to send them to.</span></div>
+      <div class="gd-item"><b>What “Export my data” contains</b><span>Everything above, as a JSON file — including your name and phone number, so keep the file somewhere you would keep a receipt.</span></div>
+      <div class="gd-item"><b>“Clear everything” means it</b><span>On the Profile tab. It wipes the basket, the history, the profile and this app's saved settings.</span></div>
+      <div class="gd-item"><b>One caveat worth knowing</b><span>On GitHub Pages this page shares an origin with every other project under the same account, so another page on that account could in principle read this browser's stored data. It is not sent anywhere — but if you would rather not store your phone number, use the ticket without saving it.</span></div>
+    </div>
+
+    <div class="sec-title">✏️ Something wrong? Tell us</div>
+    <div class="panelcard card gd">
+      <div class="gd-item"><b>Wrong number or closed branch?</b><span>Open an issue at <a href="https://github.com/iman-coll/Donate-your-heart/issues" target="_blank" rel="noopener">github.com/iman-coll/Donate-your-heart/issues ↗</a> with the site name and what you found. Please include the source you checked.</span></div>
+      <div class="gd-item"><b>An organisation that should be listed?</b><span>Same place. A published address and a phone number from the organisation's own site is what we need.</span></div>
+    </div>
+
+    <div class="note">Add a correction date and a source to every listing you change, and the directory stays
+      honest as it grows. That habit matters more than the number of sites in it.</div>
+  </section>
+  </main>
+
+  <nav class="bottomnav" aria-label="Main navigation">
+    <button class="navbtn active" data-view="home">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.5 12 4l8.5 7.5" stroke="#e8656f" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 11v9h12v-9" fill="#ffe9a8" stroke="#e8a13f" stroke-width="1.6"/><rect x="10" y="14" width="4" height="6" rx="1.4" fill="#f7a8c4"/></svg>
+      Home</button>
+    <button class="navbtn" data-view="sites">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.6-5.8-6.6-10.4a6.6 6.6 0 1 1 13.2 0C18.6 15.2 12 21 12 21z" fill="#f26d8d"/><circle cx="12" cy="10.4" r="2.6" fill="#fff"/></svg>
+      Sites</button>
+    <button class="navbtn" data-view="donate">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2.4" fill="#f78fb0"/><rect x="3" y="7" width="18" height="4" rx="2" fill="#f26d8d"/><rect x="10.9" y="7" width="2.2" height="13" fill="#fff"/><circle cx="9" cy="5.2" r="2.4" fill="none" stroke="#f26d8d" stroke-width="1.8"/><circle cx="15" cy="5.2" r="2.4" fill="none" stroke="#f26d8d" stroke-width="1.8"/></svg>
+      Donate<span id="basket-count" class="navbadge" hidden>0</span></button>
+    <button class="navbtn" data-view="zakat">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.6 2.4A9.6 9.6 0 1 0 15.6 21.6 7.6 7.6 0 1 1 15.6 2.4Z" fill="#ffd44d" stroke="#e8a13f" stroke-width="1.4" stroke-linejoin="round"/><path d="M5.4 5.6l.8 1.7 1.8.8-1.8.8-.8 1.7-.8-1.7L2.8 8.1l1.8-.8z" fill="#ffe066"/></svg>
+      Zakat</button>
+    <button class="navbtn" data-view="profile">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 10a7.5 7.5 0 0 1 15 0v1h-15z" fill="#a5714b"/><circle cx="12" cy="13.5" r="7.6" fill="#ffd9b0" stroke="#e8a13f" stroke-width="1.6"/><circle cx="9" cy="13" r="1.2" fill="#5b4a66"/><circle cx="15" cy="13" r="1.2" fill="#5b4a66"/><path d="M9.5 16.4c1.5 1.4 3.5 1.4 5 0" stroke="#5b4a66" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      Profile</button>
+  </nav>
+
+  <footer>
+    <div class="fbtns">
+      <button id="helpline-open" class="btn btn-soft">📞 National Helplines</button>
+      <button class="btn btn-soft" data-goto="sites">📍 Donation Sites</button>
+    </div>
+    <div class="fbtns">
+      <button class="btn btn-soft" data-goto="guide">📖 Donation Guide</button>
+      <button class="btn btn-soft" data-goto="emergency">🆘 Emergency</button>
+      <button class="btn btn-soft" data-goto="about">ℹ️ About &amp; Trust</button>
+    </div>
+    <div>© <span id="yr"></span> Iman Donation Trust · Made with 💗 for Pakistan</div>
+    <div style="margin-top:6px;font-size:.74rem;line-height:1.5">An independent directory. Not affiliated with, or endorsed by,
+      any organisation listed. This app never collects or transfers money.</div>
+  </footer>
+</div>
+
+<!-- ================= CATEGORY MODAL ================= -->
+<div class="modal" id="m-cat" role="dialog" aria-modal="true" aria-labelledby="cat-title">
+  <div class="backdrop" data-close></div>
+  <div class="panel" tabindex="-1">
+    <button class="pclose" data-close aria-label="Close">✕</button>
+    <span id="cat-art"></span>
+    <h3 id="cat-title">Books</h3>
+    <p class="desc" id="cat-desc"></p>
+    <div class="field"><label>How many?</label>
+      <div class="stepper">
+        <button type="button" id="cat-minus" aria-label="Decrease quantity">−</button>
+        <b id="cat-q">1</b>
+        <button type="button" id="cat-plus" aria-label="Increase quantity">+</button>
+        <select id="cat-cond" style="flex:1" aria-label="Condition"></select>
+      </div>
+    </div>
+    <button id="cat-add" class="btn btn-primary" style="width:100%;justify-content:center">🧺 Add to Basket</button>
+  </div>
+</div>
+
+<!-- ================= HELPLINES MODAL ================= -->
+<div class="modal" id="m-help" role="dialog" aria-modal="true" aria-labelledby="hp-title">
+  <div class="backdrop" data-close></div>
+  <div class="panel" tabindex="-1">
+    <button class="pclose" data-close aria-label="Close">✕</button>
+    <h3 id="hp-title">📞 National Helplines</h3>
+    <p class="desc">Tap any card to call — these lines serve all of Pakistan.</p>
+    <div id="hp-list"></div>
+    <div class="verify-note">Each number was checked on <b id="hp-checked"></b> — tap <i>source ↗</i> to see where it came from.
+      For branch-specific numbers, use the Donation Sites directory.</div>
+  </div>
+</div>
+
+<div class="modal" id="m-confirm" role="dialog" aria-modal="true" aria-labelledby="cf-text">
+  <div class="backdrop" data-close></div>
+  <div class="panel" tabindex="-1" style="max-width:380px;text-align:center">
+    <h3 id="cf-text" style="padding:0">Are you sure?</h3>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:12px">
+      <button id="cf-yes" class="btn btn-primary">Yes, do it</button>
+      <button class="btn btn-soft" data-close>Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="friends" aria-hidden="true"></div>
+<div id="toasts" role="status" aria-live="polite"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<script>
+'use strict';
+/* ═══════════════ 1. CONFIG ═══════════════ */
+const CONFIG = {
+  org: 'Iman Donation Trust',
+  storageKey: 'iman-trust-v3',
+  /* ✏️ EDIT THIS — the admin's own base. It ONLY feeds a drop-off suggestion, and
+     that distance is measured from THIS point, not from the donor. Set to null to
+     turn the suggestion off. (A donor in Karachi should not be told to go to
+     Gujranwala — see REVIEW-AND-ROADMAP.md.) */
+  homeBase: { lat: 32.161, lng: 74.188, label: 'Iman Trust HQ, Gujranwala' },
+  art: { bear:'', bunny:'', castle:'', chick:'' },
+  /* Date the helpline numbers were last checked against their own `src` page.
+     Shown to the donor, so a stale directory is visibly stale instead of quietly wrong. */
+  helplinesChecked: '2026-10-07',
+  /* The companion that watches the pointer. 'vector' uses the built-in inline-SVG
+     child (no file, no network, works under this page's CSP).
+     Want your own generated clip instead? Export it, drop the file in this folder,
+     then set mode:'video' + videoSrc. Same-origin media is already permitted by the
+     CSP (`media-src 'self'`), so no CSP change is needed for a local file. */
+  child: {
+    mode: 'vector',   // 'vector' | 'video' | 'off'
+    videoSrc: '',     // e.g. 'media/child.mp4'  — muted + looping, roughly 16:10
+    poster: ''        // e.g. 'media/child-poster.jpg'
+  },
+  /* Zakat calculator. `nisaab` is the threshold in rupees; leave it at 0 and the donor
+     is asked for it, which is the honest default because it moves with metal prices.
+     The gram figures are the classical nisaab measures and do not change. */
+  zakat: {
+    nisaab: 0,
+    goldGrams: 87.48,
+    silverGrams: 612.36,
+    nisaabCheckedOn: ''   // e.g. '2026-10-07' — shown next to a prefilled threshold
+  }
+};
+/* Every number carries the page it came from. The old list shipped Chhipa as 1121,
+   which is not a Chhipa number at all — Chhipa is 1020. A directory is only as good
+   as its ability to show you where a fact came from, so `src` is now mandatory. */
+const HELPLINES = [
+  {ico:'🚑', name:'Edhi Foundation',        ph:'115',        tel:'115',        desc:'Ambulance · orphanages · burial · every city, 24/7', src:'https://www.edhi.org'},
+  {ico:'🛵', name:'Chhipa Welfare',         ph:'1020',       tel:'1020',       desc:'Ambulance · food · shelters — Karachi network', src:'https://www.chhipa.org'},
+  {ico:'🍲', name:'Saylani Welfare Trust',  ph:'111-729-526',tel:'111729526',  desc:'Free meals · clothes · hospitals — nationwide UAN', src:'https://saylaniwelfare.com'},
+  {ico:'🕌', name:'Al-Khidmat Foundation',  ph:'0800 44448', tel:'080044448',  desc:'Hospitals · schools · disaster relief — national UAN', src:'https://alkhidmat.org'},
+  {ico:'🎗️', name:'Shaukat Khanum Hospital',ph:'042-3594-5100',tel:'04235945100',desc:'Free cancer care — Lahore · Peshawar · Karachi'}
+];
+/* 📍 SITES — lat/lng are city-level, used only for nearest-site ranking */
+const SITES = [
+  {id:'kh1', name:'Edhi Foundation — Head Office',       city:'Karachi', pro:'Sindh', address:'M.A. Jinnah Road, Gurumandir', hours:'24/7', phone:'115', lat:24.856, lng:67.030, accepts:['*']},
+  {id:'kh2', name:'Saylani Welfare Intl. Trust',         city:'Karachi', pro:'Sindh', address:'Bahadurabad', hours:'Daily 9:00–21:00', phone:'111-729-526', lat:24.881, lng:67.069, accepts:['food','clothes','kids','misc']},
+  {id:'kh3', name:'Chhipa Welfare Association',          city:'Karachi', pro:'Sindh', address:'Gorangoth, Gulshan-e-Iqbal', hours:'24/7', phone:'1020', lat:24.920, lng:67.100, accepts:['*']},
+  {id:'kh4', name:'Alamgir Welfare Trust',               city:'Karachi', pro:'Sindh', address:'Alamgir Road, Bahadurabad', hours:'Call for timings', phone:'', lat:24.880, lng:67.075, accepts:['clothes','food','misc','books']},
+  {id:'kh5', name:'SOS Children\u2019s Village Karachi', city:'Karachi', pro:'Sindh', address:'R-114, KDA Scheme 1', hours:'Call for timings', phone:'', lat:24.851, lng:67.004, accepts:['kids','toys','clothes','books']},
+  {id:'lh1', name:'Edhi Center Lahore',                  city:'Lahore', pro:'Punjab', address:'Ferozepur Road', hours:'24/7', phone:'115', lat:31.545, lng:74.323, accepts:['*']},
+  {id:'lh2', name:'Shaukat Khanum Memorial Hospital',    city:'Lahore', pro:'Punjab', address:'7-A Block R-3, Johar Town', hours:'Daily 9:00–17:00', phone:'+92 42 3594 5100', lat:31.467, lng:74.264, accepts:['misc','books']},
+  {id:'lh3', name:'SOS Children\u2019s Village Lahore',  city:'Lahore', pro:'Punjab', address:'Ferozepur Road', hours:'Call for timings', phone:'', lat:31.518, lng:74.334, accepts:['kids','toys','clothes','stationery']},
+  {id:'lh4', name:'Rizq Food Bank',                      city:'Lahore', pro:'Punjab', address:'Johar Town', hours:'Daily 10:00–20:00', phone:'', lat:31.462, lng:74.272, accepts:['food']},
+  {id:'lh5', name:'Al-Khidmat Hospital & Welfare',       city:'Lahore', pro:'Punjab', address:'Ferozepur Road', hours:'Call for timings', phone:'', lat:31.530, lng:74.310, accepts:['clothes','food','misc','stationery']},
+  {id:'is1', name:'Al-Khidmat Foundation — HQ',          city:'Islamabad', pro:'Islamabad', address:'House 4, Street 25, F-8/2', hours:'Mon–Sat 9:00–17:00', phone:'051-486-2600', lat:33.714, lng:73.047, accepts:['*']},
+  {id:'is2', name:'Edhi Center Islamabad',               city:'Islamabad', pro:'Islamabad', address:'Bhara Kahu', hours:'24/7', phone:'115', lat:33.693, lng:73.137, accepts:['*']},
+  {id:'is3', name:'Pakistan Sweet Home (Orphanage)',     city:'Islamabad', pro:'Islamabad', address:'H-13', hours:'Call for timings', phone:'', lat:33.665, lng:72.989, accepts:['kids','toys','books','clothes','stationery']},
+  {id:'rw1', name:'Edhi Center Rawalpindi',              city:'Rawalpindi', pro:'Punjab', address:'Saddar', hours:'24/7', phone:'115', lat:33.598, lng:73.065, accepts:['*']},
+  {id:'rw2', name:'Al-Khidmat Rawalpindi',               city:'Rawalpindi', pro:'Punjab', address:'Dhoke Kala Khan', hours:'Call for timings', phone:'', lat:33.614, lng:73.097, accepts:['clothes','food','misc']},
+  {id:'fs1', name:'Edhi Center Faisalabad',              city:'Faisalabad', pro:'Punjab', address:'Susan Road', hours:'24/7', phone:'115', lat:31.418, lng:73.113, accepts:['*']},
+  {id:'fs2', name:'Saylani Welfare Faisalabad',          city:'Faisalabad', pro:'Punjab', address:'Peoples Colony', hours:'Daily 9:00–21:00', phone:'', lat:31.437, lng:73.080, accepts:['food','clothes','kids']},
+  {id:'mu1', name:'Edhi Center Multan',                  city:'Multan', pro:'Punjab', address:'Vehari Road', hours:'24/7', phone:'115', lat:30.183, lng:71.462, accepts:['*']},
+  {id:'mu2', name:'Al-Khidmat Multan',                   city:'Multan', pro:'Punjab', address:'Bosan Road', hours:'Call for timings', phone:'', lat:30.157, lng:71.512, accepts:['clothes','food','books','misc']},
+  {id:'pe1', name:'Edhi Center Peshawar',                city:'Peshawar', pro:'Khyber Pakhtunkhwa', address:'University Road', hours:'24/7', phone:'115', lat:34.005, lng:71.491, accepts:['*']},
+  {id:'pe2', name:'Al-Khidmat Peshawar',                 city:'Peshawar', pro:'Khyber Pakhtunkhwa', address:'Dalazak Road', hours:'Call for timings', phone:'', lat:34.026, lng:71.563, accepts:['clothes','food','kids','misc']},
+  {id:'qu1', name:'Edhi Center Quetta',                  city:'Quetta', pro:'Balochistan', address:'Airport Road', hours:'24/7', phone:'115', lat:30.242, lng:66.942, accepts:['*']},
+  {id:'qu2', name:'Al-Khidmat Quetta',                   city:'Quetta', pro:'Balochistan', address:'Jinnah Town', hours:'Call for timings', phone:'', lat:30.202, lng:66.988, accepts:['clothes','food','misc']},
+  {id:'gj1', name:'Edhi Center Gujranwala',              city:'Gujranwala', pro:'Punjab', address:'Sialkot Road', hours:'24/7', phone:'115', lat:32.180, lng:74.170, accepts:['*']},
+  {id:'gj2', name:'Al-Khidmat Gujranwala',               city:'Gujranwala', pro:'Punjab', address:'Satellite Town', hours:'Call for timings', phone:'', lat:32.163, lng:74.208, accepts:['clothes','food','stationery','misc']},
+  {id:'sk1', name:'Edhi Center Sialkot',                 city:'Sialkot', pro:'Punjab', address:'Paris Road', hours:'24/7', phone:'115', lat:32.502, lng:74.536, accepts:['*']},
+  {id:'hy1', name:'Edhi Center Hyderabad',               city:'Hyderabad', pro:'Sindh', address:'Auto Bhan Road', hours:'24/7', phone:'115', lat:25.392, lng:68.352, accepts:['*']},
+  {id:'hy2', name:'Saylani Welfare Hyderabad',           city:'Hyderabad', pro:'Sindh', address:'Qasimabad', hours:'Daily 9:00–21:00', phone:'', lat:25.401, lng:68.322, accepts:['food','clothes']},
+  {id:'su1', name:'Edhi Center Sukkur',                  city:'Sukkur', pro:'Sindh', address:'Military Road', hours:'24/7', phone:'115', lat:27.706, lng:68.848, accepts:['*']},
+  {id:'bw1', name:'Edhi Center Bahawalpur',              city:'Bahawalpur', pro:'Punjab', address:'Multan Road', hours:'24/7', phone:'115', lat:29.381, lng:71.674, accepts:['*']},
+  {id:'sg1', name:'Edhi Center Sargodha',                city:'Sargodha', pro:'Punjab', address:'Faisalabad Road', hours:'24/7', phone:'115', lat:32.093, lng:72.688, accepts:['*']},
+  {id:'ab1', name:'Edhi Center Abbottabad',              city:'Abbottabad', pro:'Khyber Pakhtunkhwa', address:'Karakoram Highway', hours:'24/7', phone:'115', lat:34.162, lng:73.228, accepts:['*']},
+  {id:'mz1', name:'Edhi Center Muzaffarabad',            city:'Muzaffarabad', pro:'Azad Kashmir', address:'Chella Bandi', hours:'24/7', phone:'115', lat:34.357, lng:73.472, accepts:['*']},
+  {id:'gl1', name:'Edhi Center Gilgit',                  city:'Gilgit', pro:'Gilgit-Baltistan', address:'Jutal Road', hours:'24/7', phone:'115', lat:35.911, lng:74.330, accepts:['*']}
+];
+const CAT_EMOJI = {books:'📚',clothes:'👕',toys:'🧸',furniture:'🪑',food:'🍎',jewelry:'📿',electronics:'🎮',kids:'🍼',stationery:'✏️',sports:'⚽',gears:'👟',misc:'🎁'};
+const CATEGORIES = [
+  {id:'books',      label:'Books',        tint:'#cfe9f8', desc:'Storybooks, textbooks, novels & notebooks in readable condition.'},
+  {id:'clothes',    label:'Clothes',      tint:'#fbd7e3', desc:'Clean, folded clothes for all ages — every season welcome.'},
+  {id:'toys',       label:'Toys',         tint:'#ffedad', desc:'Teddy bears, trains, puzzles & games that still spark joy.'},
+  {id:'furniture',  label:'Furniture',    tint:'#e2f0cd', desc:'Chairs, tables, lamps & cupboards in usable shape.'},
+  {id:'food',       label:'Food',         tint:'#ffdcb8', desc:'Sealed, non-expired packaged food & milk for families.'},
+  {id:'jewelry',    label:'Jewelry',      tint:'#f8d3ea', desc:'Bracelets, necklaces & keepsakes for charity bazaars.'},
+  {id:'electronics',label:'Electronics',  tint:'#d4e4fa', desc:'Working tablets, radios, chargers & gadgets.'},
+  {id:'kids',       label:'Kids Items',   tint:'#ead9fa', desc:'Bottles, duckies, diapers & baby care essentials.'},
+  {id:'stationery', label:'Stationery',   tint:'#fbd2d8', desc:'Bells, crayons, pencils, school bags & art supplies.'},
+  {id:'sports',     label:'Sports Gear',  tint:'#d2eecf', desc:'Whistles, blocks, rackets & PE equipment.'},
+  {id:'gears',      label:'Misc. Gears',  tint:'#c4dcf7', desc:'Footballs, sneakers & activity gear for young players.'},
+  {id:'misc',       label:'Misc. Items',  tint:'#e6d5f5', desc:'Gift sets, decorations & everything kind in-between.'}
+];
+const CONDITIONS = ['Like New','Good','Usable','Needs Repair'];
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* Respecting prefers-reduced-motion means dropping the smooth scrolling too, not just
+   the animations — a long animated scroll is itself a vestibular trigger. */
+const scrollBehavior = () => REDUCE ? 'auto' : 'smooth';
+
+/* ═══════════════ 2. UTILS & STATE ═══════════════ */
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => 'D' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const catLabel = id => (CATEGORIES.find(c=>c.id===id)||{label:id}).label;
+const telHref = ph => 'tel:' + String(ph).replace(/[^\d+]/g,'');
+/* Local calendar date, not UTC. new Date().toISOString() is UTC, so before 05:00 in
+   Pakistan it returned YESTERDAY and the date picker offered a past day. */
+const todayLocal = () => { const d=new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+/* Every avatar now has a baked 8-frame sheet — the chick (id kept as 'duck' so
+   profiles saved by earlier versions still resolve) is no longer the odd one out. */
+const AVATARS=[{id:'bear',ico:'🧸',sheet:'bear'},{id:'bunny',ico:'🐰',sheet:'bunny'},{id:'castle',ico:'🏰',sheet:'castle'},{id:'duck',ico:'🐥',sheet:'chick'}];
+const AVATAR_IDS=AVATARS.map(a=>a.id);
+const DEFAULT_STATE={profile:{name:'',avatar:'bear'},basket:[],history:[],ui:{city:'',siteId:''}};
+
+function store(){
+  try{
+    const raw=JSON.parse(localStorage.getItem(CONFIG.storageKey));
+    return (raw && typeof raw==='object' && !Array.isArray(raw)) ? raw : {};
+  }catch(e){
+    /* Unreadable JSON: keep a copy instead of letting the next persist() silently
+       overwrite the only record of the donor's history. */
+    try{ const bad=localStorage.getItem(CONFIG.storageKey);
+         if(bad) localStorage.setItem(CONFIG.storageKey+'.bak', bad); }catch(e2){}
+    storageWarned=true;
+    return {};
+  }
+}
+let storageWarned=false;
+let storageSaveFailed=false;
+/* Anything at all can be sitting in localStorage: a value from an older build of
+   this app, a half-written write, or someone poking at devtools. Repair the shape
+   instead of trusting it — an unexpected value here used to throw during init and
+   leave the visitor staring at a blank page. */
+function sanitise(s){
+  const out=Object.assign({}, DEFAULT_STATE, s);
+  const p=(out.profile && typeof out.profile==='object') ? out.profile : {};
+  out.profile={ name:String(p.name||'').slice(0,60),
+                avatar:AVATAR_IDS.includes(p.avatar) ? p.avatar : 'bear' };
+  const u=(out.ui && typeof out.ui==='object') ? out.ui : {};
+  /* `gaze` used to live here as a saved on/off preference. The companion has no pause
+     control now, so the key is simply dropped. */
+  out.ui={ city:typeof u.city==='string' ? u.city : '',
+           siteId:typeof u.siteId==='string' ? u.siteId : '' };
+  const item=i=>({ cat:i.cat,
+                   qty:Math.min(99,Math.max(1,parseInt(i.qty,10)||1)),
+                   cond:CONDITIONS.includes(i.cond) ? i.cond : 'Good' });
+  out.basket=(Array.isArray(out.basket)?out.basket:[])
+    .filter(i=>i && CATEGORIES.some(c=>c.id===i.cat)).map(item);
+  out.history=(Array.isArray(out.history)?out.history:[])
+    .filter(r=>r && typeof r==='object' && Array.isArray(r.items) && r.items.length)
+    .slice(0,200)
+    .map(r=>({ id:String(r.id||uid()), ts:Number(r.ts)||Date.now(),
+               name:String(r.name||'').slice(0,60), phone:String(r.phone||'').slice(0,20),
+               city:String(r.city||''), site:String(r.site||''), siteId:String(r.siteId||''),
+               date:String(r.date||''), notes:String(r.notes||'').slice(0,400),
+               status:String(r.status||'Ticket Ready'),
+               items:r.items.filter(i=>i && CATEGORIES.some(c=>c.id===i.cat)).map(item) }))
+    /* A row whose items were all junk would otherwise render as an empty card. */
+    .filter(r=>r.items.length);
+  return out;
+}
+const state = sanitise(store());
+function persist(){
+  try{ localStorage.setItem(CONFIG.storageKey, JSON.stringify(state)); storageSaveFailed=false; }
+  catch(e){
+    /* Quota exceeded, private mode, storage switched off. Say so ONCE — silently
+       failing to save is how a donor loses a ticket they believed was stored. */
+    if(!storageSaveFailed){
+      storageSaveFailed=true;
+      toast('This device is not saving your data — copy your ticket before closing','⚠️');
+    }
+  }
+}
+function toast(msg, ico='💗'){
+  const t=document.createElement('div'); t.className='toast';
+  t.innerHTML=`<span>${ico}</span><span></span>`; t.lastChild.textContent=msg;
+  $('#toasts').appendChild(t);
+  setTimeout(()=>t.classList.add('out'),2600);
+  /* A timeout is the primary removal. The global `animation:none` rule under
+     prefers-reduced-motion means toastOut never fires, so an animationend-only
+     removal left every toast of the session stacked over the page. */
+  setTimeout(()=>t.remove(),3200);
+  t.addEventListener('animationend',e=>{ if(e.animationName==='toastOut') t.remove(); });
+}
+function copyText(txt){
+  if(navigator.clipboard?.writeText) return navigator.clipboard.writeText(txt).then(()=>toast('Copied!','📋')).catch(()=>fallbackCopy(txt));
+  fallbackCopy(txt);
+}
+function fallbackCopy(txt){
+  const ta=document.createElement('textarea'); ta.value=txt;
+  ta.setAttribute('readonly','');
+  ta.style.position='fixed'; ta.style.top='-1000px'; ta.style.opacity='0';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select(); ta.setSelectionRange(0,txt.length);
+  /* execCommand reports failure by RETURNING false — it does not throw. The old code
+     announced "Copied!" even when nothing had been copied. */
+  let done=false;
+  try{ done=document.execCommand('copy'); }catch(e){ done=false; }
+  ta.remove();
+  toast(done?'Copied!':'Copy failed — long-press to select instead', done?'📋':'😕');
+}
+/* Save a text payload as a file download. Three details the obvious one-liner
+   gets wrong: Firefox needs the anchor to be in the document; revoking the object
+   URL in the same tick can cancel the download (Safari and Firefox start it
+   asynchronously), so the revoke is deferred; and iOS Safari ignores `download` on
+   blob: URLs, which is why the return value is used to word the toast honestly.
+
+   It also reports whether this is an EMBEDDED frame. Streamlit serves this app inside
+   an iframe, and a sandboxed iframe may block file saves even though nothing throws —
+   so the caller can point at Copy instead of claiming success. */
+function downloadText(text,filename,mime){
+  const blob=new Blob([text],{type:(mime||'text/plain')+';charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=filename; a.style.display='none';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
+  let framed=false;
+  try{ framed = window.self!==window.top; }catch(e){ framed=true; }  // cross-origin parent
+  const ios=/iPad|iPhone|iPod/.test(navigator.userAgent);
+  return (ios||framed) ? 'maybe' : 'ok';
+}
+
+/* ═══════════════ 3. NEAREST-SITE REFERRAL (no location detection) ═══════════════ */
+function haversine(lat1,lng1,lat2,lng2){
+  const R=6371, t=x=>x*Math.PI/180;
+  const dLat=t(lat2-lat1), dLng=t(lng2-lng1);
+  const s=Math.sin(dLat/2)**2 + Math.cos(t(lat1))*Math.cos(t(lat2))*Math.sin(dLng/2)**2;
+  return Math.round(2*R*Math.asin(Math.sqrt(s)));
+}
+function nearestSites(lat,lng,n){
+  return SITES.map(s=>Object.assign({},s,{dist:haversine(lat,lng,s.lat,s.lng)}))
+              .sort((a,b)=>a.dist-b.dist).slice(0,n||3);
+}
+const fmtDist = km => km<1 ? 'under 1 km' : km+' km';
+function suggestNearest(){
+  if(CONFIG.homeBase){
+    const t=nearestSites(CONFIG.homeBase.lat,CONFIG.homeBase.lng,1)[0];
+    /* Measure from the donor, or say what you are actually measuring. The old copy
+       ("Suggested drop-off: … 12 km") read as "your nearest site", which is wrong
+       for anyone outside Gujranwala. */
+    toast('Closest partner site to our HQ: '+t.name+' — '+fmtDist(t.dist)+' from '+CONFIG.homeBase.label+' 📍');
+  } else {
+    toast('Pick your city in 💝 Donate — partner sites are listed there','📍');
+  }
+}
+
+/* ═══════════════ 4. SPRITE-BAKER ═══════════════ */
+if(!CanvasRenderingContext2D.prototype.roundRect){
+  CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
+    if(typeof r==='number') r=[r,r,r,r]; if(r.length===1) r=[r[0],r[0],r[0],r[0]];
+    const[a,b,c,d]=r;
+    this.moveTo(x+a,y); this.lineTo(x+w-b,y); this.arcTo(x+w,y,x+w,y+b,b);
+    this.lineTo(x+w,y+h-c); this.arcTo(x+w,y+h,x+w-c,y+h,c);
+    this.lineTo(x+d,y+h); this.arcTo(x,y+h,x,y+h-d,d);
+    this.lineTo(x,y+a); this.arcTo(x,y,x+a,y,a); this.closePath(); return this;
+  };
+}
+const TAU=Math.PI*2;
+const ell=(c,x,y,rx,ry)=>{c.beginPath();c.ellipse(x,y,rx,ry,0,0,TAU)};
+const cir=(c,x,y,r)=>ell(c,x,y,r,r);
+const rrp=(c,x,y,w,h,r)=>{c.beginPath();c.roundRect(x,y,w,h,r)};
+function heartP(c,x,y,s){c.beginPath();c.moveTo(x,y+s);
+  c.bezierCurveTo(x-s*1.1,y+s*.25,x-s*.95,y-s*.75,x,y-s*.2);
+  c.bezierCurveTo(x+s*.95,y-s*.75,x+s*1.1,y+s*.25,x,y+s);c.closePath();}
+function star4(c,x,y,r,rot){c.save();c.translate(x,y);c.rotate(rot);c.beginPath();
+  for(let i=0;i<8;i++){const rd=i%2?r*.38:r,a=i*Math.PI/4-Math.PI/2;c.lineTo(Math.cos(a)*rd,Math.sin(a)*rd);}
+  c.closePath();c.fill();c.restore();}
+function eye(c,x,y,blink,col){col=col||'#43291a';
+  if(blink){c.strokeStyle=col;c.lineWidth=3;c.lineCap='round';
+    c.beginPath();c.arc(x,y,4,.15*Math.PI,.85*Math.PI);c.stroke();}
+  else{c.fillStyle=col;cir(c,x,y,4.2);c.fill();c.fillStyle='#fff';cir(c,x+1.4,y-1.4,1.3);c.fill();}}
+const blush=(c,x,y)=>{c.fillStyle='rgba(244,132,164,.5)';ell(c,x,y,5.5,3.5);c.fill();};
+
+function drawBear(c,f,F){
+  const T=f/F, hop=Math.abs(Math.sin(T*TAU))*7, wave=Math.sin(T*TAU)*.55, blink=(f===5);
+  const B='#eeb77e',D='#e2a468',C='#fbe7c3';
+  c.fillStyle='rgba(191,112,144,.16)';ell(c,80,146,38,8);c.fill();
+  c.save();c.translate(80,110-hop);
+  c.fillStyle=D;ell(c,-16,36,13,8.5);c.fill();ell(c,16,36,13,8.5);c.fill();
+  c.fillStyle=B;rrp(c,-33,-16,66,56,27);c.fill();
+  c.fillStyle=C;ell(c,0,15,18,14);c.fill();
+  c.fillStyle=B;cir(c,-28,-72,12);c.fill();cir(c,28,-72,12);c.fill();
+  c.fillStyle=C;cir(c,-28,-72,5.5);c.fill();cir(c,28,-72,5.5);c.fill();
+  c.fillStyle=B;cir(c,0,-46,33);c.fill();
+  c.fillStyle=C;ell(c,0,-37,13.5,9.5);c.fill();
+  c.fillStyle='#7a4a2b';ell(c,0,-41,4.4,3.4);c.fill();
+  c.strokeStyle='#7a4a2b';c.lineWidth=2;c.lineCap='round';
+  c.beginPath();c.arc(0,-38,4.6,.15*Math.PI,.85*Math.PI);c.stroke();
+  eye(c,-13,-51,blink);eye(c,13,-51,blink);
+  blush(c,-22,-42);blush(c,22,-42);
+  c.fillStyle='#f2708a';heartP(c,-42,-8,14);c.fill();
+  c.fillStyle='rgba(255,255,255,.55)';cir(c,-46,-14,3);c.fill();
+  c.fillStyle=B;cir(c,-31,3,9.5);c.fill();
+  c.save();c.translate(30,-28);c.rotate(-.55+wave);
+  c.fillStyle=B;rrp(c,-7,-7,29,14,7);c.fill();cir(c,22,0,9);c.fill();c.restore();
+  c.restore();
+}
+function drawBunny(c,f,F){
+  const T=f/F, hop=Math.abs(Math.sin(T*TAU))*7, sway=Math.sin(T*TAU)*.13, blink=(f===2);
+  const W='#fefaf7',P='#f6c2d2';
+  c.fillStyle='rgba(191,112,144,.16)';ell(c,80,146,36,8);c.fill();
+  c.save();c.translate(80,112-hop);
+  c.fillStyle='#8fcf8f';ell(c,-2,4,7,4);c.fill();
+  c.fillStyle='#ffd7e2';cir(c,-14,2,7);c.fill();c.fillStyle='#ffd44d';cir(c,-14,2,3);c.fill();
+  c.fillStyle='#cfe8ff';cir(c,12,0,6);c.fill();c.fillStyle='#ffd44d';cir(c,12,0,2.6);c.fill();
+  for(const s of[-1,1]){c.save();c.translate(11*s,-64);c.rotate(s*.16+sway);
+    c.fillStyle=W;rrp(c,-7,-46,14,48,7);c.fill();
+    c.fillStyle=P;rrp(c,-3.5,-39,7,33,3.5);c.fill();c.restore();}
+  c.fillStyle=W;rrp(c,-29,-12,58,50,25);c.fill();cir(c,0,-40,29);c.fill();
+  eye(c,-11,-44,blink,'#3f2e2a');eye(c,11,-44,blink,'#3f2e2a');
+  c.fillStyle='#ef92ae';ell(c,0,-38,3.6,3);c.fill();
+  c.strokeStyle='#d98aa5';c.lineWidth=2;c.lineCap='round';
+  c.beginPath();c.arc(-4,-35,3.6,.15*Math.PI,.85*Math.PI);c.stroke();
+  c.beginPath();c.arc(4,-35,3.6,.15*Math.PI,.85*Math.PI);c.stroke();
+  blush(c,-19,-39);blush(c,19,-39);
+  c.fillStyle='#e9bd90';rrp(c,-32,4,64,34,7);c.fill();
+  c.strokeStyle='#d9a877';c.lineWidth=2;rrp(c,-32,4,64,34,7);c.stroke();
+  c.fillStyle='rgba(255,255,255,.5)';rrp(c,-5,4,10,34,3);c.fill();
+  c.fillStyle='#fff';cir(c,0,23,12.5);c.fill();
+  c.fillStyle='#f2708a';heartP(c,0,17,9);c.fill();
+  c.fillStyle=W;cir(c,-33,17,9);c.fill();cir(c,33,17,9);c.fill();
+  c.restore();
+}
+function drawCastle(c,f,F){
+  const T=f/F, bob=Math.sin(T*TAU)*2, tw=(Math.sin(T*TAU*2)+1)/2, flag=Math.sin(T*TAU)*4;
+  c.fillStyle='rgba(191,112,144,.16)';ell(c,80,146,40,8);c.fill();
+  c.save();c.translate(80,120-bob);
+  c.fillStyle='#cdeccb';ell(c,0,16,50,12);c.fill();
+  c.fillStyle='#fde7f0';rrp(c,-52,-54,20,64,8);c.fill();rrp(c,32,-54,20,64,8);c.fill();
+  c.fillStyle='#f5a9c6';
+  c.beginPath();c.arc(-42,-54,14,Math.PI,0);c.closePath();c.fill();
+  c.beginPath();c.arc(42,-54,14,Math.PI,0);c.closePath();c.fill();
+  c.fillStyle='#fff5f8';rrp(c,-28,-46,56,54,10);c.fill();
+  c.fillStyle='#f5a9c6';
+  c.beginPath();c.moveTo(-24,-46);c.lineTo(0,-76);c.lineTo(24,-46);c.closePath();c.fill();
+  c.fillStyle='#b98a63';rrp(c,-1.5,-100,3,26,1.5);c.fill();
+  c.fillStyle='#ffd44d';
+  c.beginPath();c.moveTo(1.5,-99);c.lineTo(22+flag,-92);c.lineTo(1.5,-85);c.closePath();c.fill();
+  c.fillStyle='#a8d8f0';cir(c,-42,-36,4.5);c.fill();cir(c,42,-36,4.5);c.fill();
+  c.fillStyle='#fff';
+  c.fillRect(-42.8,-40,1.6,8);c.fillRect(-46,-36.8,8,1.6);
+  c.fillRect(41.2,-40,1.6,8);c.fillRect(38,-36.8,8,1.6);
+  c.fillStyle='#e8b7d6';rrp(c,-11,-14,22,22,[11,11,0,0]);c.fill();
+  c.fillStyle='#fff';cir(c,5,-3,1.6);c.fill();
+  c.fillStyle='#5b4a66';cir(c,-10,-32,3.4);c.fill();cir(c,10,-32,3.4);c.fill();
+  c.strokeStyle='#5b4a66';c.lineWidth=2;c.lineCap='round';
+  c.beginPath();c.arc(0,-29,5,.15*Math.PI,.85*Math.PI);c.stroke();
+  blush(c,-17,-28);blush(c,17,-28);
+  c.fillStyle='#ffd44d';star4(c,-56,-80,6+tw*3,T*TAU);star4(c,54,-70,5+(1-tw)*3,-T*TAU);
+  c.restore();
+}
+/* The chick is the fourth mascot and follows the same 8-frame contract as the bear,
+   bunny and castle: a hop driven by |sin|, a counter-sway on the wings, one blink
+   frame, and a ground shadow that stays put while the body lifts. */
+function drawChick(c,f,F){
+  const T=f/F, hop=Math.abs(Math.sin(T*TAU))*7, flap=Math.sin(T*TAU)*.5, blink=(f===3);
+  const Y='#ffd44d',D='#f2b93c',L='#ffe9a8',O='#f2903f';
+  c.fillStyle='rgba(191,112,144,.16)';ell(c,80,146,34,8);c.fill();
+  c.save();c.translate(80,112-hop);
+  /* feet first: they sit behind the body, with the toes just clearing it */
+  c.strokeStyle=O;c.lineWidth=3.2;c.lineCap='round';
+  for(const s of[-1,1]){
+    c.beginPath();c.moveTo(8*s,26);c.lineTo(9*s,40);c.stroke();
+    c.beginPath();c.moveTo(2*s,42);c.lineTo(9*s,40);c.lineTo(16*s,42);c.stroke();
+  }
+  /* wings behind the body, so only the outer half shows */
+  for(const s of[-1,1]){
+    c.save();c.translate(24*s,-2);c.rotate(s*(.3+flap));
+    c.fillStyle=L;ell(c,0,0,9,15);c.fill();
+    c.restore();
+  }
+  c.fillStyle=Y;ell(c,0,4,30,31);c.fill();          // body
+  c.fillStyle=Y;cir(c,0,-30,26);c.fill();           // head
+  c.fillStyle=L;ell(c,0,12,17,15);c.fill();         // belly
+  /* the tuft is what makes it read as a chick instead of a yellow ball */
+  c.fillStyle=D;
+  for(const p of[[-9,-50],[0,-54],[9,-50]]){
+    c.beginPath();c.moveTo(p[0]-4,p[1]+7);c.lineTo(p[0],p[1]-9);c.lineTo(p[0]+4,p[1]+7);c.closePath();c.fill();
+  }
+  eye(c,-9,-32,blink);eye(c,9,-32,blink);
+  c.fillStyle=O;
+  c.beginPath();c.moveTo(-7,-24);c.lineTo(7,-24);c.lineTo(0,-15);c.closePath();c.fill();
+  c.strokeStyle='#d9762c';c.lineWidth=1.6;
+  c.beginPath();c.moveTo(-5,-21);c.lineTo(5,-21);c.stroke();
+  blush(c,-19,-25);blush(c,19,-25);
+  c.restore();
+}
+function bakeSheet(fn,F,S){F=F||8;S=S||160;
+  const cv=document.createElement('canvas');cv.width=F*S;cv.height=S;
+  const c=cv.getContext('2d');
+  for(let i=0;i<F;i++){c.save();c.translate(i*S,0);fn(c,i,F);c.restore();}
+  return {url:cv.toDataURL('image/png'),frames:F};
+}
+const sheets={
+  bear:  CONFIG.art.bear  ? {url:CONFIG.art.bear,frames:8}  : bakeSheet(drawBear),
+  bunny: CONFIG.art.bunny ? {url:CONFIG.art.bunny,frames:8} : bakeSheet(drawBunny),
+  castle:CONFIG.art.castle? {url:CONFIG.art.castle,frames:8}: bakeSheet(drawCastle),
+  chick: CONFIG.art.chick ? {url:CONFIG.art.chick,frames:8} : bakeSheet(drawChick)
+};
+const sprites=[]; let rafOn=false;
+function mkSprite(sel,sheet,disp,fps){
+  fps=fps||9;
+  const el=$(sel); if(!el) return null;
+  el.style.width=disp+'px'; el.style.height=disp+'px';
+  el.style.backgroundImage=`url("${sheet.url}")`;
+  el.style.backgroundSize=`${sheet.frames*disp}px ${disp}px`;
+  const s={el,frames:sheet.frames,size:disp,f:0,last:0,ms:1000/fps,dead:false};
+  if(REDUCE){ el.style.backgroundPosition='0 0'; return s; }
+  sprites.push(s); pump(); return s;
+}
+/* The three header mascots never retire, so this loop used to run for the whole
+   session — including while the tab was in the background. */
+function pump(){ if(rafOn||document.hidden) return; rafOn=true; requestAnimationFrame(step); }
+function step(t){ rafOn=false; let live=false;
+  /* Walk backwards so retired sprites can actually be removed. Previously a dead
+     sprite stayed in the array for the rest of the session, and every avatar
+     switch added one more. */
+  for(let i=sprites.length-1;i>=0;i--){ const s=sprites[i];
+    if(s.dead){ sprites.splice(i,1); continue; }
+    live=true;
+    if(t-s.last>=s.ms){ s.last=t; s.f=(s.f+1)%s.frames;
+      s.el.style.backgroundPosition=(-s.f*s.size)+'px 0px'; } }
+  if(live) pump();
+}
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) pump(); });
+
+/* ═══════════════ 5. CATEGORY ICONS ═══════════════ */
+function catIcon(id){
+  const S=(inner)=>`<svg class="ic" viewBox="0 0 96 96" aria-hidden="true">${inner}</svg>`;
+  const O='stroke="#7a5a49" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"';
+  switch(id){
+    case 'books':return S(`<g ${O}><rect x="14" y="60" width="66" height="15" rx="7" fill="#8fd07a"/><rect x="20" y="45" width="56" height="15" rx="7" fill="#f78fb0"/><rect x="15" y="30" width="62" height="15" rx="7" fill="#7ec8f0"/><path d="M28 37h34M32 52h30M26 67h38" stroke="#fff" stroke-width="3"/></g><path d="M78 14l2.2 4.8L85 21l-4.8 2.2L78 28l-2.2-4.8L71 21l4.8-2.2z" fill="#ffd44d" ${O}/>`);
+    case 'clothes':return S(`<g ${O}><path d="M24 27l13-8h6a7 7 0 0 0 14 0h6l13 8-7 13-6-4v32a4 4 0 0 1-4 4H41a4 4 0 0 1-4-4V36l-6 4z" fill="#ffd44d"/><path d="M60 26a12 12 0 0 1 20 0z" fill="#7ec8f0"/><rect x="56" y="25" width="28" height="5" rx="2.5" fill="#5fb0dd"/></g>`);
+    case 'toys':return S(`<g ${O}><circle cx="34" cy="38" r="20" fill="#eeb77e"/><circle cx="19" cy="22" r="7.5" fill="#eeb77e"/><circle cx="49" cy="22" r="7.5" fill="#eeb77e"/><circle cx="34" cy="44" r="8" fill="#fbe7c3"/><circle cx="27" cy="34" r="2.6" fill="#4a2c17"/><circle cx="41" cy="34" r="2.6" fill="#4a2c17"/><ellipse cx="34" cy="41" rx="3.4" ry="2.6" fill="#7a4a2b"/><rect x="52" y="52" width="34" height="20" rx="6" fill="#f26d7d"/><rect x="58" y="42" width="8" height="12" rx="3" fill="#e05577"/><circle cx="60" cy="76" r="5.5" fill="#5b4a66"/><circle cx="72" cy="76" r="5.5" fill="#5b4a66"/><circle cx="84" cy="76" r="5.5" fill="#5b4a66"/></g>`);
+    case 'furniture':return S(`<g ${O}><path d="M16 26h26l6 20H10z" fill="#f7a8c4"/><rect x="27" y="46" width="4" height="22" fill="#c98a5e"/><ellipse cx="29" cy="70" rx="13" ry="4" fill="#c98a5e"/><rect x="54" y="52" width="34" height="8" rx="3" fill="#d9a06b"/><rect x="57" y="60" width="5" height="16" fill="#b9824e"/><rect x="80" y="60" width="5" height="16" fill="#b9824e"/><rect x="62" y="36" width="18" height="16" rx="4" fill="#7ec8f0"/></g>`);
+    case 'food':return S(`<g ${O}><path d="M14 44a22 16 0 0 1 44 0z" fill="#f4b26b"/><circle cx="26" cy="36" r="1.8" fill="#fff"/><circle cx="38" cy="32" r="1.8" fill="#fff"/><circle cx="48" cy="38" r="1.8" fill="#fff"/><path d="M12 46h48q2 8-6 8H18q-8 0-6-8z" fill="#8fce6e"/><rect x="14" y="54" width="44" height="8" fill="#a5714b"/><path d="M16 62h40q4 0 3 6t-9 6H22q-8 0-9-6t3-6z" fill="#f4b26b"/><path d="M70 26h16v34a4 4 0 0 1-4 4H74a4 4 0 0 1-4-4z" fill="#fff"/><path d="M70 26l4-8h8l4 8z" fill="#7ec8f0"/><path d="M78 34v18" stroke="#7ec8f0" stroke-width="3"/></g>`);
+    case 'jewelry':return S(`<g ${O}><path d="M26 24c0 26 44 26 44 0" fill="none" stroke="#f2a24d" stroke-width="4" stroke-dasharray="1 9" stroke-linecap="round"/><circle cx="48" cy="52" r="11" fill="#fff"/><path d="M48 58c-5-4-6-8-3-10 2-1 3 0 3 1 0-1 1-2 3-1 3 2 2 6-3 10z" fill="#f2708a"/><path d="M20 70l1.8 4 4 1.8-4 1.8-1.8 4-1.8-4-4-1.8 4-1.8z" fill="#ffd44d"/><path d="M76 66l1.8 4 4 1.8-4 1.8-1.8 4-1.8-4-4-1.8 4-1.8z" fill="#7ec8f0"/></g>`);
+    case 'electronics':return S(`<g ${O}><rect x="14" y="22" width="40" height="48" rx="8" fill="#fff"/><rect x="19" y="28" width="30" height="32" rx="4" fill="#bfe3f7"/><path d="M34 48c-6-4.4-7-8.6-3.2-10.8 2-1.2 3.2-.2 3.2 1 0-1.2 1.2-2.2 3.2-1 3.8 2.2 2.8 6.4-3.2 10.8z" fill="#f2708a"/><rect x="54" y="46" width="34" height="22" rx="11" fill="#a8d8f0"/><path d="M64 52v10M59 57h10" stroke="#3d6b9e" stroke-width="3" stroke-linecap="round"/><circle cx="79" cy="54" r="2.6" fill="#f26d8d"/><circle cx="83" cy="60" r="2.6" fill="#8fd07a"/></g>`);
+    case 'kids':return S(`<g ${O}><rect x="26" y="38" width="20" height="36" rx="9" fill="#cfeef7"/><path d="M31 38v-6h10v6" fill="#fff"/><path d="M33 32q5-8 10 0z" fill="#f7a8c4"/><path d="M30 50h12M30 60h12" stroke="#a8d8f0" stroke-width="3"/><circle cx="66" cy="62" r="14" fill="#ffd44d"/><circle cx="74" cy="46" r="9" fill="#ffd44d"/><path d="M81 45l7 2-6 4z" fill="#f2903f"/><circle cx="74" cy="44" r="1.6" fill="#5b4a66"/><path d="M58 62q4 6 10 2" stroke="#e8a13f" stroke-width="2.4" fill="none"/></g>`);
+    case 'stationery':return S(`<g ${O}><path d="M18 52a16 16 0 0 1 32 0z" fill="#ffd44d"/><rect x="31" y="28" width="6" height="8" rx="3" fill="#e8a13f"/><circle cx="34" cy="58" r="4" fill="#f2903f"/><path d="M40 54q10 4 12 14" stroke="#e8a13f" stroke-width="3" fill="none"/><g transform="rotate(24 66 48)"><rect x="60" y="30" width="12" height="34" rx="4" fill="#8fd07a"/><path d="M60 30l6-10 6 10z" fill="#f2903f"/><rect x="60" y="52" width="12" height="6" fill="#5ea84e"/></g></g>`);
+    case 'sports':return S(`<g ${O}><circle cx="34" cy="58" r="14" fill="#f49a5a"/><circle cx="34" cy="58" r="5" fill="#ffd9b8"/><rect x="8" y="48" width="14" height="12" rx="5" fill="#f49a5a"/><rect x="14" y="26" width="12" height="14" rx="3" fill="#7ec8f0"/><rect x="14" y="40" width="12" height="8" fill="#f78fb0"/><path d="M14 26l6-6 6 6" fill="#5fb0dd"/></g>`);
+    case 'gears':return S(`<g ${O}><circle cx="34" cy="40" r="18" fill="#fff"/><path d="M34 28l9 6.5-3.4 10.5H28.4L25 34.5z" fill="#3d3d3d" stroke="none"/><path d="M34 22v6M48 34l-5 4M44 56l-5-4M24 56l5-4M20 34l5 4" stroke="#3d3d3d" stroke-width="2.4"/><path d="M50 66q2-10 12-10h20q6 0 6 8v6H50z" fill="#7ec8f0"/><rect x="48" y="68" width="42" height="7" rx="3.5" fill="#fff"/><path d="M62 58l4 5M70 57l4 5" stroke="#fff" stroke-width="2.6"/></g>`);
+    case 'misc':return S(`<g ${O}><rect x="20" y="40" width="44" height="34" rx="6" fill="#f78fb0"/><rect x="16" y="32" width="52" height="10" rx="4" fill="#f26d8d"/><rect x="38" y="32" width="8" height="42" fill="#fff"/><path d="M42 32c-8 0-12-4-10-9 2-4 8-3 10 9zM42 32c8 0 12-4 10-9-2-4-8-3-10 9z" fill="#f26d8d"/><circle cx="76" cy="62" r="10" fill="#7ec8f0"/><path d="M76 52v20M66 62h20" stroke="#fff" stroke-width="3"/><path d="M80 22l1.8 4 4 1.8-4 1.8-1.8 4-1.8-4-4-1.8 4-1.8z" fill="#ffd44d"/></g>`);
+  }
+  return S('');
+}
+
+/* ═══════════════ 6. HOME: cards + live search ═══════════════ */
+function buildCards(){
+  const g=$('#cat-grid'); g.innerHTML='';
+  CATEGORIES.forEach(cat=>{
+    const b=document.createElement('button');
+    /* No role="listitem" here: overriding the implicit button role would strip the
+       "button" announcement from screen readers. The grid is a plain role="group". */
+    b.type='button'; b.className='cat';
+    b.style.background=`linear-gradient(180deg,${cat.tint},${cat.tint}dd)`;
+    b.dataset.label=cat.label;
+    b.dataset.keys=(cat.label+' '+cat.desc+' '+CAT_EMOJI[cat.id]).toLowerCase();
+    b.innerHTML=catIcon(cat.id)+`<span class="lb">${esc(cat.label)}</span>`;
+    b.addEventListener('click',()=>openCatModal(cat));
+    g.appendChild(b);
+  });
+}
+function searchSites(q){
+  const words=q.toLowerCase().split(/\s+/).filter(Boolean);
+  if(!words.length) return [];
+  return SITES.filter(s=>{
+    const hay=(s.name+' '+s.city+' '+s.pro+' '+s.address+' '+(s.phone||'')+' '+s.accepts.map(catLabel).join(' ')).toLowerCase();
+    return words.every(w=>hay.includes(w));
+  });
+}
+function onSearchInput(){
+  const q=$('#search').value.trim();
+  const ql=q.toLowerCase();
+  const words=ql.split(/\s+/).filter(Boolean);
+  let nCat=0;
+  /* Was `c.dataset.keys.includes(ql)`, i.e. the whole query had to appear as one
+     contiguous substring — "kids items" matched nothing. Match word by word, the
+     same way searchSites() and renderSites() do. */
+  $$('#cat-grid .cat').forEach(c=>{ const hit=!words.length||words.every(w=>c.dataset.keys.includes(w)); c.hidden=!hit; if(hit)nCat++; });
+  const box=$('#live-results');
+  const siteHits = ql.length>=2 ? searchSites(q) : [];
+  if(ql.length<2){ box.hidden=true; box.innerHTML=''; }
+  else{
+    box.hidden=false;
+    if(siteHits.length){
+      const shown=siteHits.slice(0,5);
+      box.innerHTML=`<div class="lr-head">📍 Found ${siteHits.length} matching location${siteHits.length>1?'s':''} for “${esc(q)}”:</div>`+
+        shown.map(s=>`<div class="lr-row">
+          <span class="lr-inf">${esc(s.name)}<small>📌 ${esc(s.city)} · ${esc(s.hours)}${s.phone?' · 📞 '+esc(s.phone):''}</small></span>
+          ${s.phone?`<a class="btn btn-primary lr-btn" href="${telHref(s.phone)}" aria-label="Call ${esc(s.name)}">📞</a>`:''}
+          <a class="btn btn-soft lr-btn" target="_blank" rel="noopener" href="${mapsUrl(s)}" aria-label="Directions to ${esc(s.name)}">🗺️</a>
+          <button type="button" class="btn btn-soft lr-btn lr-pick" data-id="${s.id}" aria-label="Schedule at ${esc(s.name)}">💌</button>
+        </div>`).join('')+
+        (siteHits.length>5?`<div class="lr-more">+ ${siteHits.length-5} more — press Enter for the full list</div>`
+                          :`<div class="lr-more">Press Enter for the full list & filters</div>`);
+      box.querySelectorAll('.lr-pick').forEach(b=>{
+        b.onclick=()=>{ const s=SITES.find(x=>x.id===b.dataset.id); if(s) pickSite(s); };
+      });
+    } else box.innerHTML='';
+  }
+  const none = ql.length>=2 && nCat===0 && siteHits.length===0;
+  const nr=$('#no-results');
+  nr.hidden=!none;
+  if(none) nr.textContent='🍂 Nothing matched “'+q+'” — try “Lahore”, “Karachi”, “Edhi”, “toys”…';
+}
+
+/* ═══════════════ 7. MODALS ═══════════════ */
+/* A stack, not a single slot: the "Are you sure?" dialog can open on top of the
+   site list or the category picker, and focus has to unwind in the right order. */
+const focusStack=[];
+function openModal(m){
+  focusStack.push(document.activeElement);
+  m.classList.add('open');
+  document.body.classList.add('locked');
+  /* Hide everything behind the dialog from screen readers for as long as it is open. */
+  $('#app').setAttribute('aria-hidden','true');
+  m.querySelector('.panel').focus();
+}
+function closeModal(m){
+  m.classList.remove('open');
+  document.body.classList.remove('locked');
+  if(!$$('.modal.open').length) $('#app').removeAttribute('aria-hidden');
+  /* The trigger may have been re-rendered away while the dialog was open. */
+  const back=focusStack.pop();
+  if(back && document.contains(back) && back.focus) back.focus();
+}
+document.addEventListener('keydown',e=>{
+  const open=$$('.modal.open').pop(); if(!open) return;
+  if(e.key==='Escape'){ closeModal(open); return; }
+  if(e.key!=='Tab') return;
+  const els=[...open.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')]
+    .filter(x=>!x.disabled && x.offsetParent!==null);
+  if(!els.length) return;
+  const first=els[0],last=els[els.length-1];
+  if(e.shiftKey&&document.activeElement===first){last.focus();e.preventDefault();}
+  else if(!e.shiftKey&&document.activeElement===last){first.focus();e.preventDefault();}
+});
+document.addEventListener('click',e=>{
+  const open=$$('.modal.open').pop(); if(!open) return;
+  if(e.target.closest('[data-close]')) closeModal(open);
+});
+
+/* ═══════════════ 8. BASKET ═══════════════ */
+function basketTotal(){ return state.basket.reduce((n,i)=>n+i.qty,0); }
+function updateBadge(){
+  const n=basketTotal(), b=$('#basket-count');
+  b.hidden=!n; b.textContent=n;
+}
+function addToBasket(catId,qty,cond){
+  qty=qty||1; cond=cond||'Good';
+  const first=!state.basket.length;
+  const ex=state.basket.find(i=>i.cat===catId&&i.cond===cond);
+  if(ex) ex.qty+=qty; else state.basket.push({cat:catId,qty,cond});
+  /* A finished ticket must not stay on screen above a basket that has since changed. */
+  $('#donate-success').hidden=true;
+  persist(); updateBadge(); renderBasket();
+  /* Once per basket, not once per tap: this used to fire a Gujranwala suggestion on
+     every single item added. */
+  if(first) suggestNearest();
+}
+function renderBasket(){
+  const list=$('#basket-list'); list.innerHTML='';
+  if(!state.basket.length){
+    list.innerHTML=`<div class="panelcard card" style="text-align:center;color:#a08aa8;font-weight:600">
+      Basket is empty — add something kind from Home 💝</div>`;
+    return;
+  }
+  state.basket.forEach((it,idx)=>{
+    const label=esc(catLabel(it.cat));
+    const row=document.createElement('div'); row.className='b-row';
+    row.innerHTML=`<span style="font-size:1.5rem">${CAT_EMOJI[it.cat]}</span>
+      <span class="nm">${label}<br><span class="chip">${esc(it.cond)}</span></span>
+      <span class="qty"><button type="button" aria-label="One fewer ${label}">−</button><b>${Number(it.qty)}</b><button type="button" aria-label="One more ${label}">+</button></span>
+      <button type="button" class="del" aria-label="Remove ${label} (${esc(it.cond)})">🗑️</button>`;
+    /* Re-rendering the whole list on every +/− threw the focused button away and
+       dropped focus to <body>, so put it back on the equivalent button afterwards. */
+    const refocus=which=>{ const r=$$('#basket-list .b-row')[idx]; if(!r) return;
+      const b= which==='minus' ? r.querySelectorAll('.qty button')[0]
+             : which==='plus'  ? r.querySelectorAll('.qty button')[1]
+             : r.querySelector('.del');
+      if(b) b.focus(); };
+    const [minus,plus]=row.querySelectorAll('.qty button');
+    minus.onclick=()=>{ it.qty=Math.max(1,it.qty-1); persist(); renderBasket(); updateBadge(); refocus('minus'); };
+    plus.onclick =()=>{ it.qty=Math.min(99,it.qty+1); persist(); renderBasket(); updateBadge(); refocus('plus'); };
+    /* Identity, not the render-time index: an index goes stale the moment anything
+       else mutates the array between render and click. */
+    row.querySelector('.del').onclick=()=>{ state.basket=state.basket.filter(x=>x!==it);
+      persist(); renderBasket(); updateBadge(); toast('Removed from basket','🗑️'); };
+    list.appendChild(row);
+  });
+}
+function renderQuickAdd(){
+  const qa=$('#quick-add'); qa.innerHTML='';
+  CATEGORIES.forEach(c=>{
+    const s=document.createElement('button'); s.type='button'; s.className='chip chipbtn';
+    s.textContent=CAT_EMOJI[c.id]+' '+c.label;
+    s.onclick=()=>{ addToBasket(c.id,1,'Good'); toast(c.label+' added!','🧺'); };
+    qa.appendChild(s);
+  });
+}
+
+/* ═══════════════ 9. CATEGORY MODAL ═══════════════ */
+let catQty=1, catCurrent=null;
+function openCatModal(cat){
+  catCurrent=cat; catQty=1;
+  $('#cat-art').innerHTML=catIcon(cat.id);
+  $('#cat-art').firstChild.style.width='120px';
+  $('#cat-art').firstChild.style.height='120px';
+  $('#cat-title').textContent=CAT_EMOJI[cat.id]+' '+cat.label;
+  $('#cat-desc').textContent=cat.desc;
+  $('#cat-q').textContent='1';
+  const cond=$('#cat-cond'); cond.innerHTML=CONDITIONS.map(c=>`<option>${c}</option>`).join('');
+  openModal($('#m-cat'));
+}
+$('#cat-minus').onclick=()=>{catQty=Math.max(1,catQty-1);$('#cat-q').textContent=catQty;};
+$('#cat-plus').onclick =()=>{catQty=Math.min(99,catQty+1);$('#cat-q').textContent=catQty;};
+$('#cat-add').onclick=()=>{
+  addToBasket(catCurrent.id,catQty,$('#cat-cond').value);
+  closeModal($('#m-cat'));
+  toast(catCurrent.label+' ×'+catQty+' added to basket!','🧺');
+};
+
+/* ═══════════════ 10. SITES PAGE ═══════════════ */
+/* This was a modal. On a phone that meant a small scroll box with its own keyboard and
+   no room for the disclaimer, so it is a real page now, with its own search box. */
+let sitesReady=false;
+function ensureSitesControls(){
+  if(sitesReady) return;
+  const provSel=$('#sites-prov');
+  const provs=['All provinces',...[...new Set(SITES.map(s=>s.pro))].sort()];
+  provSel.innerHTML=provs.map(p=>`<option>${esc(p)}</option>`).join('');
+  fillCities('All provinces');
+  sitesReady=true;
+}
+function openSites(query){
+  ensureSitesControls();
+  $('#sites-q').value=query||'';
+  route('sites');
+}
+function fillCities(prov){
+  const citySel=$('#sites-city');
+  const cities=['All cities',...[...new Set(SITES.filter(s=>prov==='All provinces'||s.pro===prov).map(s=>s.city))].sort()];
+  const keep=citySel.value;
+  citySel.innerHTML=cities.map(c=>`<option>${esc(c)}</option>`).join('');
+  if(cities.includes(keep)) citySel.value=keep;
+}
+function mapsUrl(s){ return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.name+' '+s.address+' '+s.city+' Pakistan'); }
+function siteChips(s){
+  if(s.accepts.includes('*')) return '<span class="chip">💗 Everything</span>';
+  return s.accepts.map(a=>`<span class="chip">${CAT_EMOJI[a]} ${esc(catLabel(a))}</span>`).join('');
+}
+function pickSite(s){
+  /* No modal to close any more — the directory is a page, so just route across. */
+  route('donate');                 // route() rebuilds the city list
+  state.ui.city=s.city; state.ui.siteId=s.id; persist();
+  $('#f-city').value=s.city; populateSites(s.city);
+  const sel=$('#f-site');
+  if([...sel.options].some(o=>o.value===s.id)) sel.value=s.id;
+  toast('Selected: '+s.name,'💌');
+  window.scrollTo({top:0,behavior:scrollBehavior()});
+}
+function siteCard(s){
+  const card=document.createElement('div'); card.className='s-card';
+  const phHtml = s.phone
+    ? `<a class="btn btn-primary" href="${telHref(s.phone)}">📞 ${esc(s.phone)}</a>`
+    : `<span class="chip">📞 See Maps listing</span>`;
+  card.innerHTML=`<div class="nm">${esc(s.name)}</div>
+    <div class="meta">📌 ${esc(s.address)}, ${esc(s.city)}<br>🕘 ${esc(s.hours)}</div>
+    <div>${siteChips(s)}</div>
+    <div class="row">
+      ${phHtml}
+      <a class="btn btn-soft" target="_blank" rel="noopener" href="${mapsUrl(s)}">🗺️ Directions</a>
+      <button type="button" class="btn btn-soft sched">💌 Schedule here</button>
+    </div>`;
+  card.querySelector('.sched').onclick=()=>pickSite(s);
+  return card;
+}
+function renderSites(q){
+  ensureSitesControls();
+  const prov=$('#sites-prov').value, city=$('#sites-city').value;
+  const raw=(q===undefined?$('#sites-q').value:q)||'';
+  const ql=raw.trim().toLowerCase();
+  const list=$('#sites-list'); list.innerHTML='';
+  const hits=SITES.filter(s=>{
+    const okProv = prov==='All provinces'||s.pro===prov;
+    const okCity = city==='All cities'||s.city===city;
+    const hay=(s.name+' '+s.city+' '+s.pro+' '+s.address+' '+(s.phone||'')+' '+s.accepts.map(catLabel).join(' ')).toLowerCase();
+    return okProv && okCity && (!ql || ql.split(/\s+/).every(w=>hay.includes(w)));
+  });
+  $('#sites-none').hidden = hits.length>0;
+  $('#sites-echo').textContent = hits.length===SITES.length
+    ? `${SITES.length} partner sites across ${cityList().length} cities — search, filter, then call or navigate.`
+    : `${hits.length} of ${SITES.length} sites match${ql?` “${raw.trim()}”`:''} — call ahead before you travel.`;
+  /* Group through a Map rather than a "last city" variable: the old version emitted a
+     duplicate city header the moment SITES stopped being sorted by city. */
+  const byCity=new Map();
+  for(const s of hits){ if(!byCity.has(s.city)) byCity.set(s.city,[]); byCity.get(s.city).push(s); }
+  for(const [c,arr] of byCity){
+    const h=document.createElement('div'); h.className='city-head';
+    h.textContent='📍 '+c+' · '+arr[0].pro;
+    list.appendChild(h);
+    arr.forEach(s=>list.appendChild(siteCard(s)));
+  }
+}
+$('#sites-q').addEventListener('input',()=>renderSites());
+$('#sites-prov').addEventListener('change',e=>{ fillCities(e.target.value); renderSites(); });
+$('#sites-city').addEventListener('change',()=>renderSites());
+$('#find-btn').addEventListener('click',()=>openSites($('#search').value));
+
+/* ═══════════════ 11. HELPLINES ═══════════════ */
+/* One card builder, used by both the helplines modal and the Emergency page. */
+function helplineCard(h){
+  const card=document.createElement('div'); card.className='hp-card';
+  const src=h.src?`<br><a class="src-link" target="_blank" rel="noopener" href="${esc(h.src)}">source ↗</a>`:'';
+  card.innerHTML=`<span class="ico">${h.ico}</span>
+    <span class="inf"><span class="nm2">${esc(h.name)}</span><br><span class="ds">${esc(h.desc)}</span>${src}</span>
+    <a class="btn btn-primary" style="white-space:nowrap" href="${telHref(h.tel)}">📞 ${esc(h.ph)}</a>`;
+  return card;
+}
+function renderHelplines(){
+  const list=$('#hp-list'); list.innerHTML='';
+  $('#hp-checked').textContent=CONFIG.helplinesChecked;
+  HELPLINES.forEach(h=>list.appendChild(helplineCard(h)));
+}
+/* The Emergency page reuses the same verified numbers rather than keeping a second list
+   that could drift out of sync with the first. */
+function renderEmergencyOrgs(){
+  const list=$('#em-orgs'); if(!list) return;
+  list.innerHTML='';
+  HELPLINES.forEach(h=>list.appendChild(helplineCard(h)));
+  list.insertAdjacentHTML('beforeend',
+    `<div class="note" style="margin:10px 0 0">These are the organisations' own published national
+     numbers, checked on <b>${esc(CONFIG.helplinesChecked)}</b>. Ask them directly whether an appeal
+     you have seen is theirs — that one phone call is the cheapest scam check there is.</div>`);
+}
+$('#helpline-open').onclick=()=>{ renderHelplines(); openModal($('#m-help')); };
+
+/* ═══════════════ 12. DONATE FORM (ticket) ═══════════════ */
+function cityList(){ return [...new Set(SITES.map(s=>s.city))].sort(); }
+/* Rebuilding the <select> on every visit to Donate used to silently wipe whatever
+   the donor had already picked. Remember the choice and restore it. */
+function populateCitySite(){
+  const cities=cityList();
+  const cSel=$('#f-city');
+  const want=cities.includes(state.ui.city) ? state.ui.city : cities[0];
+  cSel.innerHTML=cities.map(c=>`<option>${esc(c)}</option>`).join('');
+  cSel.value=want;
+  populateSites(want);
+}
+/* Options now carry the site id instead of the display name. The name was the only
+   handle the ticket had on a site, which breaks the moment two branches share one. */
+function populateSites(city){
+  const sSel=$('#f-site');
+  sSel.innerHTML='<option value="">Anywhere you suggest 💗</option>'+
+    SITES.filter(s=>s.city===city)
+         .map(s=>`<option value="${esc(s.id)}">${esc(s.name)}</option>`).join('');
+  /* Restore the chosen branch, not just the city: the picker used to reset to
+     "Anywhere" on every visit, so the ticket printed the trust's suggestion even
+     though the donor had selected a specific site. */
+  if(state.ui.siteId && SITES.some(s=>s.id===state.ui.siteId && s.city===city)) sSel.value=state.ui.siteId;
+}
+$('#f-city').addEventListener('change',e=>{
+  state.ui.city=e.target.value; state.ui.siteId=''; persist(); populateSites(e.target.value);
+});
+$('#f-site').addEventListener('change',e=>{ state.ui.siteId=e.target.value; persist(); });
+/* siteId is the current key; site-name lookup only rescues tickets saved by v1-v3. */
+function siteById(id){ return SITES.find(s=>s.id===id) || null; }
+function siteByLegacyName(name){ return SITES.find(s=>s.name===name) || null; }
+
+function ticketText(rec){
+  const site=siteById(rec.siteId) || siteByLegacyName(rec.site);
+  const L=[];
+  L.push('🧾 IMAN DONATION TRUST — DONATION TICKET');
+  L.push('Ticket ID: '+rec.id);
+  L.push('Date: '+(rec.date||new Date(rec.ts).toLocaleDateString()));
+  L.push('──────────────────────────');
+  L.push('Items to donate:');
+  rec.items.forEach(i=>L.push('  • '+catLabel(i.cat)+' x'+i.qty+' ('+i.cond+')'));
+  L.push('──────────────────────────');
+  L.push('Donor: '+rec.name+'  ·  ☎ '+rec.phone);
+  L.push('City: '+rec.city);
+  L.push('Site: '+(site ? site.name : 'Nearest site suggested by trust'));
+  if(site){ L.push('Site phone: '+(site.phone||'see Maps listing')); L.push('Site address: '+site.address+', '+site.city); }
+  if(rec.notes) L.push('Notes: '+rec.notes);
+  L.push('──────────────────────────');
+  L.push('Take this ticket to the site — call ahead to confirm what they can accept 💗');
+  return L.join('\n');
+}
+$('#donate-form').addEventListener('submit',e=>{
+  e.preventDefault();
+  const name=$('#f-name'), phone=$('#f-phone'), city=$('#f-city'), dateEl=$('#f-date');
+  let ok=true, firstBad=null;
+  const mark=(el,bad)=>{
+    const f=el.closest('.field');
+    f.classList.toggle('err',bad);
+    const msg=f.querySelector('.err-msg');
+    el.setAttribute('aria-invalid',bad?'true':'false');
+    if(bad){
+      if(msg&&msg.id) el.setAttribute('aria-describedby',msg.id);
+      firstBad=firstBad||el; ok=false;
+    } else if(msg&&msg.id&&el.getAttribute('aria-describedby')===msg.id){
+      el.removeAttribute('aria-describedby');
+    }
+  };
+  mark(name, name.value.trim().length<2);
+  /* Accepts 03001234567, +92 300 1234567, 0092-300-1234567 and 042-35945100.
+     The old pattern also accepted "0000000" and "() - - -". */
+  const phoneVal=phone.value.trim();
+  const digits=phoneVal.replace(/[\s()\-.]/g,'');
+  const phoneOK=/^(?:\+92|0092|92|0)\d{9,10}$/.test(digits) ||
+                /^0\d{2,4}[\s-]?\d{6,8}$/.test(phoneVal);
+  mark(phone, !phoneOK);
+  mark(city, !city.value);
+  /* min="" on the input is only a nudge for the widget — enforce it here too. */
+  const today=todayLocal();
+  mark(dateEl, !!dateEl.value && dateEl.value<today);
+  if(!state.basket.length){ toast('Your basket is empty — add items first!','🧺'); ok=false; }
+  if(!ok){ toast('Please fix the highlighted fields','⚠️'); if(firstBad) firstBad.focus(); return; }
+
+  const siteId=$('#f-site').value;
+  const site=siteById(siteId);
+  const rec={ id:uid(), ts:Date.now(),
+    name:name.value.trim(), phone:phoneVal,
+    city:city.value, siteId:siteId, site:site?site.name:'',
+    date:dateEl.value, notes:$('#f-notes').value.trim(),
+    items:state.basket.map(i=>({...i})), status:'Ticket Ready' };
+  state.history.unshift(rec);
+  /* Only fill the profile name if the donor never set one — a ticket used to
+     silently overwrite a nickname chosen in Profile. */
+  if(!state.profile.name) state.profile.name = rec.name;
+  state.ui.city = city.value;
+  state.ui.siteId = siteId;
+  state.basket=[]; persist(); updateBadge(); renderBasket();
+
+  const txt=ticketText(rec);
+  $('#sum-pre').textContent=txt;
+  const callBtn=$('#call-site');
+  if(site && site.phone){ callBtn.hidden=false; callBtn.href=telHref(site.phone); callBtn.textContent='📞 '+site.phone; }
+  else { callBtn.hidden=true; }
+  if(site){ $('#map-site').href=mapsUrl(site); $('#map-site').hidden=false; }
+  else { $('#map-site').hidden=true; }
+  /* Clear the request-specific fields so the same ticket cannot be submitted twice
+     by double-tapping the button. Name and phone stay: most donors give again. */
+  $('#f-notes').value=''; dateEl.value='';
+  $$('#donate-form .field').forEach(f=>f.classList.remove('err'));
+  $('#donate-success').hidden=false;
+  $('#donate-success').scrollIntoView({behavior:scrollBehavior(),block:'center'});
+  celebrate(); toast('Donation ticket ready! 🎫','🎉');
+});
+$('#copy-summary').onclick=()=>copyText($('#sum-pre').textContent);
+$('#download-receipt').onclick=()=>{
+  const r=downloadText($('#sum-pre').textContent,'iman-donation-ticket.txt','text/plain');
+  toast(r==='ok' ? 'Ticket saved'
+        : 'If no file appeared, use 📋 Copy — some embeds block saving','⬇️');
+};
+$('#new-donation').onclick=()=>{ $('#donate-success').hidden=true; window.scrollTo({top:0,behavior:scrollBehavior()}); };
+
+/* ═══════════════ 13. PROFILE ═══════════════ */
+/* AVATARS now lives in section 2, because state repair needs the valid ids. */
+let avSprite=null;
+function setAvatar(id){
+  state.profile.avatar=id; persist();
+  /* aria-pressed, not just the .sel class: the selection was invisible to AT. */
+  $$('#avatar-picker .av-opt').forEach(b=>{
+    const on=b.dataset.id===id;
+    b.classList.toggle('sel',on);
+    b.setAttribute('aria-pressed',String(on));
+  });
+  const av=AVATARS.find(a=>a.id===id);
+  if(avSprite) avSprite.dead=true;
+  $('#av-emoji').hidden=!!av.sheet; $('#av-stage').hidden=!av.sheet;
+  if(av.sheet){ avSprite=mkSprite('#av-stage',sheets[av.sheet],96,7); }
+  else { $('#av-emoji').textContent=av.ico; }
+}
+function buildAvatarPicker(){
+  const p=$('#avatar-picker'); p.innerHTML='';
+  AVATARS.forEach(a=>{
+    const b=document.createElement('button'); b.type='button'; b.className='av-opt';
+    b.dataset.id=a.id; b.textContent=a.ico;
+    b.setAttribute('aria-label','Avatar: '+a.id);
+    b.setAttribute('aria-pressed','false');
+    b.onclick=()=>{ setAvatar(a.id); toast('Avatar updated!','✨'); };
+    p.appendChild(b);
+  });
+}
+const BADGES=[
+  {ico:'💝',label:'First Gift', test:h=>h.length>=1},
+  {ico:'💛',label:'Kind Heart', test:h=>h.length>=3},
+  {ico:'🌟',label:'Super Giver',test:h=>h.length>=5},
+  {ico:'🧸',label:'Toy Angel',  test:h=>h.some(r=>r.items.some(i=>i.cat==='toys'))},
+  {ico:'📚',label:'Book Buddy', test:h=>h.some(r=>r.items.some(i=>i.cat==='books'))},
+  {ico:'💗',label:'Big Heart',  test:h=>h.reduce((n,r)=>n+r.items.reduce((m,i)=>m+i.qty,0),0)>=10}
+];
+function renderProfile(){
+  $('#pf-name').value=state.profile.name||'';
+  const h=state.history;
+  $('#stat-items').textContent=h.reduce((n,r)=>n+r.items.reduce((m,i)=>m+i.qty,0),0);
+  $('#stat-don').textContent=h.length;
+  $('#stat-cats').textContent=new Set(h.flatMap(r=>r.items.map(i=>i.cat))).size;
+  const br=$('#badge-row'); br.innerHTML='';
+  BADGES.forEach(b=>{
+    const got=b.test(h);
+    const s=document.createElement('span'); s.className='badge'+(got?'':' locked');
+    s.textContent=b.ico+' '+b.label+(got?'':' · locked'); br.appendChild(s);
+  });
+  const hl=$('#history-list'); hl.innerHTML='';
+  $('#empty-history').hidden=h.length>0;
+  h.forEach(rec=>{
+    const d=document.createElement('div'); d.className='h-card';
+    const items=rec.items.map(i=>`${CAT_EMOJI[i.cat]} ${catLabel(i.cat)} ×${i.qty}`).join(' · ');
+    /* Every storage-derived value is escaped, including date and status. Nothing
+       else on a *.github.io origin is trusted: localStorage there is shared with
+       every other project page under the same account. */
+    d.innerHTML=`<div class="top"><span class="dt">${esc(rec.date||new Date(rec.ts).toLocaleDateString())}</span><span class="status">${esc(rec.status)}</span></div>
+      <div class="items">${esc(items)}</div>
+      <div class="row"><span class="chip">📍 ${esc(rec.city)}</span>
+      <button type="button" class="btn btn-soft tk" style="padding:6px 12px;font-size:.8rem">🎫 Copy ticket</button>
+      <button type="button" class="btn btn-soft dl" style="padding:6px 12px;font-size:.8rem">🗑️ Delete</button></div>`;
+    d.querySelector('.tk').onclick=()=>{ copyText(ticketText(rec)); };
+    d.querySelector('.dl').onclick=()=>showConfirm('Delete this donation record?',()=>{
+      state.history=state.history.filter(r=>r.id!==rec.id); persist(); renderProfile(); toast('Record deleted','🗑️'); });
+    hl.appendChild(d);
+  });
+}
+$('#pf-name').addEventListener('input',e=>{ state.profile.name=e.target.value.trim(); persist(); });
+$('#export-json').onclick=()=>{
+  /* Say what this file contains: it holds every donation record, including the
+     donor's name and phone number. */
+  downloadText(JSON.stringify(state,null,2),'iman-trust-my-data.json','application/json');
+  toast('Exported — this file contains your name and phone','⬇️');
+};
+let confirmFn=null;
+function showConfirm(text,fn){ $('#cf-text').textContent=text; confirmFn=fn; openModal($('#m-confirm')); }
+$('#cf-yes').onclick=()=>{ closeModal($('#m-confirm')); confirmFn&&confirmFn(); confirmFn=null; };
+$('#clear-data').onclick=()=>showConfirm('Clear profile, basket and history from this device?',()=>{
+  /* Reset from the defaults so `ui` is cleared too — it used to survive "clear
+     everything" and then reappear in the next export. */
+  const fresh=sanitise({});
+  state.basket=fresh.basket; state.history=fresh.history;
+  state.profile=fresh.profile; state.ui=fresh.ui;
+  persist();
+  $('#donate-success').hidden=true;
+  ['#f-name','#f-phone','#f-notes','#f-date'].forEach(s=>{ const el=$(s); if(el) el.value=''; });
+  $$('#donate-form .field').forEach(f=>f.classList.remove('err'));
+  $$('#donate-form [aria-invalid]').forEach(el=>el.setAttribute('aria-invalid','false'));
+  updateBadge(); renderBasket(); renderProfile(); setAvatar('bear'); populateCitySite();
+  toast('Fresh start! ✨','🧹');
+});
+
+/* ═══════════════ 14. CURSOR ENTOURAGE ═══════════════
+   Six butterflies, five boys and five girls who stay with the pointer for the whole
+   session. Every one is generated from the specs below, so the file still carries no
+   image assets and makes no network requests.
+
+   Motion: each friend owns an angle and a radius around the pointer and is pulled
+   toward that point by a lerp, so they trail and settle like a small crowd instead of
+   snapping. One style.transform write per friend per frame, nothing else.
+
+   Nothing is created at all under prefers-reduced-motion — a swarm that chases the
+   cursor is precisely the motion that setting exists to stop. */
+
+/* ---- butterflies: three wing silhouettes, six colourways ---- */
+const BFLY_WINGS={
+  round:{ fore:'M19 16 C13.5 4 3.5 1.5 2.6 8.5 C1.9 14 9 17 19 16 Z',
+          hind:'M19 17 C12 17 5 20.5 5.6 25.2 C6.2 29.4 13 29 19 20 Z' },
+  monarch:{ fore:'M19 16 C14 2.5 4.5 -0.5 2.2 7 C0.2 12.5 8 17 19 16 Z',
+            hind:'M19 17 C11 18 4 21 4.6 26 C5.2 30.4 12 29 19 20 Z' },
+  swallow:{ fore:'M19 16 C13 3 3.5 0.5 2.4 8.4 C1.6 13.4 8.5 17 19 16 Z',
+            hind:'M19 17 C11.5 19 6.5 24 9.4 29.6 C11.4 33 16 27 19 20 Z' }
+};
+const BUTTERFLIES=[
+  {w:'round',   wing:'#f26d8d', edge:'#c9455a', body:'#7a3b52',
+   mark:'<g fill="#fffdf8"><circle cx="8.6" cy="10.4" r="1.9"/><circle cx="11.6" cy="15.4" r="1.5"/></g>'},
+  {w:'monarch', wing:'#f2903f', edge:'#2f2016', body:'#2f2016',
+   mark:'<g stroke="#2f2016" stroke-width="1" fill="none"><path d="M19 15.4 C14 7 8 4 4 6"/><path d="M18.6 17.6 q-6 1.4 -9.6 5"/></g><circle cx="9.6" cy="10.6" r="1.7" fill="#ffe9a8"/>'},
+  {w:'round',   wing:'#7ec8f0', edge:'#3d6b9e', body:'#2c4a6e',
+   mark:'<g fill="#fff" opacity=".85"><circle cx="9.2" cy="10.8" r="2.4"/><circle cx="12.4" cy="15.6" r="1.4"/></g>'},
+  {w:'monarch', wing:'#ffd44d', edge:'#c98a1e', body:'#6b4a2a',
+   mark:'<g stroke="#c98a1e" stroke-width="1" fill="none"><path d="M19 15.4 C14 7 8 4 4 6"/></g><g fill="#b98ae0"><circle cx="8.4" cy="9.6" r="2"/><circle cx="11.8" cy="14.8" r="1.4"/></g>'},
+  {w:'swallow', wing:'#6fcbb5', edge:'#2f7f68', body:'#215c4c',
+   mark:'<g fill="#fffdf3"><circle cx="8.8" cy="10.2" r="1.8"/><circle cx="12.6" cy="15.2" r="1.2"/></g><path d="M9.4 29.6 l-1.8 3.6" stroke="#2f7f68" stroke-width="1.2" fill="none" stroke-linecap="round"/>'},
+  {w:'round',   wing:'#b98ae0', edge:'#7a52a8', body:'#4e3470',
+   mark:'<g stroke="#fffdf8" stroke-width="1.2" fill="none" stroke-linecap="round"><path d="M6.6 11.4 h8.4"/><path d="M7.6 15.4 h7.4"/></g>'}
+];
+function butterflySVG(b){
+  const W=BFLY_WINGS[b.w];
+  const paint='fill="'+b.wing+'"'+(b.edge?' stroke="'+b.edge+'" stroke-width="1.1" stroke-linejoin="round"':'');
+  const left='<path d="'+W.fore+'" '+paint+'/><path d="'+W.hind+'" '+paint+'/>'+(b.mark||'');
+  const size=b.size||20;
+  return '<svg viewBox="0 0 40 34" width="'+size+'" height="'+Math.round(size*0.85)+'" aria-hidden="true">'
+    +'<g class="bwl">'+left+'</g>'
+    /* outer <g> carries the CSS flap, inner <g> keeps the mirror, because a CSS
+       transform on an element overrides its SVG transform attribute. */
+    +'<g class="bwr"><g transform="translate(40,0) scale(-1,1)">'+left+'</g></g>'
+    +'<ellipse cx="20" cy="17.5" rx="1.8" ry="8.4" fill="'+b.body+'"/>'
+    +'<circle cx="20" cy="8.2" r="2.7" fill="'+b.body+'"/>'
+    +'<path d="M18.7 6.4 q-3.4 -4.2 -6 -4.8" fill="none" stroke="'+b.body+'" stroke-width="1" stroke-linecap="round"/>'
+    +'<path d="M21.3 6.4 q3.4 -4.2 6 -4.8" fill="none" stroke="'+b.body+'" stroke-width="1" stroke-linecap="round"/>'
+    +'</svg>';
+}
+
+/* ---- children: parts, then one short spec per child ---- */
+const HAIR_BACK={
+  pony:'<ellipse cx="23.6" cy="13.4" rx="2.7" ry="3.8"/><circle cx="22.6" cy="9.8" r="1.5" fill="#e8656f"/>',
+  braids:'<rect x="5.2" y="11" width="2.7" height="9.5" rx="1.35"/><rect x="22.1" y="11" width="2.7" height="9.5" rx="1.35"/>'
+        +'<circle cx="6.5" cy="20.9" r="1.3" fill="#e8656f"/><circle cx="23.5" cy="20.9" r="1.3" fill="#e8656f"/>',
+  bun:'<circle cx="15" cy="2.6" r="3.2"/>',
+  bob:'<path d="M6.4 11 a8.6 8.6 0 0 1 17.2 0 v5.8 q-8.6 -3.8 -17.2 0 z"/>',
+  long:'<path d="M6.2 11 a8.8 8.8 0 0 1 17.6 0 v12.5 q-4.4 -2.2 -8.8 -2.2 t-8.8 2.2 z"/>',
+  /* the scarf is a blob wider than the head; the skin circle is painted over it, which
+     leaves a ring of cloth around a bare face — i.e. a hijab. */
+  scarf:'<path d="M4.8 11.4 a10.2 10.2 0 0 1 20.4 0 v6.4 q-4.6 3.4 -10.2 3.4 t-10.2 -3.4 z"/>'
+};
+const HAIR_FRONT={
+  short:'<path d="M6.9 10.3 a8.1 8.1 0 0 1 16.2 0 q-8.1 -7.2 -16.2 0 z"/>',
+  swoop:'<path d="M6.9 10.3 a8.1 8.1 0 0 1 16.2 0 q-4.6 -6.8 -9.6 -4.1 q-4.4 2.3 -6.6 4.1 z"/>',
+  curly:'<path d="M6.9 10.5 a8.1 8.1 0 0 1 16.2 0 q-8.1 -6.4 -16.2 0 z"/>'
+       +'<circle cx="8.8" cy="5.5" r="2.6"/><circle cx="15" cy="3.5" r="3"/><circle cx="21.2" cy="5.5" r="2.6"/>',
+  buzz:'<path d="M7.4 9.9 a7.6 7.6 0 0 1 15.2 0 q-7.6 -5.4 -15.2 0 z"/>',
+  pony:'<path d="M6.9 10.5 a8.1 8.1 0 0 1 16.2 0 q-8.1 -6.4 -16.2 0 z"/>',
+  braids:'<path d="M6.9 10.5 a8.1 8.1 0 0 1 16.2 0 q-8.1 -6.4 -16.2 0 z"/>',
+  bun:'<path d="M6.9 10.5 a8.1 8.1 0 0 1 16.2 0 q-8.1 -6 -16.2 0 z"/>',
+  bob:'<path d="M6.9 10.5 a8.1 8.1 0 0 1 16.2 0 q-8.1 -5.6 -16.2 0 z"/>',
+  long:'<path d="M6.9 10.5 a8.1 8.1 0 0 1 16.2 0 q-8.1 -5.8 -16.2 0 z"/>',
+  scarf:'<path d="M6.7 9.2 a8.3 8.3 0 0 1 16.6 0 q-8.3 -6.4 -16.6 0 z"/>'
+};
+const EYES={
+  round:'<circle cx="12.1" cy="11.5" r="1.45" fill="#3a2a20"/><circle cx="17.9" cy="11.5" r="1.45" fill="#3a2a20"/>'
+       +'<circle cx="11.6" cy="11" r=".5" fill="#fff"/><circle cx="17.4" cy="11" r=".5" fill="#fff"/>',
+  big:'<circle cx="12.1" cy="11.4" r="1.9" fill="#3a2a20"/><circle cx="17.9" cy="11.4" r="1.9" fill="#3a2a20"/>'
+     +'<circle cx="11.4" cy="10.7" r=".7" fill="#fff"/><circle cx="17.2" cy="10.7" r=".7" fill="#fff"/>',
+  dot:'<circle cx="12.1" cy="11.6" r="1.05" fill="#3a2a20"/><circle cx="17.9" cy="11.6" r="1.05" fill="#3a2a20"/>',
+  almond:'<ellipse cx="12.1" cy="11.6" rx="1.75" ry="1.1" fill="#3a2a20"/><ellipse cx="17.9" cy="11.6" rx="1.75" ry="1.1" fill="#3a2a20"/>',
+  happy:'<path d="M10.6 12.1 q1.5 -2.1 3 0" fill="none" stroke="#3a2a20" stroke-width="1.1" stroke-linecap="round"/>'
+       +'<path d="M16.4 12.1 q1.5 -2.1 3 0" fill="none" stroke="#3a2a20" stroke-width="1.1" stroke-linecap="round"/>'
+};
+const MOUTH={
+  smile:'<path d="M13.1 14.2 q1.9 1.9 3.8 0" fill="none" stroke="#a9603f" stroke-width="1.1" stroke-linecap="round"/>',
+  grin:'<path d="M12.7 14 q2.3 2.7 4.6 0 z" fill="#a9603f"/>',
+  small:'<path d="M13.8 14.4 q1.2 1.1 2.4 0" fill="none" stroke="#a9603f" stroke-width="1" stroke-linecap="round"/>',
+  open:'<ellipse cx="15" cy="14.6" rx="1.5" ry="1.2" fill="#a9603f"/>',
+  line:'<path d="M13.6 14.6 h2.8" fill="none" stroke="#a9603f" stroke-width="1" stroke-linecap="round"/>'
+};
+const EXTRAS={
+  blush:'<g fill="#f497b3" opacity=".45"><ellipse cx="10.5" cy="13.3" rx="1.8" ry="1.1"/><ellipse cx="19.5" cy="13.3" rx="1.8" ry="1.1"/></g>',
+  freckles:'<g fill="#b3714a" opacity=".85"><circle cx="10.6" cy="13.4" r=".4"/><circle cx="11.9" cy="14.1" r=".4"/>'
+          +'<circle cx="19.4" cy="13.4" r=".4"/><circle cx="18.1" cy="14.1" r=".4"/></g>',
+  glasses:'<g fill="none" stroke="#5b4a66" stroke-width=".9"><circle cx="12.1" cy="11.5" r="2.7"/><circle cx="17.9" cy="11.5" r="2.7"/>'
+         +'<path d="M14.8 11.5 h.4"/><path d="M9.4 11.1 l-2.2 .6"/><path d="M20.6 11.1 l2.2 .6"/></g>',
+  bow:'<g transform="translate(21.8 6.6)"><path d="M0 0 l-3.2 -2.1 v4.2 z" fill="#e8656f"/><path d="M0 0 l3.2 -2.1 v4.2 z" fill="#e8656f"/>'
+     +'<circle r=".95" fill="#fff"/></g>',
+  beads:'<g fill="#ffd44d"><circle cx="15" cy="4.4" r=".85"/><circle cx="12.5" cy="5" r=".85"/><circle cx="17.5" cy="5" r=".85"/></g>'
+};
+function figureSVG(f){
+  const P=[], topLen=f.topLen||11, size=f.size||26;
+  P.push('<ellipse cx="15" cy="38.7" rx="7.2" ry="1.5" fill="rgba(120,90,110,.18)"/>');
+  P.push('<rect x="11.1" y="29.5" width="3.3" height="8" rx="1.6" fill="'+f.legs+'"/>');
+  P.push('<rect x="15.6" y="29.5" width="3.3" height="8" rx="1.6" fill="'+f.legs+'"/>');
+  P.push('<ellipse cx="12.7" cy="38.2" rx="2.5" ry="1.4" fill="'+f.shoe+'"/>');
+  P.push('<ellipse cx="17.3" cy="38.2" rx="2.5" ry="1.4" fill="'+f.shoe+'"/>');
+  P.push('<rect x="5.5" y="20" width="3" height="9.6" rx="1.5" fill="'+(f.arm||f.top)+'"/>');
+  P.push('<rect x="21.5" y="20" width="3" height="9.6" rx="1.5" fill="'+(f.arm||f.top)+'"/>');
+  P.push('<circle cx="7" cy="30.2" r="1.7" fill="'+f.skin+'"/><circle cx="23" cy="30.2" r="1.7" fill="'+f.skin+'"/>');
+  P.push('<rect x="13.2" y="15.6" width="3.6" height="3.6" rx="1.4" fill="'+f.skin+'"/>');
+  P.push('<circle cx="7.1" cy="11.2" r="1.5" fill="'+f.skin+'"/><circle cx="22.9" cy="11.2" r="1.5" fill="'+f.skin+'"/>');
+  if(HAIR_BACK[f.hairStyle]) P.push('<g fill="'+f.hair+'">'+HAIR_BACK[f.hairStyle]+'</g>');
+  P.push('<circle cx="15" cy="10.8" r="8.1" fill="'+f.skin+'"/>');
+  P.push('<rect x="10.6" y="18.6" width="8.8" height="'+topLen+'" rx="3" fill="'+f.top+'"/>');
+  if(f.flare)  P.push('<path d="M10.6 '+(18.6+topLen-2.5)+' h8.8 l2.7 '+f.flare+' h-14.2 z" fill="'+(f.top2||f.top)+'"/>');
+  if(f.stripe) P.push('<rect x="10.6" y="'+(18.6+topLen*.42)+'" width="8.8" height="1.6" fill="'+f.stripe+'"/>');
+  if(f.sash)   P.push('<rect x="10.6" y="'+(18.6+topLen-3.2)+'" width="8.8" height="2.1" fill="'+f.sash+'"/>');
+  if(f.collar) P.push('<path d="M12.8 19.3 l2.2 2.3 l2.2 -2.3" fill="none" stroke="'+f.collar+'" stroke-width="1.1" stroke-linecap="round"/>');
+  if(f.tie)    P.push('<path d="M15 21.4 l1.5 1.8 l-1.5 4.2 l-1.5 -4.2 z" fill="'+f.tie+'"/>');
+  if(HAIR_FRONT[f.hairStyle]) P.push('<g fill="'+f.hair+'">'+HAIR_FRONT[f.hairStyle]+'</g>');
+  P.push(EYES[f.eyes]||EYES.round);
+  P.push(MOUTH[f.mouth]||MOUTH.smile);
+  (f.extras||[]).forEach(k=>{ if(EXTRAS[k]) P.push(EXTRAS[k]); });
+  return '<svg viewBox="0 0 30 40" width="'+size+'" height="'+Math.round(size*40/30)+'" aria-hidden="true">'+P.join('')+'</svg>';
+}
+/* Ten children, no two alike: distinct name, skin, hair style, outfit colour and
+   shape, eye shape, mouth and extras. `kind` only changes how they skip. */
+const FRIEND_KIDS=[
+  {kind:'boy', name:'Ali',    skin:'#f6cfa8', hair:'#2f2016', hairStyle:'short',  top:'#7ec8f0', topLen:11, legs:'#3d6b9e', shoe:'#5b4a66',
+   eyes:'round',  mouth:'smile', extras:['blush'], collar:'#fff'},
+  {kind:'boy', name:'Bilal',  skin:'#c98a5e', hair:'#201812', hairStyle:'buzz',   top:'#8fd07a', topLen:9,  legs:'#f6cfa8', shoe:'#4a3324',
+   eyes:'dot',    mouth:'grin',  extras:['freckles']},
+  {kind:'boy', name:'Hamza',  skin:'#a9714b', hair:'#2f2016', hairStyle:'curly',  top:'#f7d9a8', topLen:13, legs:'#f7d9a8', shoe:'#7a5a49',
+   eyes:'almond', mouth:'small', extras:['blush'], sash:'#e8656f'},
+  {kind:'boy', name:'Usman',  skin:'#f0c39a', hair:'#4a3324', hairStyle:'swoop',  top:'#b98ae0', topLen:12, legs:'#5b4a66', shoe:'#3d2f45',
+   eyes:'big',    mouth:'smile', extras:['glasses'], stripe:'#e3d1f5'},
+  {kind:'boy', name:'Talha',  skin:'#8a5a3a', hair:'#15100c', hairStyle:'short',  top:'#fdfdfd', topLen:11, legs:'#2f3d5c', shoe:'#201812',
+   eyes:'round',  mouth:'smile', extras:[], collar:'#2f3d5c', tie:'#e8656f'},
+  {kind:'girl',name:'Ayesha', skin:'#f6cfa8', hair:'#3a2418', hairStyle:'long',   top:'#f78fb0', topLen:10, flare:5, legs:'#f6cfa8', shoe:'#e8656f',
+   eyes:'round',  mouth:'smile', extras:['blush','bow']},
+  {kind:'girl',name:'Hina',   skin:'#d99b6c', hair:'#201812', hairStyle:'braids', top:'#8fd0c0', topLen:12, legs:'#8fd0c0', shoe:'#3d6b9e',
+   eyes:'almond', mouth:'small', extras:['beads'], sash:'#fff'},
+  {kind:'girl',name:'Sana',   skin:'#f0c39a', hair:'#5a3a22', hairStyle:'pony',   top:'#f2903f', topLen:9,  legs:'#3d6b9e', shoe:'#5b4a66',
+   eyes:'dot',    mouth:'grin',  extras:['freckles'], stripe:'#fff'},
+  {kind:'girl',name:'Maryam', skin:'#c98a5e', hair:'#f0a8c0', hairStyle:'scarf',  top:'#5b7fd4', topLen:11, legs:'#5b4a66', shoe:'#3d2f45',
+   eyes:'big',    mouth:'smile', extras:['glasses'], collar:'#fff'},
+  {kind:'girl',name:'Zainab', skin:'#a9714b', hair:'#15100c', hairStyle:'bob',    top:'#ffd44d', topLen:10, flare:6, legs:'#f0c39a', shoe:'#e8656f',
+   eyes:'happy',  mouth:'open',  extras:['blush','bow']}
+];
+
+function initFriends(){
+  const host=$('#friends');
+  if(!host || REDUCE) return null;      // the one case where they are not drawn at all
+  const BF=20, KID=26;
+  const folk=[];
+  const clampN=(v,a,b)=>v<a?a:(v>b?b:v);
+  const half=el=>el.svgW/2;
+
+  BUTTERFLIES.forEach((b,i)=>{
+    folk.push({ svg:butterflySVG(Object.assign({size:BF},b)), svgW:BF, svgH:Math.round(BF*0.85),
+      r:52+(i%3)*12, a:(i/BUTTERFLIES.length)*Math.PI*2, spin:0.42+(i%2)*0.3,
+      wob:7, wobSpeed:2.1+i*0.22, bob:2.2, bobSpeed:1.3+i*0.09, k:0.105, tilt:24, walk:false, phase:i*1.7 });
+  });
+  FRIEND_KIDS.forEach((f,i)=>{
+    folk.push({ svg:figureSVG(Object.assign({size:KID},f)), svgW:KID, svgH:Math.round(KID*40/30),
+      r:30+(i%4)*9, a:(i/FRIEND_KIDS.length)*Math.PI*2+0.45, spin:-0.26-(i%3)*0.11,
+      /* the girls skip a little higher than the boys walk */
+      wob:4, wobSpeed:1.5+i*0.12, bob:f.kind==='girl'?2.2:1.5, bobSpeed:1.6+i*0.07,
+      k:0.078, tilt:0, walk:true, phase:i*0.9 });
+  });
+
+  let px=innerWidth/2, py=innerHeight/2, raf=0, running=false, last=0;
+  for(const f of folk){
+    f.el=document.createElement('div');
+    f.el.className='fr';
+    f.el.innerHTML=f.svg;
+    host.appendChild(f.el);
+    f.x=px+f.r*Math.cos(f.a);
+    f.y=py+f.r*Math.sin(f.a)*0.66;
+    f.face=1;
+    if(f.tilt){                                   // stagger the wing beat per butterfly
+      f.el.querySelectorAll('.bwl,.bwr').forEach(g=>{ g.style.animationDuration=(0.24+(f.r%3)*0.03).toFixed(2)+'s'; });
+    }
+  }
+
+  const onMove=e=>{
+    const t=e.touches&&e.touches[0] ? e.touches[0] : e;
+    if(typeof t.clientX==='number'){ px=t.clientX; py=t.clientY; }
+  };
+  function frame(t){
+    raf=0; if(!running) return;
+    const dt=Math.max(8, Math.min(48, last? t-last : 16)); last=t;
+    for(const f of folk){
+      f.a += f.spin*dt/1000;
+      const rr=f.r + Math.sin(t/1000*f.wobSpeed+f.phase)*f.wob;
+      const tx=px+rr*Math.cos(f.a);
+      const ty=py+rr*Math.sin(f.a)*0.66 + Math.sin(t/1000*f.bobSpeed+f.phase)*f.bob;
+      const nx=f.x+(tx-f.x)*f.k, ny=f.y+(ty-f.y)*f.k;
+      const vx=(nx-f.x)/(dt/1000);
+      f.x=nx; f.y=ny;
+      let tr='translate3d('+(f.x-f.svgW/2).toFixed(1)+'px,'+(f.y-f.svgH/2).toFixed(1)+'px,0)';
+      if(f.tilt) tr+=' rotate('+clampN(vx*0.05,-f.tilt,f.tilt).toFixed(1)+'deg)';
+      if(f.walk){                                 // they turn to face the way they are going
+        if(vx>34) f.face=1; else if(vx<-34) f.face=-1;
+        if(f.face<0) tr+=' scaleX(-1)';
+      }
+      f.el.style.transform=tr;
+    }
+    raf=requestAnimationFrame(frame);
+  }
+  function start(){ if(running) return; running=true; last=0; raf=requestAnimationFrame(frame); }
+  function stop(){ running=false; if(raf){ cancelAnimationFrame(raf); raf=0; } }
+
+  window.addEventListener('pointermove',onMove,{passive:true});
+  window.addEventListener('pointerdown',onMove,{passive:true});
+  window.addEventListener('touchmove',onMove,{passive:true});
+  document.addEventListener('visibilitychange',()=>{ document.hidden ? stop() : start(); });
+  start();
+  return { start, stop, folk };
+}
+
+/* ═══════════════ 15. ZAKAT CALCULATOR ═══════════════
+   Deliberately NOT persisted: these are the donor's financial figures, and unlike a
+   name and a phone number there is no reason for them to outlive the tab. Nothing here
+   leaves the page either — the metal rate is typed in by the donor, because the app
+   makes no network requests and a stale price would be worse than no price. */
+const ZK_ASSETS=['zk-cash','zk-gold','zk-silver','zk-stock','zk-recv'];
+/* Keeps the minus sign so a negative entry parses as negative and is then rejected —
+   stripping it turned "-5000" into +5000, which silently inflated the total. */
+const zkNum=v=>{ const n=parseFloat(String(v==null?'':v).replace(/[^0-9.\-]/g,'')); return (isFinite(n)&&n>0)?n:0; };
+const zkMoney=n=>'Rs '+Math.round(n).toLocaleString('en-PK');
+function zakatFigures(){
+  const assets=ZK_ASSETS.reduce((t,id)=>t+zkNum($('#'+id).value),0);
+  const debts=zkNum($('#zk-debt').value);
+  const total=Math.max(0,assets-debts);
+  const nisaab=zkNum($('#zk-nisaab').value);
+  return {assets,debts,total,nisaab,above:nisaab>0&&total>=nisaab};
+}
+function zakatWorksheet(){
+  const f=zakatFigures();
+  return ['ZAKAT WORKSHEET — Iman Donation Trust','',
+    'Cash in hand & bank : '+zkMoney(zkNum($('#zk-cash').value)),
+    'Gold (value)        : '+zkMoney(zkNum($('#zk-gold').value)),
+    'Silver (value)      : '+zkMoney(zkNum($('#zk-silver').value)),
+    'Business stock      : '+zkMoney(zkNum($('#zk-stock').value)),
+    'Money owed to me    : '+zkMoney(zkNum($('#zk-recv').value)),
+    'Debts I must pay    : -'+zkMoney(f.debts),
+    '----------------------------------',
+    'Total zakatable     : '+zkMoney(f.total),
+    'Nisaab threshold    : '+(f.nisaab>0?zkMoney(f.nisaab):'not set'),
+    'Zakat due (2.5%)    : '+zkMoney(f.above?f.total*0.025:0),'',
+    'This is a calculator, not a fatwa. Zakat is due on wealth held for one',
+    'complete lunar year (hawl), above the nisaab, and surplus to your needs.',
+    'Ask a scholar about your own situation.'].join('\n');
+}
+function renderZakat(){
+  if(!$('#zk-total')) return;
+  const f=zakatFigures();
+  $('#zk-total').textContent=zkMoney(f.total);
+  $('#zk-thr').textContent=f.nisaab>0?zkMoney(f.nisaab):'not set';
+  const v=$('#zk-verdict');
+  if(f.nisaab<=0){
+    v.className='zk-verdict';
+    v.textContent='Add your nisaab threshold above — without it there is nothing to compare your wealth against.';
+  } else if(f.total<=0){
+    v.className='zk-verdict';
+    v.textContent='Enter what you own above to see what you owe.';
+  } else if(f.above){
+    v.className='zk-verdict due';
+    v.textContent='Your zakatable wealth is above the nisaab, so zakat is due on it — subject to the hawl (one lunar year) condition.';
+  } else {
+    v.className='zk-verdict below';
+    v.textContent='Your zakatable wealth is below the nisaab, so no zakat is due on it.';
+  }
+  $('#zk-due').textContent=zkMoney(f.above?f.total*0.025:0);
+  $('#zk-nisaab-note').textContent = f.nisaab>0
+    ? 'Nisaab set to '+zkMoney(f.nisaab)+(CONFIG.zakat.nisaabCheckedOn?' (figure dated '+CONFIG.zakat.nisaabCheckedOn+')':'')
+      +'. Metal prices move, so recheck this figure every year.'
+    : 'Nisaab is the line between owing zakat and not. Leave it blank and you will still see your total wealth.';
+}
+function initZakat(){
+  if(!$('#zk-nisaab')) return;
+  if(CONFIG.zakat.nisaab>0) $('#zk-nisaab').value=String(CONFIG.zakat.nisaab);
+  ZK_ASSETS.concat(['zk-debt','zk-nisaab']).forEach(id=>$('#'+id).addEventListener('input',renderZakat));
+  $('#zk-usenisaab').addEventListener('click',()=>{
+    const grams=parseFloat($('#zk-metal').value)||0;
+    const rate=zkNum($('#zk-rate').value);
+    if(!rate){ toast('Enter today’s price per gram first','⚖️'); $('#zk-rate').focus(); return; }
+    $('#zk-nisaab').value=String(Math.round(grams*rate));
+    renderZakat();
+    toast('Nisaab set from '+grams+' g × '+zkMoney(rate),'🧮');
+  });
+  $('#zk-copy').addEventListener('click',()=>copyText(zakatWorksheet()));
+  $('#zk-clear').addEventListener('click',()=>{
+    ZK_ASSETS.concat(['zk-debt','zk-nisaab','zk-rate']).forEach(id=>{ $('#'+id).value=''; });
+    renderZakat();
+    toast('Cleared — and nothing here was saved anyway','🧹');
+  });
+  renderZakat();
+}
+
+/* ═══════════════ 16. ROUTER ═══════════════ */
+const ROUTES=['home','sites','donate','zakat','profile','guide','emergency','about'];
+/* Guide, Emergency and About are reached from Home and the footer rather than the tab
+   bar, so they keep their parent tab lit — otherwise the nav would go blank. */
+const NAV_PARENT={guide:'home',emergency:'home',about:'home'};
+function route(name){
+  name=(name||location.hash.replace('#','')||'home');
+  if(!ROUTES.includes(name)) name='home';
+  $$('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));
+  const tab=NAV_PARENT[name]||name;
+  /* aria-current tells a screen reader which section is showing; the class alone cannot. */
+  $$('.navbtn').forEach(b=>{
+    const on=b.dataset.view===tab;
+    b.classList.toggle('active',on);
+    if(on) b.setAttribute('aria-current','true'); else b.removeAttribute('aria-current');
+  });
+  if(name==='profile') renderProfile();
+  if(name==='donate'){ renderBasket(); populateCitySite(); }
+  if(name==='sites') renderSites();
+  if(name==='zakat') renderZakat();
+  window.scrollTo({top:0,behavior:scrollBehavior()});
+  /* replaceState throws a SecurityError on a file:// document (opaque origin). This
+     runs at init and on every navigation, so an unguarded call broke the whole router
+     whenever the file was opened directly instead of over http. */
+  try{ if(location.hash!=='#'+name) history.replaceState(null,'','#'+name); }catch(e){}
+}
+window.addEventListener('hashchange',()=>route());
+$$('.navbtn').forEach(b=>b.addEventListener('click',()=>route(b.dataset.view)));
+/* One delegated handler for every in-app link: quick links, footer buttons, the
+   "Where to give" button on the Zakat page. */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-goto]');
+  if(t) route(t.dataset.goto);
+});
+
+/* ═══════════════ 17. FX ═══════════════ */
+let fxRaf=0;
+function celebrate(){
+  if(REDUCE) return;
+  const cv=$('#fx'), c=cv.getContext('2d');
+  /* Canvas is a replaced element: setting the backing store alone would also change
+     its displayed size, so pin the CSS box and scale the context instead. Capped at
+     2x — 3x on a cheap Android phone costs fill rate for no visible gain. */
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.width=Math.round(innerWidth*dpr); cv.height=Math.round(innerHeight*dpr);
+  cv.style.width=innerWidth+'px'; cv.style.height=innerHeight+'px';
+  c.setTransform(dpr,0,0,dpr,0,0);
+  const chars=['💗','⭐','🌸','✨','🧸','🎀','💖'], ps=[];
+  for(let i=0;i<42;i++) ps.push({x:innerWidth/2+(Math.random()-.5)*280,y:innerHeight*.32,
+    vx:(Math.random()-.5)*7,vy:-Math.random()*9-3,g:.26,r:Math.random()*TAU,vr:(Math.random()-.5)*.22,
+    s:16+Math.random()*16,ch:chars[(Math.random()*chars.length)|0]});
+  /* Two fast submissions used to start two loops on the same canvas, each clearing
+     the other's particles. Cancel any run still in flight first. */
+  if(fxRaf){ cancelAnimationFrame(fxRaf); fxRaf=0; }
+  const t0=performance.now();
+  (function anim(t){
+    const el=(t-t0)/1700; c.clearRect(0,0,cv.width,cv.height); let live=false;
+    for(const p of ps){ p.x+=p.vx; p.y+=p.vy; p.vy+=p.g; p.r+=p.vr;
+      const a=Math.max(0,1-el); if(a>0) live=true;
+      c.save(); c.globalAlpha=a; c.translate(p.x,p.y); c.rotate(p.r);
+      c.font=p.s+'px serif'; c.textAlign='center'; c.fillText(p.ch,0,0); c.restore(); }
+    if(live) fxRaf=requestAnimationFrame(anim);
+    else { fxRaf=0; c.clearRect(0,0,cv.width,cv.height); }
+  })(t0);
+}
+setInterval(()=>{
+  if(REDUCE||document.hidden) return;
+  /* #welcome-card lives in #view-home, which is display:none on the other tabs.
+     Animations never run in a display:none subtree, so animationend never fired and
+     one orphan node piled up every 3.8s for as long as the tab was left open. */
+  const home=$('#view-home'); if(!home||!home.classList.contains('active')) return;
+  const w=$('#welcome-card'); if(!w) return;
+  const h=document.createElement('span'); h.className='h-float';
+  h.textContent=['💗','🌸','✨','🎀'][(Math.random()*4)|0];
+  h.style.left=(10+Math.random()*80)+'%';
+  w.appendChild(h);
+  h.addEventListener('animationend',()=>h.remove());
+  setTimeout(()=>h.remove(),4000);
+},3800);
+
+/* ═══════════════ 18. CURSOR-FOLLOWING COMPANION ═══════════════
+   The child in the hero is inline SVG, so it needs no image file, no network and no
+   relaxed CSP. This module only writes transforms: the pupils track the pointer, the
+   whole scene tilts in perspective, and three depth layers slide against each other.
+   House rules — one rAF loop, transform-only writes, and the loop stops whenever the
+   scene is off-screen, the tab is hidden, or the visitor opts out. */
+const GAZE=(()=>{
+  const host=$('#child-hero'), svg=$('#child-stage'), wrap=$('#child-3d');
+  if(!host||!wrap) return { start(){}, stop(){} };
+  if(CONFIG.child.mode==='off'){ host.hidden=true; return { start(){}, stop(){} }; }
+
+  /* ---- optional: play your own generated clip instead of the drawing ---- */
+  let visual=svg;
+  if(CONFIG.child.mode==='video' && CONFIG.child.videoSrc && svg){
+    const v=document.createElement('video');
+    v.src=CONFIG.child.videoSrc;
+    if(CONFIG.child.poster) v.poster=CONFIG.child.poster;
+    v.muted=true; v.loop=true; v.playsInline=true; v.autoplay=true;
+    v.setAttribute('aria-hidden','true');
+    v.play().catch(()=>{});          // autoplay can be refused; the poster still shows
+    svg.replaceWith(v); visual=v;
+  }
+  /* A clip cannot re-aim its own eyes, so only the scene-level effects apply to it. */
+  const isVector = visual===svg;
+  const q =s=>isVector ? svg.querySelector(s) : null;
+  const qa=s=>isVector ? [...svg.querySelectorAll(s)] : [];
+  const far=q('.sc-far'), mid=q('.sc-mid'), kid=q('.sc-child'), shadow=q('#child-shadow'),
+        mouth=q('#child-mouth'), pupils=qa('.pupil-g'), lids=qa('.lid'), blushes=qa('.blush');
+
+  /* Tuning, in SVG user units unless stated. */
+  const TILT=8, FAR_S=5, MID_S=9, KID_S=4.4, PUPIL=3.2, LID_H=18.4;
+  const LERP=.085, IDLE_AFTER=4000;
+
+  /* Always on: there is no pause control any more. Reduced motion is the one reason
+     to sit still, and it is honoured by the global animation:none rule plus this flag. */
+  const enabled = !REDUCE;
+  let tx=0, ty=0, gx=0, gy=0;        // target and smoothed gaze, each -1..1
+  let near=0, lidT=0, lidV=0, nextBlink=performance.now()+1500+Math.random()*2500;
+  let lastMove=0, phase=Math.random()*10, raf=0, running=false, onScreen=true;
+  const clamp=(v,a,b)=>v<a?a:(v>b?b:v);
+  const lerp=(a,b,t)=>a+(b-a)*t;
+
+  function point(x,y){
+    if(!enabled||!visual) return;
+    const r=visual.getBoundingClientRect(); if(!r.width) return;
+    const cx=r.left+r.width/2, cy=r.top+r.height*.56;
+    tx=clamp((x-cx)/(innerWidth*.5),-1,1);
+    ty=clamp((y-cy)/(innerHeight*.45),-1,1);
+    near=clamp(1-Math.hypot((x-cx)/(r.width*1.15),(y-cy)/(r.height*1.5)),0,1);
+    lastMove=performance.now();
+  }
+  const onPointer=e=>point(e.clientX,e.clientY);
+
+  function draw(now){
+    raf=0; if(!running) return;
+    if(enabled && now-lastMove>IDLE_AFTER){   // nobody is watching: let them look around
+      phase+=.006;
+      tx=Math.sin(phase)*.55; ty=Math.sin(phase*.7+1.3)*.28; near=lerp(near,0,.02);
+    }
+    gx=lerp(gx,tx,LERP); gy=lerp(gy,ty,LERP);
+    /* scale(1.06) before the rotations: a tilted rectangle would otherwise show the
+       card background in its corners. Applied first because transforms compose
+       right-to-left. */
+    wrap.style.transform = enabled
+      ? 'perspective(760px) rotateY('+(gx*TILT).toFixed(2)+'deg) rotateX('+(-gy*TILT*.7).toFixed(2)+'deg) scale(1.06)'
+      : 'none';
+    const move=(el,dx,dy)=>{ if(el) el.setAttribute('transform','translate('+dx.toFixed(2)+' '+dy.toFixed(2)+')'); };
+    move(far,-gx*FAR_S,-gy*FAR_S*.72);
+    move(mid,-gx*MID_S,-gy*MID_S*.66);
+    move(kid, gx*KID_S, gy*KID_S*.68);
+    move(shadow,-gx*4,-gy*2.5);
+    const px=(gx*PUPIL).toFixed(2), py=(gy*PUPIL*.78).toFixed(2);
+    for(const p of pupils) p.setAttribute('transform','translate('+px+' '+py+')');
+    /* Blink tweened by hand rather than in CSS: CSS transforms of SVG children are
+       still patchy on older WebKit, and this file targets cheap Android phones. */
+    if(now>nextBlink){ lidT=1; nextBlink=now+2400+Math.random()*3400; }
+    lidV=lerp(lidV,lidT,.42); if(lidT===1&&lidV>.985) lidT=0;
+    for(const l of lids) l.setAttribute('height',(lidV*LID_H).toFixed(2));
+    /* The smile widens as the pointer gets close. */
+    if(mouth) mouth.setAttribute('d', near>.5 ? 'M148 126 q12 11 24 0' : 'M150 128 q10 8 20 0');
+    for(const b of blushes) b.setAttribute('opacity',(.34+near*.34).toFixed(2));
+    raf=requestAnimationFrame(draw);
+  }
+  function start(){ if(running||!onScreen||document.hidden) return; running=true; if(!raf) raf=requestAnimationFrame(draw); }
+  function stop(){ running=false; if(raf){ cancelAnimationFrame(raf); raf=0; } }
+
+  window.addEventListener('pointermove',onPointer,{passive:true});
+  window.addEventListener('pointerdown',onPointer,{passive:true});
+  document.addEventListener('pointerleave',()=>{ tx=0; ty=0; near=0; });
+  document.addEventListener('visibilitychange',()=>{ document.hidden?stop():start(); });
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(es=>{ onScreen=es.some(e=>e.isIntersecting); onScreen?start():stop(); },
+      {threshold:.05}).observe(host);
+  }
+  /* No pause button: the only reason to stop is prefers-reduced-motion, which is
+     handled by `enabled` above and by the global animation:none rule. */
+  if(enabled) start(); else wrap.style.transform='none';
+  return { start, stop };
+})();
+
+/* ═══════════════ 19. INIT ═══════════════ */
+$('#search').addEventListener('input',onSearchInput);
+$('#search').addEventListener('keydown',e=>{ if(e.key==='Enter') openSites(e.target.value); });
+$('#search-heart').addEventListener('click',()=>{
+  const vis=$$('#cat-grid .cat').filter(c=>!c.hidden);
+  if(!vis.length) return;
+  const c=vis[(Math.random()*vis.length)|0];
+  c.classList.remove('boing'); void c.offsetWidth; c.classList.add('boing');
+  c.scrollIntoView({behavior:scrollBehavior(),block:'center'});
+  toast('Surprise pick: '+c.dataset.label+'!','🎲');
+});
+document.addEventListener('keydown',e=>{
+  /* Never steal focus out of an open dialog: inside a modal the active element is the
+     .panel DIV, which passed the old tagName test. */
+  if($$('.modal.open').length) return;
+  if(e.key==='/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){
+    e.preventDefault(); $('#search').focus(); }
+});
+$('#bear-stage').addEventListener('click',()=>{ toast('Hugs for your kindness!','🧸');
+  $('#bear-stage').classList.remove('boing'); void $('#bear-stage').offsetWidth; $('#bear-stage').classList.add('boing'); });
+$('#bunny-stage').addEventListener('click',()=>{ toast('Every gift fills my box with joy!','🐰'); route('donate'); });
+$('#castle-stage').addEventListener('click',()=>toast('Every donation builds a happy home!','🏰'));
+
+$('#yr').textContent=new Date().getFullYear();
+$('#f-date').min=todayLocal();   // was toISOString(): UTC, so "today" was wrong before 05:00 PKT
+buildCards(); buildAvatarPicker(); renderQuickAdd(); renderBasket(); updateBadge();
+setAvatar(state.profile.avatar||'bear');
+initZakat();
+renderEmergencyOrgs();
+/* Kept in a binding so the browser self-test can inspect the entourage without
+   creating a second one. */
+const FRIENDS=initFriends();
+/* Real layout sizes chosen from the viewport. The old code scaled the mascots with a
+   CSS transform, which does not shrink the layout box, so on a 360px phone the header
+   needed ~390px against ~340px available and .app-header{overflow:hidden} clipped it. */
+const NARROW = innerWidth<420;
+mkSprite('#bear-stage',sheets.bear,NARROW?92:132);
+mkSprite('#castle-stage',sheets.castle,NARROW?80:116);
+mkSprite('#bunny-stage',sheets.bunny,NARROW?78:112);
+/* Re-run the filter once: a restored or autofilled search box used to show text while
+   the grid stayed unfiltered, because only the `input` event was bound. */
+onSearchInput();
+route();
+</script>
+</body>
+</html>
