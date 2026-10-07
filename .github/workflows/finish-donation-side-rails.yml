@@ -12,103 +12,17 @@ jobs:
   finish:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-
-      - name: Finish the requested visual changes
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          p = Path('docs/index.html')
-          s = p.read_text(encoding='utf-8')
-
-          s = re.sub(
-              r'\s*<div style="margin-top:6px;font-size:\.74rem;line-height:1\.5">\s*'
-              r'An independent directory\. Not affiliated with, or endorsed by,\s*'
-              r'any organisation listed\. This app never collects or transfers money\.\s*</div>',
-              '', s, count=1
-          )
-
-          if 'id="decorative-rails"' not in s:
-              html = r'''
-  <div id="decorative-rails" aria-hidden="true">
-    <div class="rail rail-left"><div class="rail-chain" id="rail-left-items"></div></div>
-    <div class="rail rail-right"><div class="rail-chain" id="rail-right-items"></div></div>
-  </div>
-'''
-              marker = '\n</div>\n\n<!-- ================= CATEGORY MODAL ================= -->'
-              if marker not in s:
-                  raise SystemExit('HTML insertion marker not found')
-              s = s.replace(marker, html + marker, 1)
-
-          css = r'''
-/* ═══════════ Decorative side chains ═══════════ */
-#decorative-rails{position:fixed;inset:0;pointer-events:none;z-index:45;overflow:hidden}
-.rail{position:absolute;top:0;bottom:0;width:38px;overflow:hidden;display:flex;justify-content:center}
-.rail-left{left:calc(50% - 280px - 50px)}
-.rail-right{right:calc(50% - 280px - 50px)}
-.rail-chain{position:absolute;inset:-28px 0;display:flex;flex-direction:column;align-items:center;justify-content:space-around}
-.rail-item{width:34px;height:34px;display:grid;place-items:center;font-size:25px;line-height:1;filter:drop-shadow(0 3px 4px rgba(185,105,135,.22));transform-origin:50% 50%;animation:railBounce 2.6s ease-in-out infinite;will-change:transform}
-.rail-item:nth-child(3n){animation-name:railBounceWide;animation-duration:3.1s}
-.rail-item:nth-child(4n){animation-name:railSpinBounce;animation-duration:3.7s}
-.rail-item:nth-child(5n){animation-duration:2.9s}
-.rail-left .rail-item:nth-child(even){animation-delay:-.8s}
-.rail-left .rail-item:nth-child(3n){animation-delay:-1.45s}
-.rail-right .rail-item:nth-child(even){animation-delay:-1.2s}
-.rail-right .rail-item:nth-child(3n){animation-delay:-2s}
-@keyframes railBounce{0%,100%{transform:translate3d(0,0,0) rotate(-7deg) scale(.9)}50%{transform:translate3d(2px,-9px,0) rotate(7deg) scale(1.08)}}
-@keyframes railBounceWide{0%,100%{transform:translate3d(0,1px,0) rotate(-12deg) scale(.86)}50%{transform:translate3d(-3px,-11px,0) rotate(12deg) scale(1.12)}}
-@keyframes railSpinBounce{0%{transform:translate3d(0,0,0) rotate(0deg) scale(.9)}50%{transform:translate3d(1px,-8px,0) rotate(180deg) scale(1.08)}100%{transform:translate3d(0,0,0) rotate(360deg) scale(.9)}}
-@media (max-width:900px){#decorative-rails{display:none}}
-@media (prefers-reduced-motion:reduce){.rail-item{animation:none!important}}
-'''
-          marker_css = '\n/* ═══════════ Cursor entourage: 6 butterflies + 5 boys + 5 girls ═══════════ */'
-          if '/* ═══════════ Decorative side chains ═══════════' not in s:
-              if marker_css not in s:
-                  raise SystemExit('CSS insertion marker not found')
-              s = s.replace(marker_css, css + marker_css, 1)
-
-          js = r'''
-/* ═══════════ Decorative side-chain builder ═══════════ */
-(function initDecorativeRails(){
-  const left=document.getElementById('rail-left-items');
-  const right=document.getElementById('rail-right-items');
-  if(!left||!right||REDUCE) return;
-  const things=['🧺','👕','👗','💵','🐪','🍔','🌹','🍊','🌷','🌼','💎','💍','📿','🚗','⚽','🏍️','👜','🧣','👟','🍎','🎁','🧸','📚','🎀','🌺','🪻','💗','🛍️','🥕','🪴','🎒','🪙'];
-  const make=(host,offset)=>{
-    for(let i=0;i<18;i++){
-      const el=document.createElement('span');
-      el.className='rail-item';
-      el.textContent=things[(i*3+offset)%things.length];
-      el.style.animationDelay=(-((i*0.47)+(offset*.19)%3.5)).toFixed(2)+'s';
-      el.style.fontSize=(22+(i%4)*2)+'px';
-      host.appendChild(el);
-    }
-  };
-  make(left,0); make(right,11);
-})();
-'''
-          marker_js = '\n/* ═══════════════ 19. INIT ═══════════════ */'
-          if 'initDecorativeRails' not in s:
-              if marker_js not in s:
-                  raise SystemExit('JS insertion marker not found')
-              s = s.replace(marker_js, js + marker_js, 1)
-
-          p.write_text(s, encoding='utf-8')
-          PY
-
-      - name: Commit the finished file
+      - uses: actions/checkout@v4
+      - name: Apply requested changes
+        run: python tools/finish_side_rails.py
+      - name: Commit changed app
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/index.html
           if git diff --cached --quiet; then
-            echo "No changes needed."
+            echo "No app changes needed."
           else
-            git commit -m "Add animated donation side chains and remove disclaimer"
+            git commit -m "Finish animated donation side rails"
             git push
           fi
