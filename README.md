@@ -193,6 +193,20 @@ python -m http.server 8123 --directory tools/site
 
 ---
 
+## More reading
+
+* [`REVIEW-AND-ROADMAP.md`](REVIEW-AND-ROADMAP.md) — the full review: ~20 defects that were
+  found and fixed, what was verified and how, what is still open, and a six-tier roadmap for
+  turning this into a production-grade Pakistan donation platform. Includes the rendered
+  mascot sheets and the cursor entourage.
+* [`research/pakistan-donation-briefing.md`](research/pakistan-donation-briefing.md) — the
+  evidence base for the directory: what each major trust actually accepts, how zakat and
+  qurbani are organised, the payments and registration rules that apply in Pakistan, and what
+  a prototype may and may not do. Every claim is labelled `[fetched]`, `[snippet]`,
+  **UNVERIFIED** or **CONFLICT**.
+
+---
+
 ## Honest limits
 
 * **The directory is not verified.** Addresses, hours and accepted categories were
