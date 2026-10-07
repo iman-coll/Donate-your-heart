@@ -11,6 +11,16 @@ headless = true
 [browser]
 gatherUsageStats = false
 
+# Hide Streamlit's own chrome as far as config allows. The CSS in streamlit_app.py
+# does the rest; these two are the parts that cannot be reached from CSS.
+[client]
+toolbarMode = "minimal"
+showErrorDetails = false
+showSidebarNavigation = false
+
+[ui]
+hideTopBar = true
+
 # NOTE: there is intentionally no secrets.toml in this repository and this app needs
 # none. If you ever add one, .gitignore already excludes it — and remember that
 # `docs/` is the only folder GitHub Pages publishes, so this directory is never

@@ -85,24 +85,76 @@ survive `file://` — but a real server is closer to how it will behave live.
 
 ## 3. Run it on Streamlit
 
+### Why there is no Python rewrite
+
+Streamlit is a Python framework, and the honest answer is that **the app cannot be
+converted to Python without changing it**. `st.markdown(..., unsafe_allow_html=True)`
+strips every `<script>` tag, and the app is 1,600 lines of JavaScript: canvas-baked
+mascots, the cursor entourage, modals, the Zakat calculator, the ticket generator. Even
+the fonts and the CSS custom properties would not survive. Rebuilding it from Streamlit
+widgets would produce a *different app that resembles this one* — which is exactly what
+you said you did not want.
+
+So nothing is converted. `streamlit_app.py` reads `docs/index.html` and hands those
+**identical bytes** to the browser inside one iframe. Same HTML, same CSS, same
+JavaScript, same strict CSP, same fonts, same graphics. The only Python in the project
+hides Streamlit's own header, toolbar and footer so that what you see is the app and
+nothing else.
+
+You can prove it: the pushed blob hash of `docs/index.html` is `da7e0f6b…`, and
+`git hash-object docs/index.html` prints the same thing. One file, two hosts, no drift.
+
+### Run it locally
+
 ```bash
 pip install -r requirements.txt
 streamlit run streamlit_app.py
+# opens http://localhost:8501
 ```
 
-Then **Streamlit Community Cloud**: share.streamlit.io → *New app* → pick this repo →
-main file `streamlit_app.py` → Deploy. `requirements.txt` is picked up automatically.
+### Deploy on Streamlit Community Cloud
 
-Two notes about Streamlit, because they are the two things that can look broken:
+1. Go to **<https://share.streamlit.io>** and click **Sign in with GitHub**. Authorise it
+   for the `iman-coll` account (it needs read access to your repositories).
+2. Click **Create app** → choose **Deploy a public app from GitHub**.
+3. Fill in exactly these fields:
 
-* **The app renders inside an iframe.** Its own Content-Security-Policy still applies,
-  and every asset it needs is a `data:` URI or inline, so nothing is blocked. The one
-  thing an iframe *can* block is saving files, which is why the ticket button says
-  "use 📋 Copy" when it cannot be sure the save worked.
-* **`localStorage` may be shared with the Streamlit origin** rather than isolated to
-  the app. The app already assumes its stored data might be corrupt or foreign and
-  repairs it on load, so this is safe — but if you want true isolation, use the Pages
-  URL instead.
+   | Field | Value |
+   |---|---|
+   | Repository | `iman-coll/Donate-your-heart` |
+   | Branch | `main` |
+   | Main file path | `streamlit_app.py` |
+   | App URL | pick anything, e.g. `donate-your-heart` |
+   | Advanced settings → Python version | 3.11 or newer |
+   | Advanced settings → Secrets | **leave empty** — this app needs none |
+
+4. Click **Deploy!** The first build takes a minute or two; after that every `git push`
+   to `main` redeploys automatically.
+
+Your app will be at `https://<app-url>.streamlit.app`.
+
+> **Do not** put `streamlit_app.py` at the repo root of a *different* Pages site, and
+> never commit `.streamlit/secrets.toml`. This repo needs no secrets at all, and
+> `.gitignore` already excludes that file.
+
+### Two extra switches
+
+| Switch | Effect |
+|---|---|
+| `?check=1` on the Streamlit URL | Shows the byte count and SHA-256 of the embedded file, so you can confirm both hosts serve identical bytes. Absent by default, because the default view should be nothing but the app. |
+| `EMBED_MODE=url` (env var) | Points the iframe at the live Pages URL instead of inlining the file. Slightly lighter and always current, but it needs the Pages site to be up. `EMBED_MODE=srcdoc` (default) works with no network at all. |
+
+### If something looks off on Streamlit
+
+| Symptom | Cause and fix |
+|---|---|
+| A thin scrollbar next to the app's own scrolling | The iframe is a few pixels taller than the window. The CSS uses `dvh` with a `vh` fallback; tweak the `0.5rem` in `streamlit_app.py` if your browser is unusual. |
+| Streamlit's header or toolbar is still visible | A Streamlit version renamed those elements. Also set **Settings → Theme** once, or add the newer selectors to the `<style>` block in `streamlit_app.py`. |
+| "Save ticket" does nothing | Streamlit's component iframe may block file downloads. The app detects the frame and tells the user to press **📋 Copy** instead — the ticket text is identical either way. |
+| Donation history does not survive a reload | The component iframe may not have `allow-same-origin`, so `localStorage` is unavailable. The app already catches that and warns once; everything else works. For guaranteed persistence use the Pages URL. |
+| The companion or the cursor entourage is missing | Fine — `prefers-reduced-motion` is on. They are disabled deliberately for anyone with that setting. |
+
+---
 
 ## 4. Deploy to GitHub Pages
 
