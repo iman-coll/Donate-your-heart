@@ -243,6 +243,26 @@ footer .fbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin
 .child-3d>svg,.child-3d>video{display:block;width:100%;height:auto}
 .child-svg{background:#ffeaf2}
 .sc-far,.sc-mid,.sc-child,.pupil-g,.lid,.blush{will-change:transform}
+/* ═══════════ Decorative side chains ═══════════ */
+#decorative-rails{position:fixed;inset:0;pointer-events:none;z-index:45;overflow:hidden}
+.rail{position:absolute;top:0;bottom:0;width:38px;overflow:hidden;display:flex;justify-content:center}
+.rail-left{left:calc(50% - 280px - 50px)}
+.rail-right{right:calc(50% - 280px - 50px)}
+.rail-chain{position:absolute;inset:-28px 0;display:flex;flex-direction:column;align-items:center;justify-content:space-around}
+.rail-item{width:34px;height:34px;display:grid;place-items:center;font-size:25px;line-height:1;filter:drop-shadow(0 3px 4px rgba(185,105,135,.22));transform-origin:50% 50%;animation:railBounce 2.6s ease-in-out infinite;will-change:transform}
+.rail-item:nth-child(3n){animation-name:railBounceWide;animation-duration:3.1s}
+.rail-item:nth-child(4n){animation-name:railSpinBounce;animation-duration:3.7s}
+.rail-item:nth-child(5n){animation-duration:2.9s}
+.rail-left .rail-item:nth-child(even){animation-delay:-.8s}
+.rail-left .rail-item:nth-child(3n){animation-delay:-1.45s}
+.rail-right .rail-item:nth-child(even){animation-delay:-1.2s}
+.rail-right .rail-item:nth-child(3n){animation-delay:-2s}
+@keyframes railBounce{0%,100%{transform:translate3d(0,0,0) rotate(-7deg) scale(.9)}50%{transform:translate3d(2px,-9px,0) rotate(7deg) scale(1.08)}}
+@keyframes railBounceWide{0%,100%{transform:translate3d(0,1px,0) rotate(-12deg) scale(.86)}50%{transform:translate3d(-3px,-11px,0) rotate(12deg) scale(1.12)}}
+@keyframes railSpinBounce{0%{transform:translate3d(0,0,0) rotate(0deg) scale(.9)}50%{transform:translate3d(1px,-8px,0) rotate(180deg) scale(1.08)}100%{transform:translate3d(0,0,0) rotate(360deg) scale(.9)}}
+@media (max-width:900px){#decorative-rails{display:none}}
+@media (prefers-reduced-motion:reduce){.rail-item{animation:none!important}}
+
 /* ═══════════ Cursor entourage: 6 butterflies + 5 boys + 5 girls ═══════════ */
 /* layout+paint containment only: `strict` would add size containment, and a fixed
    element sized by inset:0 does not need its size derived from nothing. */
@@ -834,9 +854,12 @@ footer{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
       <button class="btn btn-soft" data-goto="about">ℹ️ About &amp; Trust</button>
     </div>
     <div>© <span id="yr"></span> Iman Donation Trust · Made with 💗 for Pakistan</div>
-    <div style="margin-top:6px;font-size:.74rem;line-height:1.5">An independent directory. Not affiliated with, or endorsed by,
-      any organisation listed. This app never collects or transfers money.</div>
   </footer>
+  <div id="decorative-rails" aria-hidden="true">
+    <div class="rail rail-left"><div class="rail-chain" id="rail-left-items"></div></div>
+    <div class="rail rail-right"><div class="rail-chain" id="rail-right-items"></div></div>
+  </div>
+
 </div>
 
 <!-- ================= CATEGORY MODAL ================= -->
@@ -2330,6 +2353,25 @@ const GAZE=(()=>{
      handled by `enabled` above and by the global animation:none rule. */
   if(enabled) start(); else wrap.style.transform='none';
   return { start, stop };
+})();
+
+/* ═══════════ Decorative side-chain builder ═══════════ */
+(function initDecorativeRails(){
+  const left=document.getElementById('rail-left-items');
+  const right=document.getElementById('rail-right-items');
+  if(!left||!right||REDUCE) return;
+  const things=['🧺','👕','👗','💵','🐪','🍔','🌹','🍊','🌷','🌼','💎','💍','📿','🚗','⚽','🏍️','👜','🧣','👟','🍎','🎁','🧸','📚','🎀','🌺','🪻','💗','🛍️','🥕','🪴','🎒','🪙'];
+  const make=(host,offset)=>{
+    for(let i=0;i<18;i++){
+      const el=document.createElement('span');
+      el.className='rail-item';
+      el.textContent=things[(i*3+offset)%things.length];
+      el.style.animationDelay=(-((i*0.47)+(offset*.19)%3.5)).toFixed(2)+'s';
+      el.style.fontSize=(22+(i%4)*2)+'px';
+      host.appendChild(el);
+    }
+  };
+  make(left,0); make(right,11);
 })();
 
 /* ═══════════════ 19. INIT ═══════════════ */
